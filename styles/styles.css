@@ -14,9 +14,8 @@ body {
 }
 
 .screen{
-  width: 90vw;
-  height: 90vh;
-  max-width: 800px;
+  width: 800px;
+  height: 650px;
   border: 1px solid black;
   position: relative;
 }
@@ -24,29 +23,54 @@ body {
 header {
   display: flex;
   flex-direction: row;
-  background: lightblue;
   justify-content: flex-end;
-  height: 10%;
+  height: 15%;
 }
 
 .stats-box {
-  background: pink;
+  background: rgb(255, 240, 192);
   display: inline-block;
   width: 200px;
   position: relative;
-  top: -55px;
+  top: -75px;
   left: 10px;
+}
+li {
+  list-style: none;
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+
+ul {
+  padding-left: 0;
 }
 
 .message-box {
   width: 70%;
   height: 100%;
-  border: 1px solid black;
-  background-color: blue;
+  box-shadow: 0 0 5px rgb(85, 85, 85);
+  background-color: rgba(0,0,0,0.1); 
+  padding: 10px;
 }
 
 main {
   width: 100%;
-  height: 80%;
+  height: 70%;
   border-bottom: 1px solid black;
+}
+
+footer {
+  height: 15%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* background-color: rgba(5, 103, 5, 0.988); */
+}
+
+button {
+  background-color: lightblue;
+  border: none;
+  box-shadow: 0 0 2px rgb(56, 100, 154);
+  border-radius: 5%;
+  width: 80px;
 }
