@@ -17,21 +17,21 @@
 
 ### Start Screen ~ Tamagotchi Is Born!
 
-![image](./images/Screen Shot 2020-09-21 at 8.49.25 PM.png)
+![image]('./images/Screen Shot 2020-09-21 at 8.49.25 PM.png')
 
-![image](./images/Screen Shot 2020-09-21 at 8.58.42 PM.png)
+![image]('./images/Screen Shot 2020-09-21 at 8.58.42 PM.png')
 
 ### Interact With Tamagotchi
 User chooses from interactions options and affects Tamagotchi's stats.
 
-![image](./images/Screen Shot 2020-09-21 at 9.07.23 PM.png)
+![image]('./images/Screen Shot 2020-09-21 at 9.07.23 PM.png')
 
 ### Tamagotchi Tells How It Feels
 Tamagotchi can communicate how they feel through body language and the narrative box.
 
-![image](./images/Screen Shot 2020-09-22 at 9.52.28 AM.png)
+![image]('./images/Screen Shot 2020-09-22 at 9.52.28 AM.png')
 
 ## Tamagotchi's Needs Change
 At a certain age, Tamagotchi's needs change and the user must figure out what they want.
 
-![image](./images/Screen Shot 2020-09-22 at 9.54.51 AM.png)
+![image]('./images/Screen Shot 2020-09-22 at 9.54.51 AM.png')
