@@ -8,22 +8,40 @@
 
 // ----------------------------- Global Variables
 
-const feedButton = document.querySelector('#feed');
-const playButton = document.querySelector('#play');
-const teachButton = document.querySelector('#teach');
-const tuckButton = document.querySelector('#tuck-in');
-let time = 0;
+const feedButton = document.getElementById('#feed');
+const playButton = document.getElementById('#play');
+const teachButton = document.getElementById('#teach');
+const tuckButton = document.getElementById('#tuck-in');
 
+const hungryBar = document.getElementById('#hungry');
+const sleepyBar = document.getElementById('#sleepy');
+const boredBar = document.getElementById('#bored');
+const skillsBar = document.getElementById('#skills');
+
+let time = 0;
+let gameplay = 'off';
 
 // ----------------------------- Functions
 
 // start timer of pet counting up, increment sleep, boredome, and hunger with time
-function lifetimer(pet) {
+function lifetimer(tamagotchi) {
   const timerId = setInterval(function() {
-    if (time % 30000 === 0) {
-      pet.stats.sleepy++;
+    if (time % 45 === 0) {
+      const sleepyVal = tamagotchi.stats.sleepy++;
+      sleepyBar.setAttribute('value', sleepyVal);
+    };
+    if (time % 30 === 0) {
+      const boredVal = tamagotchi.stats.bored++;
+      const hungryVal = tamagotchi.stats.hungry++;
+      boredBar.setAttribute('value', boredVal);
+      hungryBar.setAttribute('value', hungryVal);
+    };
+    time++;
+    if (gameplay === 'off') {
+      clearInterval(timerId);
     }
-  })
+  }, 1000);
+
 }
 
 // ----------------------------- Tamagotchi Class
@@ -32,6 +50,9 @@ class Gotchi {
   constructor(name) {
     this.name = name;
     this.age = 1;
+    this.color = 'lightblue';
+    this.desire = '';
+    this.skill = '';
     this.stats = {
       hungry: 7,
       sleepy: 3,
@@ -71,50 +92,35 @@ class Gotchi {
         tricks: 'fly'
       }
     },
-    this.choices = [
-      `Find ${this.name} a friend`,
-      `Send ${this.name} to college`,
-      `Set ${this.name} free`
-    ],
+    this.choices = {
+      catch: `Find ${this.name} a friend`,
+      tickle: `Send ${this.name} to college`,
+      boardGame: `Set ${this.name} free`
+    },
     this.result = '';
   }
   sleep() {
     this.sleepy = 0;
+    sleepyBar.setAttribute('value', this.sleepy);
   }
   eat() {
     this.hungry = 0;
+    hungryBar.setAttribute('value', this.hungry);
   }
   play() {
     this.bored <= 2 ? this.bored = 0 : this.bored -= 2;
     this.sleepy++;
+    boredBar.setAttribute('value', this.bored);
+    sleepyBar.setAttribute('value', this.sleepy);
   }
   learn() {
     this.bored <= 2 ? this.bored = 0 : this.bored -= 2;
     this.sleepy++
+    boredBar.setAttribute('value', this.bored);
+    sleepyBar.setAttribute('value', this.sleepy);
   }
-  // activate animations...
-  checkStats() {
-    const statNums = this.stats.values();
-    statNums.some(num => {
-      if (num === 10) {
-        alert(`${this.name} isn't responding anymore...`);
-        game.isAlive = false;
-      } else if (num >= 8) {
-        alert(`${this.name} doesn't feel so good...`);
-      }
-    })
-  }
-  checkAge() {
-    if (this.age === 6) {
-      // activate desire / skills scenes
-      this.getDesire();
-      this.getSkills();
-    }
-    if (this.age === 10) {
-      // activate wants a change scene
-    }
-  }
-  getColor() {
+  // Change color based on food eaten
+  changeColor() {
     const foods = this.care.food.keys();
     let mostEaten;
     let amountEaten = 0;
@@ -124,7 +130,31 @@ class Gotchi {
         amountEaten = this.care[foods[i]];
       }
     }
-    return this.character.temper[mostEaten][1];
+    this.color = this.character.temper[mostEaten][1];
+  }
+  // activate animations when stats are in danger zone
+  checkStats() {
+    const statNums = this.stats.values();
+    statNums.some(num => {
+      if (num === 10) {
+        alert(`${this.name} isn't responding anymore...`);
+        game.isAlive = false;
+        gameplay = false;       // stops lifetimer
+      } else if (num >= 8) {
+        alert(`${this.name} doesn't feel so good...`);
+      }
+    })
+  }
+  // Update desire/skill if age is 6 activate animations to hint at Tamagotchi's desire
+  checkAge() {
+    if (this.age === 6) {
+      // activate desire / skills scenes
+      this.desire = this.getDesire();
+      this.skill = this.getSkills();
+    }
+    if (this.age === 10) {
+      // activate wants a change scene
+    }
   }
   getDesire() {
     const desires = this.care.play.keys();

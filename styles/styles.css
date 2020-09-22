@@ -28,21 +28,29 @@ header {
 }
 
 .stats-box {
-  background: rgb(255, 240, 192);
-  display: inline-block;
-  width: 200px;
   position: relative;
+  width: 200px;
   top: -75px;
   left: 10px;
+  background: rgb(255, 240, 192);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
 }
 li {
   list-style: none;
-  padding-left: 10px;
-  padding-bottom: 5px;
+}
+
+.name-age {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 ul {
-  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 0 10px;
 }
 
 .message-box {
@@ -64,7 +72,6 @@ footer {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* background-color: rgba(5, 103, 5, 0.988); */
 }
 
 button {
