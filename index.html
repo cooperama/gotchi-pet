@@ -20,7 +20,7 @@
 
     <header>
       <div class="message-box">
-        <p>Message goes here</p>
+        <p class="message"></p>
       </div>
     </header>
 
@@ -32,11 +32,29 @@
           <li>Age:</li>
           <span class="age">1</span>
         </ul>
-        <ul class="stats">
+        <!-- <ul class="stats">
           <li>Hungry: </li><progress id="hungry" value="0"></progress>
           <li>Sleepy: </li><progress id="sleepy" value="0"></progress>
           <li>Bored: </li><progress id="bored" value="0"></progress>
           <li>Skills: </li><progress id="skills" value="0"></progress>
+        </ul> -->
+        <ul class="stats">
+          <li>Hungry: </li>
+          <div class="progress-bars">
+            <div class="bar" id="hungry-progress"></div>
+          </div>
+          <li>Sleepy: </li>
+          <div class="progress-bars">
+            <div class="bar" id="sleepy-progress"></div>
+          </div>
+          <li>Bored: </li>
+          <div class="progress-bars">
+            <div class="bar" id="bored-progress"></div>
+          </div>
+          <li>Skills: </li>
+          <div class="progress-bars">
+            <div class="bar" id="skills-progress"></div>
+          </div>
         </ul>
       </div>
     </main>

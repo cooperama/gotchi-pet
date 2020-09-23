@@ -81,3 +81,35 @@ button {
   border-radius: 5%;
   width: 80px;
 }
+
+
+/* progress bar code modified from: 
+https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
+
+.progress-bars {
+  padding: 1px;
+  border: 2px solid rgb(97, 97, 97);
+}
+
+.bar {
+  width: 1%;
+  height: 10px;
+  background-color: rgb(59, 186, 215);
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+
+.warning {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    background-color: rgb(59, 186, 215);
+  }
+  50% {
+    background-color: rgb(215, 140, 59);
+  }
+  100% {
+    background-color: rgb(59, 186, 215);
+  }
+}
