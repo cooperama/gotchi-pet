@@ -27,7 +27,7 @@ const messageBoxDiv = document.querySelector('.message-box');
 const statsBoxDiv = document.querySelector('.stats-box');
 const interactionsDiv = document.querySelector('.interactions');
 
-const moonImg = document.querySelector('.moon');
+const characterImg = document.querySelector('.character');
 
 const body = document.querySelector('body');
 const header = document.querySelector('header');
@@ -287,18 +287,26 @@ startButton.addEventListener('click', function() {
   // remove start button,
   startButton.remove();
   // start float down animation
-  moonImg.classList.add('float-down');
-  moonImg.classList.add('wobble');
+  characterImg.classList.add('float-down');
+  characterImg.classList.add('wobble');
   // when animation is done, 
   // change background images of body and screen (maybe fade the screen to white for day)
   let waiting = true;
   let wait = 0;
   while (waiting) {
     const pause = setInterval(function() {
-      if (wait === 6) {
+      if (wait === 5) {
         body.style.background = 'url(./images/ghilbli_day_2.jpg)';
         screen.style.background = 'url(./images/ghibli_background.jpg)';
-        // moonImg.remove();
+
+        // remove .moon class, add .moon-top class (which has animation) after 3 second animation, change characterImg url to gotchi url
+        characterImg.classList.remove('moon');
+        characterImg.classList.add('moon-top');
+        characterImg.classList.add('egg-down');
+      }
+      if (wait === 10) {
+        characterImg.setAttribute('src', './images/sprite/gotchi-young-happy.png')
+        characterImg.classList.add('gotchi');
         clearInterval(pause);
         waiting = false;
       }

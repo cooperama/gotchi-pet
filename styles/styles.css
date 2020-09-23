@@ -6,7 +6,7 @@
 }
 
 
-/******************* Layout / Sections */
+/******************* Layout */
 
 body {
   margin: 0;
@@ -36,52 +36,6 @@ body {
 }
 
 
-/* remove class display-none and moon img element after gotchi is born / start button clicked */
-/* display-none applied to main, header, and footer and moon-after img */
-
-.display-none {
-  display: none;
-}
-
-.moon {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  left: 40%;
-  top: 5%;
-  animation: moon-float 5s infinite;
-} 
-
-
-.start-game {
-  position: relative;
-  background: none;
-  outline: none;
-  font-size: 30px;
-  text-shadow: 0 0 1px rgb(174, 247, 255);
-  color: rgba(255, 255, 255, 0.502);
-  animation: start-float 2s infinite;
-}
-
-
-/* moon position after */
-/* change moon image to gotchi */
-/* .moon-after {
-  position: relative;
-  bottom: 0;
-  top: -10%;
-  left: 45%;
-  height: 100px;
-  width: 100px;
-} */
-
-.gotchi {
-  position: absolute;
-  bottom: 0;
-  left: 45%;
-}
-
-
 header {
   display: flex;
   flex-direction: row;
@@ -101,7 +55,7 @@ footer {
 }
 
 
-/******************* Details */
+/******************* Sections */
 
 .message-box {
   width: 70%;
@@ -123,6 +77,17 @@ footer {
   display: flex;
   flex-direction: column;
 }
+
+.interactions {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(81, 159, 32, 0.728);
+}
+
+/******************* Details */
+
 
 .name-age {
   display: flex;
@@ -154,13 +119,6 @@ ul {
   padding: 0 10px 0 10px;
 }
 
-.interactions {
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: rgba(81, 159, 32, 0.728);
-}
 
 button {
   background-color: lightblue;
@@ -190,16 +148,73 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 /******************* Toggled / Added / Removed Classes */
 
+/* remove class display-none and moon img element after gotchi is born / start button clicked */
+/* display-none applied to main, header, and footer and moon-after img */
+
+.display-none {
+  display: none;
+}
+
+
+.moon {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  left: 40%;
+  top: 5%;
+  animation: moon-float 5s infinite;
+} 
+
+.moon-top {
+  position: relative;
+  top: 0;
+  left: 40%;
+  height: 100px;
+  width: 100px;
+}
+
+
+.start-game {
+  position: relative;
+  background: none;
+  outline: none;
+  font-size: 30px;
+  text-shadow: 0 0 1px rgb(174, 247, 255);
+  color: rgba(255, 255, 255, 0.502);
+  animation: start-float 2s infinite;
+}
+
+
+/* !!!! not in position */
+.gotchi {
+  position: relative;
+  top: 70%;
+  left: 40%;
+}
+
 .float-down {
-  animation: float-down 7.5s;
+  animation: float-down 6s;
 }
 
 .warning {
   animation: warning-blink 1s infinite;
 }
 
+.egg-down {
+  animation: egg-down 5s;
+}
 /******************* Animations */
 
+@keyframes egg-down {
+  60% {
+    top: 70%;
+    left: 40%;
+  }
+  100% {
+    top: 70%;
+    left: 40%;
+  }
+}
 
 @keyframes float-down {
   1% {
