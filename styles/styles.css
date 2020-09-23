@@ -1,6 +1,12 @@
+/******************* Universal */
+
 * {
   box-sizing: border-box;
+  font-family: 'Epilogue', sans-serif;
 }
+
+
+/******************* Layout / Sections */
 
 body {
   margin: 0;
@@ -11,14 +17,70 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* starting image... remove after start */
+  background: url('../images/ghibli_night_2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.screen{
-  width: 800px;
-  height: 650px;
-  border: 1px solid black;
+.screen {
+  width: 850px;
+  height: 675px;
+  /* starting image... remove after start */
+  background: url('../images/ghibli_night.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 18px solid black;
+  box-shadow: 0 0 2px rgb(85, 85, 85);
   position: relative;
 }
+
+
+/* remove class display-none and moon img element after gotchi is born / start button clicked */
+/* display-none applied to main, header, and footer and moon-after img */
+
+.display-none {
+  display: none;
+}
+
+.moon {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  left: 40%;
+  top: 5%;
+  animation: moon-float 5s infinite;
+} 
+
+
+.start-game {
+  position: relative;
+  background: none;
+  outline: none;
+  font-size: 30px;
+  text-shadow: 0 0 1px rgb(174, 247, 255);
+  color: rgba(255, 255, 255, 0.502);
+  animation: start-float 2s infinite;
+}
+
+
+/* moon position after */
+/* change moon image to gotchi */
+/* .moon-after {
+  position: relative;
+  bottom: 0;
+  top: -10%;
+  left: 45%;
+  height: 100px;
+  width: 100px;
+} */
+
+.gotchi {
+  position: absolute;
+  bottom: 0;
+  left: 45%;
+}
+
 
 header {
   display: flex;
@@ -27,24 +89,63 @@ header {
   height: 15%;
 }
 
+main {
+  width: 100%;
+  height: 70%;
+  border-bottom: 1px solid rgb(169, 169, 169);
+  position: relative;
+}
+
+footer {
+  height: 15%;
+}
+
+
+/******************* Details */
+
+.message-box {
+  width: 70%;
+  height: 100%;
+  box-shadow: 0 0 2px rgb(85, 85, 85);
+  background-color: rgba(0, 0, 0, 0.199); 
+  padding: 20px;
+  margin: 10px;
+}
+
 .stats-box {
   position: relative;
   width: 200px;
-  top: -75px;
+  top: -90px;
   left: 10px;
-  background: rgb(255, 240, 192);
+  background: rgba(255, 240, 192, 0.728);
+  box-shadow: 0 0 2px rgb(85, 85, 85);
   width: 200px;
   display: flex;
   flex-direction: column;
-}
-li {
-  list-style: none;
 }
 
 .name-age {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 0;
+  margin-top: 5px;
+  text-align: center;
+}
+
+li {
+  list-style: none;
+  padding-top: 5px;
+}
+
+.name, .age {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  background: #fffae8;
+  border-radius: 5%;
+  box-shadow: 0 0 2px rgb(159, 159, 159);
 }
 
 ul {
@@ -53,42 +154,30 @@ ul {
   padding: 0 10px 0 10px;
 }
 
-.message-box {
-  width: 70%;
+.interactions {
   height: 100%;
-  box-shadow: 0 0 5px rgb(85, 85, 85);
-  background-color: rgba(0,0,0,0.1); 
-  padding: 10px;
-}
-
-main {
-  width: 100%;
-  height: 70%;
-  border-bottom: 1px solid black;
-}
-
-footer {
-  height: 15%;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  background: rgba(81, 159, 32, 0.728);
 }
 
 button {
   background-color: lightblue;
   border: none;
-  box-shadow: 0 0 2px rgb(56, 100, 154);
+  box-shadow: 0 0 3px rgb(51, 65, 82);
   border-radius: 5%;
   width: 80px;
+  cursor: pointer;
 }
 
-
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 /* progress bar code modified from: 
 https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .progress-bars {
   padding: 1px;
-  border: 2px solid rgb(97, 97, 97);
+  box-shadow: 0 0 3px rgb(0, 0, 0);
 }
 
 .bar {
@@ -98,11 +187,75 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-.warning {
-  animation: blink 1s infinite;
+
+/******************* Toggled / Added / Removed Classes */
+
+.float-down {
+  animation: float-down 7.5s;
 }
 
-@keyframes blink {
+.warning {
+  animation: warning-blink 1s infinite;
+}
+
+/******************* Animations */
+
+
+@keyframes float-down {
+  1% {
+    left: 41%;
+  }
+  2% {
+    left: 40%;
+  }
+  3% {
+    left: 41%;
+  }
+  5% {
+    left: 40%;
+  }
+  8% {
+    width: 150px;
+    height: 150px;
+    left: 40%;
+    top: 5%;
+  }
+  100% {
+    top: 80%;
+    left: 45%;
+    height: 0;
+    width: 0;
+  }
+}
+
+@keyframes start-float {
+  0% {
+    top: 1%;
+  }
+  50% {
+    top: 0;
+  }
+  100% {
+    top: 1%;
+  }
+}
+
+@keyframes moon-float {
+  0% {
+    left: 40%;
+    top: 5%;
+  }
+  50% {
+    left: 40%;
+    top: 6%;
+  }
+  100% {
+    left: 40%;
+    top: 5%;
+  }
+}
+
+@keyframes warning-blink {
   0% {
     background-color: rgb(59, 186, 215);
   }

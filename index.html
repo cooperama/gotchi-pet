@@ -10,6 +10,8 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
 å/>
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;800&display=swap" rel="stylesheet">
   <!-- Main JS -->
   <script src="./scripts/app.js" defer></script>
   <title>Tamagotchi</title>
@@ -17,20 +19,26 @@
 <body>
   <h1 class="animate__animated animate__bounce">Tamagotchi</h1>
   <div class="screen">
-
-    <header>
+    <!-- remove img el after intro()... -->
+    <img class="moon moon-after" src="./images/moon.png" alt="moon">
+    <button class="start-game">start</button>
+    <header class="display-none">
       <div class="message-box">
         <p class="message"></p>
       </div>
     </header>
 
-    <main>
+    <main class="display-none">
       <div class="stats-box">
         <ul class="name-age">
-          <li>Name:</li>
-          <span class="name">Gotchi</span>
-          <li>Age:</li>
-          <span class="age">1</span>
+          <div>
+            <li>Name:</li>
+            <span class="name"></span>
+          </div>
+          <div>
+            <li>Age:</li>
+            <span class="age">1</span>
+          </div>
         </ul>
         <!-- <ul class="stats">
           <li>Hungry: </li><progress id="hungry" value="0"></progress>
@@ -57,13 +65,24 @@
           </div>
         </ul>
       </div>
+
+      <img class="moon-after display-none" src="./images/moon.png" alt="moon">
+      <img class="gotchi display-none" src="./images/sprite/gotchi-young-happy.png" alt="one-year-old">
+      <img class="one-year display-none" src="./images/sprite/gotchi-young-open-mouth.png" alt="one-year-old">
+    
+      <!-- <img src="./images/cherries.png" alt="">
+      <img src="./images/leaves.png" alt="">
+      <img src="./images/sandwich.png" alt=""> -->
+
     </main>
 
-    <footer>
-      <button id="feed">feed</button>
-      <button id="play">play</button>
-      <button id="teach">teach</button>
-      <button id="tuck-in">tuck-in</button>
+    <footer class="display-none">
+      <div class="interactions">
+        <button id="feed">feed</button>
+        <button id="play">play</button>
+        <button id="teach">teach</button>
+        <button id="tuck-in">tuck-in</button>
+      </div>
     </footer>
 
   </div>
