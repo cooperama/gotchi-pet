@@ -69,17 +69,17 @@ class Gotchi {
     this.care = {
       food: {
         leaves: 0,
-        cherries: 1,
+        cherries: 0,
         sandwich: 0
       },
       play: {
-        catch: 1,
+        catch: 0,
         tickle: 0,
         boardGame: 0
       },
       teach: {
         read: 0,
-        math: 1,
+        math: 0,
         tricks: 0
       }
     };
@@ -388,18 +388,76 @@ pauseButton.addEventListener('click', function() {
 // maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below
 // buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!
+// make a function that adds display none to all interaction buttons
+// then can toggle class i want removed
+
+
+// add listeners for images ~~~~ in function, not as global vars...???
+// when clicked, ... animated a hand coming from the side giving the gotchi the food... lololol
+// add care to gotchi object
+
 feedButton.addEventListener('click', function(e) {
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.add('display-none');
   document.querySelector('.feed-options').classList.toggle('display-none');
-  game.gotchis[0].eat();
+  document.querySelector('.tuck-in-options').classList.add('display-none');
+  
+  document.querySelector('.feed-options').addEventListener('click', function(e) {
+    const care = e.target.getAttribute('class')
+    game.gotchis[0].care.food[care]++;
+    console.log(game.gotchis[0].care.food)
+    e.stopPropagation();
+    game.gotchis[0].eat();
+    document.querySelector('.feed-options').classList.add('display-none');
+  })
+
+
 });
 playButton.addEventListener('click', function(e) {
-  game.gotchis[0].play();
+  document.querySelector('.feed-options').classList.add('display-none');
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.tuck-in-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.toggle('display-none');
+  
+  document.querySelector('.play-options').addEventListener('click', function(e) {
+    const care = e.target.getAttribute('class')
+    game.gotchis[0].care.play[care]++;
+    console.log(game.gotchis[0].care.play)
+    e.stopPropagation();
+    game.gotchis[0].play();
+    document.querySelector('.play-options').classList.add('display-none');
+  })
 });
 teachButton.addEventListener('click', function(e) {
-  game.gotchis[0].learn();
+  document.querySelector('.teach-options').classList.toggle('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.add('display-none');
+  document.querySelector('.tuck-in-options').classList.add('display-none');
+  
+  document.querySelector('.teach-options').addEventListener('click', function(e) {
+    const care = e.target.getAttribute('class')
+    game.gotchis[0].care.teach[care]++;
+    console.log(game.gotchis[0].care.teach)
+    e.stopPropagation();
+    game.gotchis[0].learn();
+    document.querySelector('.teach-options').classList.add('display-none');
+  })
 });
 tuckButton.addEventListener('click', function(e) {
-  game.gotchis[0].sleep();
+  document.querySelector('.tuck-in-options').classList.toggle('display-none');
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.add('display-none');
+
+  document.querySelector('.tuck-in-options').addEventListener('click', function(e) {
+    // const care = e.target.getAttribute('class')
+    // game.gotchis[0].care.teach[care]++;
+    // console.log(game.gotchis[0].care.teach)
+    e.stopPropagation();
+    game.gotchis[0].sleep();
+    document.querySelector('.tuck-in-options').classList.add('display-none');
+  })
 });
 
 agreeTwo.addEventListener('mouseover', function(e) {
