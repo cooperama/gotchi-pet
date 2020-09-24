@@ -2,7 +2,8 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'Epilogue', sans-serif;
+  /* font-family: 'Epilogue', sans-serif; */
+  font-family: 'Poppins', sans-serif;
 }
 
 
@@ -18,7 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   /* starting image... remove after start */
-  background: url('../images/ghibli_night_2.jpg');
+  background-image: url('../images/ghibli_night_2.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -27,7 +28,7 @@ body {
   width: 850px;
   height: 675px;
   /* starting image... remove after start */
-  background: url('../images/ghibli_night.jpg');
+  background-image: url('../images/ghibli_night.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   border: 18px solid black;
@@ -46,7 +47,7 @@ header {
 main {
   width: 100%;
   height: 70%;
-  border-bottom: 1px solid rgb(169, 169, 169);
+  /* border-bottom: 1px solid rgb(169, 169, 169); */
   position: relative;
 }
 
@@ -62,7 +63,7 @@ footer {
   height: 100%;
   box-shadow: 0 0 2px rgb(85, 85, 85);
   background-color: rgba(0, 0, 0, 0.199); 
-  padding: 20px;
+  padding: 30px;
   margin: 10px;
 }
 
@@ -73,6 +74,7 @@ footer {
   left: 10px;
   background: rgba(255, 240, 192, 0.728);
   box-shadow: 0 0 2px rgb(85, 85, 85);
+  border-radius: 2px;
   width: 200px;
   display: flex;
   flex-direction: column;
@@ -198,6 +200,61 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   top: 78%;
   left: 40%;
 }
+
+.instructions {
+  background: rgba(43, 43, 43, 0.55);
+  height: 120px;
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  color: white;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 2;
+  top: 35%;
+  left: 25%;
+}
+
+.instructions p {
+  margin-bottom: 0;
+}
+
+.instructions input {
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.653);
+  text-align: center;
+  margin: 8px 0 10px 0; 
+}
+
+.instructions input:focus {
+  background-color: rgba(255, 255, 255, 0.838);
+  outline: none;
+}
+
+.agree, 
+.name-choice {
+  background-color: rgba(52, 175, 213, 0.81);
+  color: white;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.agree:hover, 
+.name-choice:hover {
+  background-color: rgba(52, 175, 213, 1);
+  transition: background-color 250;
+  box-shadow: 0 0 3px rgb(73, 201, 223);
+}
+
+
+
+.lie-down {
+  transform: rotate(-90deg);
+}
+
 
 .float-down {
   animation: float-down 6s;

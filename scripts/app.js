@@ -12,6 +12,20 @@ const feedButton = document.getElementById('feed');
 const playButton = document.getElementById('play');
 const teachButton = document.getElementById('teach');
 const tuckButton = document.getElementById('tuck-in');
+const agreeButtons = document.querySelectorAll('.agree');
+
+
+const instructionsOne = document.querySelector('.i-one');
+const instructionsTwo = document.querySelector('.i-two');
+const instructionsThree = document.querySelector('.i-three');
+const instructionsFour = document.querySelector('.i-four');
+
+const agreeOne = document.querySelector('.button-one');
+const agreeTwo = document.querySelector('.button-two');
+const agreeThree = document.querySelector('.button-three');
+
+const nameButton = document.querySelector('.name-choice');
+const nameBox = document.getElementById('gotchi-name');
 
 const hungryBar = document.getElementById('hungry-progress');
 const sleepyBar = document.getElementById('sleepy-progress');
@@ -42,6 +56,7 @@ class Gotchi {
   constructor(name) {
     this.name = name;
     this.age = 1;
+    // color feature held off for time
     this.color = 'lightblue';
     this.desire = '';
     this.skill = '';
@@ -94,16 +109,14 @@ class Gotchi {
   }
   sleep() {
     this.stats.sleepy = 0;
-    sleepyBar.style.width = `${this.stats.sleepy*10}%`;
     this.age++;
     ageSpan.textContent = this.age;
     this.checkStats();
-    // change color
-    this.changeColor();
+    // change color -- held off for time
+    // this.changeColor();
   }
   eat() {
     this.stats.hungry = 0;
-    hungryBar.style.width = `${this.stats.hungry*10}%`;
     this.checkStats();
   }
   play() {
@@ -111,20 +124,17 @@ class Gotchi {
     this.stats.sleepy += 0.5;
     this.stats.skill += 0.25;
     this.stats.hungry += 1.5;
-    boredBar.style.width = `${this.stats.bored*10}%`;
-    sleepyBar.style.width = `${this.stats.sleepy*10}%`;
     this.checkStats();
   }
   learn() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
     this.stats.sleepy += 0.5;
-    this.stats.skill++;
+    this.stats.skill += 0.5;
     this.stats.hungry += 1.5;
-    boredBar.style.width = `${this.stats.bored*10}%`;
-    sleepyBar.style.width = `${this.stats.sleepy*10}%`;
-    skillsBar.style.width = `${this.stats.skill*10}%`;
+    this.checkStats();
   }
   // Change color based on food eaten
+  // Feature skipped if no time... if time, figure out svg thing
   changeColor() {
     const foods = Object.keys(this.care.food);
     let mostEaten;
@@ -166,16 +176,23 @@ class Gotchi {
     } else {
       allBars.forEach(bar => {
         bar.classList.remove('warning');
+        messageP.textContent = '';
       })
     }
     // commented out below so game can continue during testing ////
-    // if (dead) {
-    //   messageBoxDiv.remove();
-    //   statsBoxDiv.remove();
-    //   interactionsDiv.remove();
-    //   // move name to center, put Gotchi in a grave //////////////////
-    // }
-
+    if (dead) {
+      game.isAlive = false;
+      messageBoxDiv.remove();
+      statsBoxDiv.remove();
+      interactionsDiv.remove();
+      // move name to center, put Gotchi in a grave //////////////////
+      characterImg.setAttribute('src', './images/sprite/gotchi-young-dead-unimpressed.png')
+      characterImg.classList.add('lie-down');
+    }
+    boredBar.style.width = `${this.stats.bored*10}%`;
+    hungryBar.style.width = `${this.stats.hungry*10}%`;
+    sleepyBar.style.width = `${this.stats.sleepy*10}%`;
+    skillsBar.style.width = `${this.stats.skill*10}%`;
   }
   // Update desire/skill if age is 6 activate animations to hint at Tamagotchi's desire
   checkAge() {
@@ -235,21 +252,35 @@ const game = {
   start() {
     this.isAlive = true;
     this.intro();
-    const gotchiName = prompt('What a cutie! What will you call your Tamagotchi?');
-    const tamagotchi = new Gotchi(gotchiName);
-    // update name~~
-    nameSpan.textContent = gotchiName;
-    // in case I want to develop so more gotchis are born::::
-    this.gotchis.push(tamagotchi);
+    // const gotchiName = prompt('What a cutie! What will you call your Tamagotchi?');
 
+    screen.appendChild(instructionsOne);
+
+
+
+    // // this part in name button event...?
+    // const gotchiName = nameInput.getAttribute('value');
+
+    // // 
+    // const tamagotchi = new Gotchi(gotchiName);
+
+
+    // // update name~~
+    // nameSpan.textContent = gotchiName;
+    // // in case I want to develop so more gotchis are born::::
+    // this.gotchis.push(tamagotchi);
+
+    
     // instead of prompt... a form might be better...
     // const gotchiName = prompt('What will you call your Tamagotchi?');
     // const tamagotchi = new Gotchi(gotchiName);
-    header.classList.remove('display-none');
-    main.classList.remove('display-none');
-    footer.classList.remove('display-none');
+    // header.classList.remove('display-none');
+    // main.classList.remove('display-none');
+    // footer.classList.remove('display-none');
     // life(this.gotchis[0]);
-    this.life(this.gotchis[0]);
+    // this.life(this.gotchis[0]);
+
+    // // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   },
   life(tamagotchi) {
     const timerId = setInterval(function() {
@@ -265,13 +296,13 @@ const game = {
         hungryBar.style.width = `${hungryVal*10}%`;
       };
       game.time++;
-      // If any stats reach 10, game over.
-      tamagotchi.checkStats();
       // if (this.gameplay === 'off') {
-      if (this.isAlive === false) {
-        clearInterval(timerId);
-        this.gameOver();
-      }
+        if (this.isAlive === false) {
+          clearInterval(timerId);
+          this.gameOver();
+        }
+        // If any stats reach 10, game over.
+        tamagotchi.checkStats();
     }, 1000);
   },
   gameOver() {
@@ -296,8 +327,8 @@ startButton.addEventListener('click', function() {
   while (waiting) {
     const pause = setInterval(function() {
       if (wait === 5) {
-        body.style.background = 'url(./images/ghilbli_day_2.jpg)';
-        screen.style.background = 'url(./images/ghibli_background.jpg)';
+        body.style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
+        screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
 
         characterImg.classList.remove('moon');
         characterImg.classList.add('moon-top');
@@ -318,13 +349,16 @@ startButton.addEventListener('click', function() {
       // }
       // if (wait === 15) {
         game.start();
-        header.classList.remove('display-none');
-        main.classList.remove('display-none');
-        footer.classList.remove('display-none');
-        main.appendChild(characterImg);
-        // the classes below were added in the beginning.. removed here for cleanliness
-        characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
-        characterImg.classList.add('gotchi');
+
+        // commentin below for name input click listener
+        // header.classList.remove('display-none');
+        // main.classList.remove('display-none');
+        // footer.classList.remove('display-none');
+        // main.appendChild(characterImg);
+        // // the classes below were added in the beginning.. removed here for cleanliness
+        // characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
+        // characterImg.classList.add('gotchi');
+        // ^^^^^^^^^^^^^^^^^^^
         clearInterval(pause);
         waiting = false;
       }
@@ -351,6 +385,56 @@ teachButton.addEventListener('click', function(e) {
 tuckButton.addEventListener('click', function(e) {
   game.gotchis[0].sleep();
 });
+
+agreeTwo.addEventListener('mouseover', function(e) {
+  e.target.textContent = 'okay !';
+  this.addEventListener('mouseout', function(e) {
+    e.target.textContent = 'okay?';
+  })
+})
+agreeThree.addEventListener('mouseover', function(e) {
+  e.target.textContent = 'okay !';
+  this.addEventListener('mouseout', function(e) {
+    e.target.textContent = 'okay?';
+  })
+})
+nameButton.addEventListener('mouseover', function(e) {
+  e.target.textContent = 'okay !';
+  this.addEventListener('mouseout', function(e) {
+    e.target.textContent = 'okay?';
+  })
+})
+
+agreeOne.addEventListener('click', function() {
+  instructionsOne.remove();
+  screen.appendChild(instructionsTwo);
+})
+agreeTwo.addEventListener('click', function() {
+  instructionsTwo.remove();
+  screen.appendChild(instructionsThree);
+})
+agreeThree.addEventListener('click', function() {
+  instructionsThree.remove();
+  screen.appendChild(instructionsFour);
+})
+
+nameButton.addEventListener('click', function(e) {
+  const gotchiName = nameBox.value;
+  const tamagotchi = new Gotchi(gotchiName);
+  nameSpan.textContent = gotchiName;
+  // in case I want to develop so more gotchis are born::::
+  game.gotchis.push(tamagotchi);
+  console.log(tamagotchi)
+  instructionsFour.remove();
+  header.classList.remove('display-none');    
+  main.classList.remove('display-none');
+  footer.classList.remove('display-none');
+  game.life(game.gotchis[0]);
+  main.appendChild(characterImg);
+  // the classes below were added in the beginning.. removed here for cleanliness
+  characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
+  characterImg.classList.add('gotchi');
+})
 
 
 // ----------------------------- testing testing testing
