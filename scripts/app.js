@@ -235,7 +235,7 @@ const game = {
   start() {
     this.isAlive = true;
     this.intro();
-    const gotchiName = prompt('What will you call your Tamagotchi?');
+    const gotchiName = prompt('What a cutie! What will you call your Tamagotchi?');
     const tamagotchi = new Gotchi(gotchiName);
     // update name~~
     nameSpan.textContent = gotchiName;
@@ -290,7 +290,7 @@ startButton.addEventListener('click', function() {
   characterImg.classList.add('float-down');
   characterImg.classList.add('wobble');
   // when animation is done, 
-  // change background images of body and screen (maybe fade the screen to white for day)
+  // change background images of body and screen
   let waiting = true;
   let wait = 0;
   while (waiting) {
@@ -299,13 +299,31 @@ startButton.addEventListener('click', function() {
         body.style.background = 'url(./images/ghilbli_day_2.jpg)';
         screen.style.background = 'url(./images/ghibli_background.jpg)';
 
-        // remove .moon class, add .moon-top class (which has animation) after 3 second animation, change characterImg url to gotchi url
         characterImg.classList.remove('moon');
         characterImg.classList.add('moon-top');
         characterImg.classList.add('egg-down');
-      }
+      };
       if (wait === 10) {
         characterImg.setAttribute('src', './images/sprite/gotchi-young-happy.png')
+        characterImg.classList.add('gotchi-intro');
+      }
+      if (wait === 12) {
+        characterImg.setAttribute('src', './images/sprite/gotchi-young-really-happy.png')
+      }
+      if (wait === 13) {
+        characterImg.setAttribute('src', './images/sprite/gotchi-young-happy.png')
+      }
+      if (wait === 14) {
+        characterImg.remove();
+      // }
+      // if (wait === 15) {
+        game.start();
+        header.classList.remove('display-none');
+        main.classList.remove('display-none');
+        footer.classList.remove('display-none');
+        main.appendChild(characterImg);
+        // the classes below were added in the beginning.. removed here for cleanliness
+        characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
         characterImg.classList.add('gotchi');
         clearInterval(pause);
         waiting = false;
@@ -316,10 +334,6 @@ startButton.addEventListener('click', function() {
   }
 
 
-
-  // remove moon image
-  // show gotchi image
-  // show message, stats, and interaction boxes
 })
 
 // maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below

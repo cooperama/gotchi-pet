@@ -178,6 +178,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   position: relative;
   background: none;
   outline: none;
+  font-family: 'Epilogue', sans-serif;
   font-size: 30px;
   text-shadow: 0 0 1px rgb(174, 247, 255);
   color: rgba(255, 255, 255, 0.502);
@@ -185,10 +186,16 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 }
 
 
-/* !!!! not in position */
-.gotchi {
+.gotchi-intro {
   position: relative;
+  display: inline-block;
   top: 70%;
+  left: 40%;
+}
+
+.gotchi {
+  position: absolute;
+  top: 78%;
   left: 40%;
 }
 
@@ -203,7 +210,10 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .egg-down {
   animation: egg-down 5s;
 }
+
+
 /******************* Animations */
+
 
 @keyframes egg-down {
   60% {
@@ -238,8 +248,8 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   100% {
     top: 80%;
     left: 45%;
-    height: 0;
-    width: 0;
+    height: 10px;
+    width: 10px;
   }
 }
 
