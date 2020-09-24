@@ -50,6 +50,7 @@ const footer = document.querySelector('footer');
 const screen = document.querySelector('.screen');
 
 
+
 // ----------------------------- Tamagotchi Class
 
 class Gotchi {
@@ -62,9 +63,10 @@ class Gotchi {
     this.skill = '';
     this.stats = {
       hungry: 6,
-      sleepy: 3,
+      sleepy: 1,
       bored: 3,
-      skill: 0
+      skill: 0,
+      skillCount: 0
     };
     this.care = {
       food: {
@@ -121,16 +123,16 @@ class Gotchi {
   }
   play() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
-    this.stats.sleepy += 0.5;
-    this.stats.skill += 0.2;
-    this.stats.hungry += 1.5;
+    this.stats.sleepy += 0.2;
+    this.stats.skill += 0.5;
+    this.stats.hungry += 0.5;
     this.checkStats();
   }
   learn() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
-    this.stats.sleepy += 0.5;
-    this.stats.skill += 0.2;
-    this.stats.hungry += 1.5;
+    this.stats.sleepy += 0.2;
+    this.stats.skill += 0.5;
+    this.stats.hungry += 0.5;
     this.checkStats();
   }
   // Change color based on food eaten
@@ -171,6 +173,18 @@ class Gotchi {
     // if skills bar fills, pop a star next to the pause button
     // clicking the star makes the gotchi do tricks
 
+    if (this.stats.skill === 10) {
+      if (this.stats.skillCount <= 3) {
+        this.stats.skill = 0;
+        this.stats.skillCount++;
+        const skillStar = document.createElement('img');
+        skillStar.setAttribute('src', './images/star.png');
+        skillStar.setAttribute('alt', 'star');
+        skillStar.classList.add('star');
+        document.querySelector('.star-box').appendChild(skillStar);
+      }
+    }
+
     // change color of progress bars that are at 8 or above;
     // trickyyyyyyyy couldn't select just one bar
     if (danger) {
@@ -184,15 +198,15 @@ class Gotchi {
       })
     }
     // commented out below so game can continue during testing ////
-    // if (dead) {
-    //   game.isAlive = false;
-    //   messageBoxDiv.remove();
-    //   statsBoxDiv.remove();
-    //   interactionsDiv.remove();
-    //   // move name to center, put Gotchi in a grave //////////////////
-    //   characterImg.setAttribute('src', './images/sprite/gotchi-young-dead-unimpressed.png')
-    //   characterImg.classList.add('lie-down');
-    // }
+    if (dead) {
+      game.isAlive = false;
+      messageBoxDiv.remove();
+      statsBoxDiv.remove();
+      interactionsDiv.remove();
+      // move name to center, put Gotchi in a grave //////////////////
+      characterImg.setAttribute('src', './images/sprite/gotchi-young-dead-unimpressed.png')
+      characterImg.classList.add('lie-down');
+    }
     boredBar.style.width = `${this.stats.bored*10}%`;
     hungryBar.style.width = `${this.stats.hungry*10}%`;
     sleepyBar.style.width = `${this.stats.sleepy*10}%`;
@@ -248,47 +262,12 @@ const game = {
   gotchis: [],
   isAlive: false,
   time: 0,
-  intro() {
-    // gotchi hatches, show statsBoxDiv, interactionsDiv, messageDiv,
-    // DONT show name ~~ that comes after intro
-    // explain game rules
-  },
   start() {
     this.isAlive = true;
-    this.intro();
-    // const gotchiName = prompt('What a cutie! What will you call your Tamagotchi?');
-
     screen.appendChild(instructionsOne);
-
-
-
-    // // this part in name button event...?
-    // const gotchiName = nameInput.getAttribute('value');
-
-    // // 
-    // const tamagotchi = new Gotchi(gotchiName);
-
-
-    // // update name~~
-    // nameSpan.textContent = gotchiName;
-    // // in case I want to develop so more gotchis are born::::
-    // this.gotchis.push(tamagotchi);
-
-    
-    // instead of prompt... a form might be better...
-    // const gotchiName = prompt('What will you call your Tamagotchi?');
-    // const tamagotchi = new Gotchi(gotchiName);
-    // header.classList.remove('display-none');
-    // main.classList.remove('display-none');
-    // footer.classList.remove('display-none');
-    // life(this.gotchis[0]);
-    // this.life(this.gotchis[0]);
-
-    // // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   },
   life(tamagotchi) {
     const timerId = setInterval(function() {
-      // console.log(game.time);
       // timer stops if pause button clicked
       if (!pauseButton.classList.contains('pause-game')) {
         if (game.time % 15 === 0) {
@@ -302,17 +281,26 @@ const game = {
           hungryBar.style.width = `${hungryVal*10}%`;
         };
         game.time++;
-          if (this.isAlive === false) {
-            clearInterval(timerId);
-            this.gameOver();
-          }
-          // If any stats reach 10, game over.
-          tamagotchi.checkStats();
+        if (this.isAlive === false) {
+          clearInterval(timerId);
+          this.gameOver();
+        }
+        // If any stats reach 10, game over.
+        tamagotchi.checkStats();
       }
     }, 1000);
   },
   gameOver() {
     // if gotchi dies
+    let time = 0;
+    pauseGame();
+    const dieTime = setInterval(function() {
+      if (time === 5) {
+        document.querySelector('.night-time').classList.add('white-out');
+        clearInterval(dieTime);
+      }
+      time++;
+    }, 1000);
   }
 }
 
@@ -320,14 +308,31 @@ const game = {
 // ----------------------------- Events
 
 
+function addDisplayNoneToOptions () {
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.add('display-none');
+  document.querySelector('.tuck-in-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
+}
+
+function toggleDisplayOnToButtons() {
+  feedButton.classList.toggle('display-none');
+  playButton.classList.toggle('display-none');
+  teachButton.classList.toggle('display-none');
+  tuckButton.classList.toggle('display-none');
+}
+
+function pauseGame() {
+  pauseButton.classList.toggle('pause-game'); // pauses timer!!!
+  addDisplayNoneToOptions();
+  toggleDisplayOnToButtons()
+}
+
+// starting animation ~~
 startButton.addEventListener('click', function() {
-  // remove start button,
   startButton.remove();
-  // start float down animation
   characterImg.classList.add('float-down');
   characterImg.classList.add('wobble');
-  // when animation is done, 
-  // change background images of body and screen
   let waiting = true;
   let wait = 0;
   while (waiting) {
@@ -352,19 +357,7 @@ startButton.addEventListener('click', function() {
       }
       if (wait === 14) {
         characterImg.remove();
-      // }
-      // if (wait === 15) {
         game.start();
-
-        // commentin below for name input click listener
-        // header.classList.remove('display-none');
-        // main.classList.remove('display-none');
-        // footer.classList.remove('display-none');
-        // main.appendChild(characterImg);
-        // // the classes below were added in the beginning.. removed here for cleanliness
-        // characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
-        // characterImg.classList.add('gotchi');
-        // ^^^^^^^^^^^^^^^^^^^
         clearInterval(pause);
         waiting = false;
       }
@@ -372,12 +365,15 @@ startButton.addEventListener('click', function() {
     }, 1000);
     break;
   }
-
-
 })
 
 pauseButton.addEventListener('click', function() {
-  pauseButton.classList.toggle('pause-game');
+  // pauseButton.classList.toggle('pause-game'); // pauses timer!!!
+  // addDisplayNoneToOptions();
+  // toggleDisplayOnToButtons()
+
+  pauseGame();
+
   // feedButton.classList.toggle('display-none');
   // playButton.classList.toggle('display-none');
   // teachButton.classList.toggle('display-none');
@@ -388,36 +384,22 @@ pauseButton.addEventListener('click', function() {
 // maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below
 // buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!
-// make a function that adds display none to all interaction buttons
-// then can toggle class i want removed
-
-
-// add listeners for images ~~~~ in function, not as global vars...???
-// when clicked, ... animated a hand coming from the side giving the gotchi the food... lololol
-// add care to gotchi object
 
 feedButton.addEventListener('click', function(e) {
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.add('display-none');
+  addDisplayNoneToOptions();
   document.querySelector('.feed-options').classList.toggle('display-none');
-  document.querySelector('.tuck-in-options').classList.add('display-none');
-  
+
   document.querySelector('.feed-options').addEventListener('click', function(e) {
     const care = e.target.getAttribute('class')
     game.gotchis[0].care.food[care]++;
-    console.log(game.gotchis[0].care.food)
     e.stopPropagation();
     game.gotchis[0].eat();
     document.querySelector('.feed-options').classList.add('display-none');
   })
-
-
 });
+
 playButton.addEventListener('click', function(e) {
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.tuck-in-options').classList.add('display-none');
+  addDisplayNoneToOptions();
   document.querySelector('.play-options').classList.toggle('display-none');
   
   document.querySelector('.play-options').addEventListener('click', function(e) {
@@ -429,11 +411,10 @@ playButton.addEventListener('click', function(e) {
     document.querySelector('.play-options').classList.add('display-none');
   })
 });
+
 teachButton.addEventListener('click', function(e) {
+  addDisplayNoneToOptions();
   document.querySelector('.teach-options').classList.toggle('display-none');
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.add('display-none');
-  document.querySelector('.tuck-in-options').classList.add('display-none');
   
   document.querySelector('.teach-options').addEventListener('click', function(e) {
     const care = e.target.getAttribute('class')
@@ -444,21 +425,38 @@ teachButton.addEventListener('click', function(e) {
     document.querySelector('.teach-options').classList.add('display-none');
   })
 });
+
 tuckButton.addEventListener('click', function(e) {
+  addDisplayNoneToOptions();
   document.querySelector('.tuck-in-options').classList.toggle('display-none');
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.add('display-none');
 
   document.querySelector('.tuck-in-options').addEventListener('click', function(e) {
-    // const care = e.target.getAttribute('class')
-    // game.gotchis[0].care.teach[care]++;
-    // console.log(game.gotchis[0].care.teach)
     e.stopPropagation();
     game.gotchis[0].sleep();
     document.querySelector('.tuck-in-options').classList.add('display-none');
+    
+
+    // dim screen, remove buttons, change image, wait 5 s, remove class
+    document.querySelector('.night-time').classList.add('night-time-on');
+    // toggleDisplayOnToButtons()
+    let time = 0;
+    pauseGame();
+    const sleepyTime = setInterval(function() {
+      if (time === 8) {
+        pauseGame();
+        // toggleDisplayOnToButtons()
+        document.querySelector('.night-time').classList.remove('night-time-on');
+        clearInterval(sleepyTime);
+      }
+      time++;
+    }, 1000);
   })
 });
+
+agreeOne.addEventListener('click', function() {
+  instructionsOne.remove();
+  screen.appendChild(instructionsTwo);
+})
 
 agreeTwo.addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
@@ -466,30 +464,30 @@ agreeTwo.addEventListener('mouseover', function(e) {
     e.target.textContent = 'okay?';
   })
 })
+
+agreeTwo.addEventListener('click', function() {
+  instructionsTwo.remove();
+  screen.appendChild(instructionsThree);
+})
+
+
 agreeThree.addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = 'okay?';
   })
 })
+
+agreeThree.addEventListener('click', function() {
+  instructionsThree.remove();
+  screen.appendChild(instructionsFour);
+})
+
 nameButton.addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = 'okay?';
   })
-})
-
-agreeOne.addEventListener('click', function() {
-  instructionsOne.remove();
-  screen.appendChild(instructionsTwo);
-})
-agreeTwo.addEventListener('click', function() {
-  instructionsTwo.remove();
-  screen.appendChild(instructionsThree);
-})
-agreeThree.addEventListener('click', function() {
-  instructionsThree.remove();
-  screen.appendChild(instructionsFour);
 })
 
 nameButton.addEventListener('click', function(e) {
@@ -512,15 +510,3 @@ nameButton.addEventListener('click', function(e) {
 
 
 // ----------------------------- testing testing testing
-
-// const gotchi = new Gotchi('Gotchi');
-// gameplay = 'on';
-// game.life(gotchi);
-// gotchi.checkStats();
-// gotchi.getDesire();
-// gotchi.getSkills();
-// gotchi.checkAge();
-
-
-// testing testing testing
-// game.start();

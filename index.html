@@ -18,6 +18,7 @@
   <title>Tamagotchi</title>
 </head>
 <body>
+  <div class="night-time"></div>
   <div class="screen">
     <img class="character moon" src="./images/moon.png" alt="moon">
 
@@ -28,7 +29,9 @@
       <div class="message-box">
         <p class="message"> </p>
       </div>
-      <button class="pause">pause</button>
+      <div class="star-box">
+        <button class="pause">pause</button>
+      </div>
     </header>
 
     <main class="display-none">
@@ -76,7 +79,7 @@
       </div>
       <div class="instructions i-four">
         <p>What will you call them?</p>
-        <input type="name" name="gotchi-name" id="gotchi-name" placeholder="Gogo" value="Gogo">
+        <input type="name" name="gotchi-name" id="gotchi-name" placeholder="ChouChou" value="ChouChou">
         <button class="name-choice">okay?</button>
       </div>
     </main>
@@ -112,8 +115,6 @@
 
         <div class="options-boxes tuck-in-box">
           <div class="option-pop-out tuck-in-options display-none">
-            <!-- <img src="./images/option-stand-in.png" alt="cherries" class="cherries">
-            <img src="./images/option-stand-in.png" alt="leaves" class="leaves"> -->
             <img src="./images/option-stand-in.png" alt="tucktuck" class="tucktuck">
           </div>
           <button id="tuck-in">tuck-in</button>
