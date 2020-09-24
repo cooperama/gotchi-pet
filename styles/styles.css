@@ -25,8 +25,10 @@ body {
 }
 
 .screen {
-  width: 850px;
-  height: 675px;
+  width: 80%;
+  height: 75%;
+  /* width: 850px;
+  height: 675px; */
   /* starting image... remove after start */
   background-image: url('../images/ghibli_night.jpg');
   background-repeat: no-repeat;
@@ -39,9 +41,11 @@ body {
 
 header {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
   height: 15%;
+  margin-top: 20px;
 }
 
 main {
@@ -60,7 +64,7 @@ footer {
 
 .message-box {
   width: 70%;
-  height: 100%;
+  min-height: 100%;
   box-shadow: 0 0 2px rgb(85, 85, 85);
   background-color: rgba(0, 0, 0, 0.199); 
   padding: 30px;
@@ -70,9 +74,9 @@ footer {
 .stats-box {
   position: relative;
   width: 200px;
-  top: -90px;
+  top: -105px;
   left: 10px;
-  background: rgba(255, 240, 192, 0.728);
+  background: rgba(238, 212, 126, 0.728); 
   box-shadow: 0 0 2px rgb(85, 85, 85);
   border-radius: 2px;
   width: 200px;
@@ -81,7 +85,7 @@ footer {
 }
 
 .interactions {
-  height: 100%;
+  height: 80%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -122,14 +126,63 @@ ul {
 }
 
 
-button {
-  background-color: lightblue;
+/******************* Buttons */
+
+button,
+button:focus,
+button:active,
+button:hover {
+  outline: none;
   border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.pause {
+  margin-right: 10px;
+  background-color: rgba(240, 128, 128, 0.803);
+  color: white;
+  z-index: 1;
+}
+
+.pause:hover, 
+.pause:active {
+  background-color: rgb(240, 128, 128);
+}
+
+
+.interactions button {
+  background-color: lightblue;
   box-shadow: 0 0 3px rgb(51, 65, 82);
   border-radius: 5%;
   width: 80px;
-  cursor: pointer;
 }
+
+
+.interactions button:hover {
+  background-color: rgb(90, 185, 216);
+}
+
+.feed-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 25%;
+}
+
+.feed-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 65%;
+}
+
+.feed-options img {
+
+}
+
 
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 /* progress bar code modified from: 
@@ -180,6 +233,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   position: relative;
   background: none;
   outline: none;
+  border: none;
   font-family: 'Epilogue', sans-serif;
   font-size: 30px;
   text-shadow: 0 0 1px rgb(174, 247, 255);
@@ -236,7 +290,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .agree, 
 .name-choice {
-  background-color: rgba(52, 175, 213, 0.81);
+  background-color: rgba(52, 151, 213, 0.81);
   color: white;
   margin-bottom: 15px;
   letter-spacing: 1px;
@@ -244,7 +298,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .agree:hover, 
 .name-choice:hover {
-  background-color: rgba(52, 175, 213, 1);
+  background-color: rgba(99, 187, 242, 0.94);
   transition: background-color 250;
   box-shadow: 0 0 3px rgb(73, 201, 223);
 }

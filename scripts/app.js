@@ -13,7 +13,7 @@ const playButton = document.getElementById('play');
 const teachButton = document.getElementById('teach');
 const tuckButton = document.getElementById('tuck-in');
 const agreeButtons = document.querySelectorAll('.agree');
-
+const pauseButton = document.querySelector('.pause');
 
 const instructionsOne = document.querySelector('.i-one');
 const instructionsTwo = document.querySelector('.i-two');
@@ -122,14 +122,14 @@ class Gotchi {
   play() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
     this.stats.sleepy += 0.5;
-    this.stats.skill += 0.25;
+    this.stats.skill += 0.2;
     this.stats.hungry += 1.5;
     this.checkStats();
   }
   learn() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
     this.stats.sleepy += 0.5;
-    this.stats.skill += 0.5;
+    this.stats.skill += 0.2;
     this.stats.hungry += 1.5;
     this.checkStats();
   }
@@ -163,10 +163,14 @@ class Gotchi {
       if (num > 10) {
         messageP.textContent = `${this.name} isn't responding anymore...`;
         game.isAlive = false;
-        // gameplay = 'off';       // stops life()
         return true;
       } 
     })
+
+    // add skills counter
+    // if skills bar fills, pop a star next to the pause button
+    // clicking the star makes the gotchi do tricks
+
     // change color of progress bars that are at 8 or above;
     // trickyyyyyyyy couldn't select just one bar
     if (danger) {
@@ -176,19 +180,19 @@ class Gotchi {
     } else {
       allBars.forEach(bar => {
         bar.classList.remove('warning');
-        messageP.textContent = '';
+        messageP.textContent = ' ';
       })
     }
     // commented out below so game can continue during testing ////
-    if (dead) {
-      game.isAlive = false;
-      messageBoxDiv.remove();
-      statsBoxDiv.remove();
-      interactionsDiv.remove();
-      // move name to center, put Gotchi in a grave //////////////////
-      characterImg.setAttribute('src', './images/sprite/gotchi-young-dead-unimpressed.png')
-      characterImg.classList.add('lie-down');
-    }
+    // if (dead) {
+    //   game.isAlive = false;
+    //   messageBoxDiv.remove();
+    //   statsBoxDiv.remove();
+    //   interactionsDiv.remove();
+    //   // move name to center, put Gotchi in a grave //////////////////
+    //   characterImg.setAttribute('src', './images/sprite/gotchi-young-dead-unimpressed.png')
+    //   characterImg.classList.add('lie-down');
+    // }
     boredBar.style.width = `${this.stats.bored*10}%`;
     hungryBar.style.width = `${this.stats.hungry*10}%`;
     sleepyBar.style.width = `${this.stats.sleepy*10}%`;
@@ -284,25 +288,27 @@ const game = {
   },
   life(tamagotchi) {
     const timerId = setInterval(function() {
-      console.log(game.time);
-      if (game.time % 15 === 0) {
-        const sleepyVal = tamagotchi.stats.sleepy++;
-        sleepyBar.style.width = `${sleepyVal*10}%`;
-      };
-      if (game.time % 3 === 0) {
-        const boredVal = tamagotchi.stats.bored++;
-        const hungryVal = tamagotchi.stats.hungry++;
-        boredBar.style.width = `${boredVal*10}%`;
-        hungryBar.style.width = `${hungryVal*10}%`;
-      };
-      game.time++;
-      // if (this.gameplay === 'off') {
-        if (this.isAlive === false) {
-          clearInterval(timerId);
-          this.gameOver();
-        }
-        // If any stats reach 10, game over.
-        tamagotchi.checkStats();
+      // console.log(game.time);
+      // timer stops if pause button clicked
+      if (!pauseButton.classList.contains('pause-game')) {
+        if (game.time % 15 === 0) {
+          const sleepyVal = tamagotchi.stats.sleepy++;
+          sleepyBar.style.width = `${sleepyVal*10}%`;
+        };
+        if (game.time % 3 === 0) {
+          const boredVal = tamagotchi.stats.bored++;
+          const hungryVal = tamagotchi.stats.hungry++;
+          boredBar.style.width = `${boredVal*10}%`;
+          hungryBar.style.width = `${hungryVal*10}%`;
+        };
+        game.time++;
+          if (this.isAlive === false) {
+            clearInterval(timerId);
+            this.gameOver();
+          }
+          // If any stats reach 10, game over.
+          tamagotchi.checkStats();
+      }
     }, 1000);
   },
   gameOver() {
@@ -370,10 +376,20 @@ startButton.addEventListener('click', function() {
 
 })
 
+pauseButton.addEventListener('click', function() {
+  pauseButton.classList.toggle('pause-game');
+  // feedButton.classList.toggle('display-none');
+  // playButton.classList.toggle('display-none');
+  // teachButton.classList.toggle('display-none');
+  // tuckButton.classList.toggle('display-none');
+})
+
+
 // maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below
 // buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
 
 feedButton.addEventListener('click', function(e) {
+  document.querySelector('.feed-options').classList.toggle('display-none');
   game.gotchis[0].eat();
 });
 playButton.addEventListener('click', function(e) {
