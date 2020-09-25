@@ -262,14 +262,17 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .gotchi-intro {
   position: relative;
   display: inline-block;
-  top: 70%;
-  left: 40%;
+  top: 72%;
+  left: 37%;
+  height: 135px;
+  width: 135px;
 }
 
 .gotchi {
   position: absolute;
-  top: 78%;
+  top: 74%;
   left: 40%;
+  height: 135px;
 }
 
 .star {
@@ -398,17 +401,80 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   z-index: 1;
 }
 
+.pace {
+  animation: pace 20s infinite linear;
+}
+
+
 /******************* Animations */
+
+/* add / remove when pausing or pressing buttons */
+@keyframes pace {
+  0% {
+    left: 40%;
+    top: 74%;
+  }
+  10% {
+    left: 40%;
+    top: 69%;
+  }
+  20% {
+    left: 33%;
+    top: 66%;
+  }
+  25% {
+    left: 30%;
+    top: 70%;
+  }
+  32% {
+    left: 33%;
+    top: 74%;
+  }
+  40% {
+    left: 31%;
+    top: 70%;
+  }
+  48% {
+    left: 40%;
+  }
+  51% {
+    left: 45%;
+    top: 66%;
+  }
+  57% {
+    left: 50%;
+    top: 70%;
+  }
+  63% {
+    left: 56%;
+    top: 74%;
+  }
+  77% {
+    left: 54%;
+    top: 70%;
+  }
+  90% {
+    left: 55%;
+    top: 65%;
+  }
+  100% {
+    left: 40%;
+    top: 74%;
+  }
+}
+
+
+
 
 @keyframes blanket-slide {
   0% {
     right: 29%;
   }
   40% {
-    right: 38%;
+    right: 37%;
   }
   93% {
-    right: 38%;
+    right: 37%;
   }
   100% {
     right: 29%;
@@ -470,11 +536,13 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 @keyframes egg-down {
   60% {
-    top: 70%;
+    top: 74%;
+    /* top: 70%; */
     left: 40%;
   }
   100% {
-    top: 70%;
+    top: 74%;
+    /* top: 70%; */
     left: 40%;
   }
 }

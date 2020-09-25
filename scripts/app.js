@@ -279,7 +279,7 @@ class Gotchi {
         document.querySelectorAll('.bar').forEach(bar => {
         bar.classList.remove('warning');
         messageP.textContent = ' ';
-        changeCharacterImage('happy', this.sizeIndex)
+        changeCharacterImage('happyDown', this.sizeIndex)
       })
     }
     // commented out below so game can continue during testing ////
@@ -390,9 +390,128 @@ const game = {
 // ----------------------------- Events
 
 
+pauseButton.addEventListener('click', function() {
+  if (!this.classList.contains('pause-game')) {
+    characterImg.classList.remove('pace');
+    characterImg.classList.add('display-none');
+  } else {
+    characterImg.classList.add('pace');
+    characterImg.classList.remove('display-none');
+  }
+  // above is gonna cause a bug when clicking a button but no option...
+  // maybe remove pause button from screen at this time
+  pauseGame();
+})
+
+// maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below
+// buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
 
 
-// start game button starting animation ~~
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// trying to dry up the toggling on the buttons...
+
+// function addDisplayNoneToOptions(target) {
+
+//   document.querySelector('.teach-options').classList.add('display-none');
+//   document.querySelector('.play-options').classList.add('display-none');
+//   document.querySelector('.feed-options').classList.add('display-none');
+
+//   target.classList.remove('display-none');
+// }
+
+
+document.getElementById('feed').addEventListener('click', function(e) {
+  // addDisplayNoneToOptions(e.target);
+  // Close other button options divs
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.toggle('display-none');
+
+  // move character to center 
+  characterImg.classList.remove('pace'); 
+  
+  document.querySelector('.feed-options').addEventListener('click', function(e) {
+    const care = e.target.getAttribute('class')
+    game.gotchis[0].care.food[care]++;
+    e.stopPropagation();
+    game.gotchis[0].eat();
+    document.querySelector('.feed-options').classList.add('display-none');
+    characterImg.classList.add('pace'); 
+  })
+});
+
+document.getElementById('play').addEventListener('click', function(e) {
+  // addDisplayNoneToOptions(e.target);
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.toggle('display-none');
+  characterImg.classList.remove('pace'); 
+  
+  document.querySelector('.play-options').addEventListener('click', function(e) {
+    const care = e.target.getAttribute('class')
+    game.gotchis[0].care.play[care]++;
+    e.stopPropagation();
+    game.gotchis[0].play();
+    document.querySelector('.play-options').classList.add('display-none');
+    characterImg.classList.add('pace'); 
+  })
+});
+
+document.getElementById('teach').addEventListener('click', function(e) {
+  // addDisplayNoneToOptions(e.target);
+  document.querySelector('.play-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
+  document.querySelector('.teach-options').classList.toggle('display-none');
+  characterImg.classList.remove('pace'); 
+  
+  document.querySelector('.teach-options').addEventListener('click', function(e) {
+    const care = e.target.getAttribute('class')
+    game.gotchis[0].care.teach[care]++;
+    e.stopPropagation();
+    game.gotchis[0].learn();
+    document.querySelector('.teach-options').classList.add('display-none');
+    characterImg.classList.add('pace'); 
+  })
+});
+
+document.getElementById('tuck-in').addEventListener('click', function(e) {
+  addDisplayNoneToOptions();
+  
+  game.gotchis[0].sleep();
+  
+    e.stopPropagation();
+    document.querySelector('.night-time').classList.add('night-time-on');
+    pauseGame();
+    
+    changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+    
+    characterImg.classList.add('lie-down');
+    document.querySelector('.blanket').classList.add('blanket-slide');
+    
+    let time = 0;
+    const sleepyTime = setInterval(function() {
+      if (time === 2) {
+        game.gotchis[0].incrementSize();
+        changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+      }
+      if (time === 4) {
+
+        document.querySelector('.blanket').classList.remove('blanket-slide');
+        characterImg.classList.remove('lie-down');
+        changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
+      }
+      if (time === 5) {
+        pauseGame();
+        document.querySelector('.night-time').classList.remove('night-time-on');
+        clearInterval(sleepyTime);
+      }
+      time++;
+    }, 1000);
+});
+
+
+// ~~~~~~~~~~~~~~ start game button starting animation
+
 document.querySelector('.start-game')
   .addEventListener('click', function() {
     document.querySelector('.start-game').remove();
@@ -435,117 +554,8 @@ document.querySelector('.start-game')
   }
 )
 
-pauseButton.addEventListener('click', function() {
-  pauseGame();
-})
 
-// maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below
-// buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
-
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// trying to dry up the toggling on the buttons...
-
-// function addDisplayNoneToOptions(target) {
-
-//   document.querySelector('.teach-options').classList.add('display-none');
-//   document.querySelector('.play-options').classList.add('display-none');
-//   document.querySelector('.feed-options').classList.add('display-none');
-
-//   target.classList.remove('display-none');
-// }
-
-document.getElementById('feed').addEventListener('click', function(e) {
-  // addDisplayNoneToOptions(e.target);
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.toggle('display-none');
-
-  document.querySelector('.feed-options').addEventListener('click', function(e) {
-    const care = e.target.getAttribute('class')
-    game.gotchis[0].care.food[care]++;
-    e.stopPropagation();
-    game.gotchis[0].eat();
-    document.querySelector('.feed-options').classList.add('display-none');
-  })
-});
-
-document.getElementById('play').addEventListener('click', function(e) {
-  // addDisplayNoneToOptions(e.target);
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.toggle('display-none');
-  
-  document.querySelector('.play-options').addEventListener('click', function(e) {
-    const care = e.target.getAttribute('class')
-    game.gotchis[0].care.play[care]++;
-    e.stopPropagation();
-    game.gotchis[0].play();
-    document.querySelector('.play-options').classList.add('display-none');
-  })
-});
-
-document.getElementById('teach').addEventListener('click', function(e) {
-  // addDisplayNoneToOptions(e.target);
-  document.querySelector('.play-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.teach-options').classList.toggle('display-none');
-  
-  document.querySelector('.teach-options').addEventListener('click', function(e) {
-    const care = e.target.getAttribute('class')
-    game.gotchis[0].care.teach[care]++;
-    e.stopPropagation();
-    game.gotchis[0].learn();
-    document.querySelector('.teach-options').classList.add('display-none');
-  })
-});
-
-document.getElementById('tuck-in').addEventListener('click', function(e) {
-  addDisplayNoneToOptions();
-
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // not changing ???
-  // document.querySelector('body')
-  //   .style.backgroundImage = 'url(./images/ghilbli_night_2.jpg)';
-  // document.querySelector('body').style.zIndex = 11;
-  
-  game.gotchis[0].sleep();
-  
-    e.stopPropagation();
-    document.querySelector('.night-time').classList.add('night-time-on');
-    pauseGame();
-    
-    changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
-    
-    characterImg.classList.add('lie-down');
-    document.querySelector('.blanket').classList.add('blanket-slide');
-    
-    let time = 0;
-    const sleepyTime = setInterval(function() {
-      if (time === 2) {
-        game.gotchis[0].incrementSize();
-        changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
-      }
-      if (time === 4) {
-        // document.querySelector('body')
-        //     .style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
-        document.querySelector('.blanket').classList.remove('blanket-slide');
-        characterImg.classList.remove('lie-down');
-        changeCharacterImage('happy', game.gotchis[0].sizeIndex)
-      }
-      if (time === 5) {
-        pauseGame();
-        document.querySelector('.night-time').classList.remove('night-time-on');
-        clearInterval(sleepyTime);
-      }
-      time++;
-    }, 1000);
-});
-
-// const document.querySelector('.button-one') = document.querySelector('.button-one');
-// const document.querySelector('.button-two') = document.querySelector('.button-two');
-// const document.querySelector('.button-three') = document.querySelector('.button-three');
-
+// ~~~~~~~~~~~~~~ Intro / Instructions Buttons
 
 document.querySelector('.button-one').addEventListener('click', function() {
   document.querySelector('.i-one').remove();
@@ -570,7 +580,6 @@ document.querySelector('.button-two').addEventListener('click', function() {
   document.querySelector('.i-two').remove();
   screen.appendChild(document.querySelector('.i-three'));
 })
-
 
 document.querySelector('.button-three').addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
@@ -602,15 +611,17 @@ document.querySelector('.name-choice').addEventListener('click', function(e) {
   document.querySelector('header').classList.remove('display-none');    
   document.querySelector('main').classList.remove('display-none');
   document.querySelector('footer').classList.remove('display-none');
-  // header.classList.remove('display-none');    
-  // main.classList.remove('display-none');
-  // footer.classList.remove('display-none');
+
   game.life(game.gotchis[0]);
   document.querySelector('main').appendChild(characterImg);
   // the classes below were added in the beginning.. removed here for cleanliness
   characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
   characterImg.classList.add('gotchi');
+  // start pacing
+  characterImg.classList.add('pace');
 })
+
+
 
 
 // ----------------------------- testing testing testing
