@@ -17,15 +17,25 @@ const characterImg = document.querySelector('.character');
 
 
 const imageFiles = {
-  happy: [
-    './images/sprite/gotchi-young-happy.png',
-    './images/sprite/gotchi-midage-happy.png',
+  happyDown: [
+    './images/sprite/gotchi-young-happy-down.png',
+    './images/sprite/gotchi-midage-happy-down.png',
     './images/sprite/gotchi-big-happy-down.png'
   ],
-  reallyHappy: [
-    './images/sprite/gotchi-young-really-happy.png',
-    './images/sprite/gotchi-midage-really-happy.png',
+  happyUp: [
+    './images/sprite/gotchi-young-happy-up.png',
+    './images/sprite/gotchi-midage-happy-up.png',
+    './images/sprite/gotchi-big-happy-up.png'
+  ],
+  reallyHappyDown: [
+    './images/sprite/gotchi-young-really-happy-down.png',
+    './images/sprite/gotchi-midage-really-happy-down.png',
     './images/sprite/gotchi-big-really-happy-down.png'
+  ],
+  reallyHappyUp: [
+    './images/sprite/gotchi-young-really-happy-up.png',
+    './images/sprite/gotchi-midage-really-happy-up.png',
+    './images/sprite/gotchi-big-really-happy-up.png'
   ],
   back: [
     './images/sprite/gotchi-young-back.png',
@@ -40,7 +50,7 @@ const imageFiles = {
   openMouth: [
     './images/sprite/gotchi-young-open-mouth.png',
     './images/sprite/gotchi-midage-open-mouth.png',
-    './images/sprite/gotchi-big-open-mouth-down.png'
+    './images/sprite/gotchi-big-open-mouth.png'
   ],
   sad: [
     './images/sprite/gotchi-young-sad.png',
@@ -55,13 +65,45 @@ const imageFiles = {
   worried: [
     './images/sprite/gotchi-young-worried.png',
     './images/sprite/gotchi-midage-worried.png',
-    './images/sprite/gotchi-big-worried-down.png'
+    './images/sprite/gotchi-big-worried.png'
   ],
   surprisedBad: [
     './images/sprite/gotchi-young-surprised-bad.png',
     './images/sprite/gotchi-midage-surprised-bad.png',
-    './images/sprite/gotchi-big-surprised-bad-down.png'
+    './images/sprite/gotchi-big-surprised-bad.png'
   ],
+  catch: [
+    './images/sprite/gotchi-young-catch.png',
+    './images/sprite/gotchi-midage-catch.png',
+    './images/sprite/gotchi-big-catch.png'
+  ],
+  eat: [
+    './images/sprite/gotchi-young-eat.png',
+    './images/sprite/gotchi-midage-eat.png',
+    './images/sprite/gotchi-big-eat.png'
+  ],
+  bird: [
+    './images/bird-down.png',
+    './images/bird-up.png'
+  ],
+  catBoard: [
+    './images/cat-board-100.png',
+    './images/cat-board-c-100.png',
+    './images/cat-board-a-100.png',
+    './images/cat-board-t-100.png',
+    './images/cat-board-cat-100.png'
+  ],
+  mathboard: [
+    './images/whiteboard-after-100.png',
+    './images/whiteboard-before-100.png'
+  ],
+  squirrel: [
+    './images/squirrel-happy.png',
+    './images/squirrel-run-open.png',
+    './images/squirrel-run-closed.png',
+    './images/squirrel-upsidedown-open.png',
+    './images/squirrel-upsidedown-closed.png'
+  ]
 }
 
 // ----------------------------- Helper Functions
@@ -70,7 +112,9 @@ function changeCharacterImage(image, sizeIndex) {
   characterImg.setAttribute('src', imageFiles[image][sizeIndex]);
 }
 
-function addDisplayNoneToOptions () {
+// used with pause button
+// trying to use with toggling interaction buttons... not working
+function addDisplayNoneToOptions() {
   document.querySelector('.teach-options').classList.add('display-none');
   document.querySelector('.play-options').classList.add('display-none');
   document.querySelector('.feed-options').classList.add('display-none');
@@ -152,8 +196,8 @@ class Gotchi {
   sleep() {
     this.stats.sleepy = 0;
     this.age++;
+    this.checkAge();
     this.checkStats();
-    console.log('sleep function age: ', this.age)
     // change color -- held off for time
     // this.changeColor();
   }
@@ -224,8 +268,6 @@ class Gotchi {
       }
     }
 
-    // change color of progress bars that are at 8 or above;
-    // trickyyyyyyyy couldn't select just one bar
     if (danger) {
         document.querySelectorAll('.bar').forEach(bar => {
         bar.classList.add('warning');
@@ -350,49 +392,48 @@ const game = {
 
 
 
-// starting animation ~~
-document.querySelector('.start-game').addEventListener('click', function() {
-  document.querySelector('.start-game').remove();
-// startButton.addEventListener('click', function() {
-//   startButton.remove();
-  characterImg.classList.add('float-down');
-  characterImg.classList.add('wobble');
-  let waiting = true;
-  let wait = 0;
-  while (waiting) {
-    const pause = setInterval(function() {
-      if (wait === 5) {
-        document.querySelector('body').style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
-        screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
-        // body.style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
-        // screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
+// start game button starting animation ~~
+document.querySelector('.start-game')
+  .addEventListener('click', function() {
+    document.querySelector('.start-game').remove();
+    characterImg.classList.add('float-down');
+    characterImg.classList.add('wobble');
+    let waiting = true;
+    let wait = 0;
+    while (waiting) {
+      const pause = setInterval(function() {
+        if (wait === 5) {
+          document.querySelector('body')
+            .style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
+          screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
 
-        characterImg.classList.remove('moon');
-        characterImg.classList.add('moon-top');
-        characterImg.classList.add('egg-down');
-      };
-      // start with default character images
-      if (wait === 10) {
-        characterImg.setAttribute('src', './images/sprite/gotchi-young-happy.png')
-        characterImg.classList.add('gotchi-intro');
-      }
-      if (wait === 12) {
-        characterImg.setAttribute('src', './images/sprite/gotchi-young-really-happy.png')
-      }
-      if (wait === 13) {
-        characterImg.setAttribute('src', './images/sprite/gotchi-young-happy.png')
-      }
-      if (wait === 14) {
-        characterImg.remove();
-        game.start();
-        clearInterval(pause);
-        waiting = false;
-      }
-      wait++
-    }, 1000);
-    break;
+          characterImg.classList.remove('moon');
+          characterImg.classList.add('moon-top');
+          characterImg.classList.add('egg-down');
+        };
+        // start with default character images
+        if (wait === 10) {
+          characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png')
+          characterImg.classList.add('gotchi-intro');
+        }
+        if (wait === 12) {
+          characterImg.setAttribute('src', './images/sprite/gotchi-young-really-happy-up.png')
+        }
+        if (wait === 13) {
+          characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png')
+        }
+        if (wait === 14) {
+          characterImg.remove();
+          game.start();
+          clearInterval(pause);
+          waiting = false;
+        }
+        wait++
+      }, 1000);
+      break;
+    }
   }
-})
+)
 
 pauseButton.addEventListener('click', function() {
   pauseGame();
@@ -402,8 +443,22 @@ pauseButton.addEventListener('click', function() {
 // buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
 
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// trying to dry up the toggling on the buttons...
+
+// function addDisplayNoneToOptions(target) {
+
+//   document.querySelector('.teach-options').classList.add('display-none');
+//   document.querySelector('.play-options').classList.add('display-none');
+//   document.querySelector('.feed-options').classList.add('display-none');
+
+//   target.classList.remove('display-none');
+// }
+
 document.getElementById('feed').addEventListener('click', function(e) {
-  addDisplayNoneToOptions();
+  // addDisplayNoneToOptions(e.target);
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.play-options').classList.add('display-none');
   document.querySelector('.feed-options').classList.toggle('display-none');
 
   document.querySelector('.feed-options').addEventListener('click', function(e) {
@@ -416,7 +471,9 @@ document.getElementById('feed').addEventListener('click', function(e) {
 });
 
 document.getElementById('play').addEventListener('click', function(e) {
-  addDisplayNoneToOptions();
+  // addDisplayNoneToOptions(e.target);
+  document.querySelector('.teach-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
   document.querySelector('.play-options').classList.toggle('display-none');
   
   document.querySelector('.play-options').addEventListener('click', function(e) {
@@ -429,7 +486,9 @@ document.getElementById('play').addEventListener('click', function(e) {
 });
 
 document.getElementById('teach').addEventListener('click', function(e) {
-  addDisplayNoneToOptions();
+  // addDisplayNoneToOptions(e.target);
+  document.querySelector('.play-options').classList.add('display-none');
+  document.querySelector('.feed-options').classList.add('display-none');
   document.querySelector('.teach-options').classList.toggle('display-none');
   
   document.querySelector('.teach-options').addEventListener('click', function(e) {
@@ -443,14 +502,16 @@ document.getElementById('teach').addEventListener('click', function(e) {
 
 document.getElementById('tuck-in').addEventListener('click', function(e) {
   addDisplayNoneToOptions();
-  // document.querySelector('.tuck-in-options').classList.toggle('display-none');
 
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // not changing ???
+  // document.querySelector('body')
+  //   .style.backgroundImage = 'url(./images/ghilbli_night_2.jpg)';
+  // document.querySelector('body').style.zIndex = 11;
+  
   game.gotchis[0].sleep();
   
-  
-  // document.querySelector('.tuck-in-options').addEventListener('click', function(e) {
     e.stopPropagation();
-    // document.querySelector('.tuck-in-options').classList.add('display-none');
     document.querySelector('.night-time').classList.add('night-time-on');
     pauseGame();
     
@@ -466,6 +527,8 @@ document.getElementById('tuck-in').addEventListener('click', function(e) {
         changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
       }
       if (time === 4) {
+        // document.querySelector('body')
+        //     .style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
         document.querySelector('.blanket').classList.remove('blanket-slide');
         characterImg.classList.remove('lie-down');
         changeCharacterImage('happy', game.gotchis[0].sizeIndex)
@@ -522,7 +585,6 @@ document.querySelector('.button-three').addEventListener('click', function() {
 })
 
 document.querySelector('.name-choice').addEventListener('mouseover', function(e) {
-// nameButton.addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = 'okay?';
@@ -530,11 +592,9 @@ document.querySelector('.name-choice').addEventListener('mouseover', function(e)
 })
 
 document.querySelector('.name-choice').addEventListener('click', function(e) {
-  // const gotchiName = nameBox.value;
   const gotchiName = document.getElementById('gotchi-name').value;
   const tamagotchi = new Gotchi(gotchiName);
   document.querySelector('.name').textContent = gotchiName;
-  // nameSpan.textContent = gotchiName;
   // in case I want to develop so more gotchis are born::::
   game.gotchis.push(tamagotchi);
   console.log(tamagotchi)
