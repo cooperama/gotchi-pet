@@ -16,6 +16,10 @@ const messageP = document.querySelector('.message');
 const characterImg = document.querySelector('.character');
 
 
+const teachOptions = document.querySelector('.teach-options');
+const playOptions = document.querySelector('.play-options');
+const feedOptions = document.querySelector('.feed-options');
+
 const imageFiles = {
   happyDown: [
     './images/sprite/gotchi-young-happy-down.png',
@@ -97,6 +101,11 @@ const imageFiles = {
     './images/whiteboard-after-100.png',
     './images/whiteboard-before-100.png'
   ],
+  loveBugs: [
+    './images/images/love-bugs.png',
+    './images/images/love-bugs-love.png',
+    './images/images/love-bugs-love-2.png'
+  ],
   squirrel: [
     './images/squirrel-happy.png',
     './images/squirrel-run-open.png',
@@ -133,6 +142,36 @@ function pauseGame() {
   toggleDisplayOnToButtons()
 }
 
+function displayDropImage(e) {
+  const className = e.target.classList[0];
+  const matchingImage = document.querySelector(`.drop-${className}`);
+  matchingImage.classList.remove('display-none');
+  matchingImage.classList.add('object-drop')
+}
+
+function hideDropImage(e) {
+  const className = e.target.classList[0];
+  const matchingImage = document.querySelector(`.drop-${className}`);
+  matchingImage.classList.add('display-none');
+  matchingImage.classList.remove('object-drop')
+}
+
+function hideScreenBoxes() {
+  pauseButton.classList.add('display-none');
+  document.querySelector('.star-box').classList.add('display-none');
+  document.querySelector('.message-box').classList.add('display-none');
+  document.querySelector('.stats-box').classList.add('display-none');
+  document.querySelector('.interactions').classList.add('display-none');
+}
+
+function showScreenBoxes() {
+  pauseButton.classList.remove('display-none');
+  document.querySelector('.star-box').classList.remove('display-none');
+  document.querySelector('.message-box').classList.remove('display-none');
+  document.querySelector('.stats-box').classList.remove('display-none');
+  document.querySelector('.interactions').classList.remove('display-none');
+}
+
 
 // ----------------------------- Tamagotchi Class
 
@@ -141,10 +180,6 @@ class Gotchi {
     this.name = name;
     this.age = 1;
     this.sizeIndex = 0;
-    // color feature held off for time
-    this.color = 'lightblue';
-    this.desire = '';
-    this.skill = '';
     this.stats = {
       hungry: 6,
       sleepy: 1,
@@ -192,14 +227,14 @@ class Gotchi {
       boardGame: `Set ${this.name} free`
     },
     this.result = '';
+    this.desire = '';
+    this.skill = '';
   }
   sleep() {
     this.stats.sleepy = 0;
     this.age++;
     this.checkAge();
     this.checkStats();
-    // change color -- held off for time
-    // this.changeColor();
   }
   eat() {
     this.stats.hungry = 0;
@@ -223,20 +258,6 @@ class Gotchi {
     if (this.age === 3) this.sizeIndex = 1;
     if (this.age === 6) this.sizeIndex = 2;
     document.querySelector('.age').textContent = this.age;
-  }
-  // Change color based on food eaten
-  // Feature skipped if no time... if time, figure out svg thing
-  changeColor() {
-    const foods = Object.keys(this.care.food);
-    let mostEaten;
-    let amountEaten = 0;
-    for (let i = 0; i < foods.length; i++) {
-      if (this.care.food[foods[i]] > amountEaten) {
-        mostEaten = foods[i];
-        amountEaten = this.care[foods[i]];
-      }
-    }
-    this.color = this.character.temper[mostEaten][1];
   }
   checkStats() {
     let statNums = Object.values(this.stats);
@@ -271,6 +292,7 @@ class Gotchi {
     if (danger) {
         document.querySelectorAll('.bar').forEach(bar => {
         bar.classList.add('warning');
+        characterImg.classList.remove('pace');
       })
       if (!dead) {
         changeCharacterImage('worried', this.sizeIndex)
@@ -283,10 +305,10 @@ class Gotchi {
       })
     }
     // commented out below so game can continue during testing ////
-    if (dead) {
-      game.isAlive = false;
-      game.gameOver();
-    }
+    // if (dead) {
+    //   game.isAlive = false;
+    //   game.gameOver();
+    // }
     document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
     document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
     document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
@@ -374,6 +396,7 @@ const game = {
   },
   gameOver() {
     console.log('gameOver')
+    characterImg.classList.remove('pace');
     document.querySelector('.star-box').remove();
     document.querySelector('.message-box').remove();
     document.querySelector('.stats-box').remove();
@@ -420,23 +443,46 @@ pauseButton.addEventListener('click', function() {
 // }
 
 
+// ~~~~ FEED BUTTON ANIMATION && FUNCTIONALITY
+
 document.getElementById('feed').addEventListener('click', function(e) {
   // addDisplayNoneToOptions(e.target);
   // Close other button options divs
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.toggle('display-none');
+  teachOptions.classList.add('display-none');
+  playOptions.classList.add('display-none');
+  feedOptions.classList.toggle('display-none');
+  // document.querySelector('.teach-options').classList.add('display-none');
+  // document.querySelector('.play-options').classList.add('display-none');
+  // document.querySelector('.feed-options').classList.toggle('display-none');
 
-  // move character to center 
-  characterImg.classList.remove('pace'); 
-  
-  document.querySelector('.feed-options').addEventListener('click', function(e) {
+
+  feedOptions.addEventListener('click', function(e) {
+    pauseGame();
+    e.stopPropagation();
+    feedOptions.classList.add('display-none');
+
+
+    characterImg.classList.remove('pace'); 
     const care = e.target.getAttribute('class')
     game.gotchis[0].care.food[care]++;
-    e.stopPropagation();
-    game.gotchis[0].eat();
-    document.querySelector('.feed-options').classList.add('display-none');
-    characterImg.classList.add('pace'); 
+    
+    
+    let time = 0;
+    const feedingTime = setInterval(function() {
+      if (time === 0) {
+        displayDropImage(e);
+        hideScreenBoxes();
+      }
+      if (time === 3) {
+        game.gotchis[0].eat();
+        hideDropImage(e);
+        showScreenBoxes();
+        characterImg.classList.add('pace');
+        pauseGame();
+        clearInterval(feedingTime);
+      }
+      time++;
+    }, 1000);
   })
 });
 
@@ -445,15 +491,33 @@ document.getElementById('play').addEventListener('click', function(e) {
   document.querySelector('.teach-options').classList.add('display-none');
   document.querySelector('.feed-options').classList.add('display-none');
   document.querySelector('.play-options').classList.toggle('display-none');
-  characterImg.classList.remove('pace'); 
+  pauseGame();
   
   document.querySelector('.play-options').addEventListener('click', function(e) {
+    characterImg.classList.remove('pace'); 
     const care = e.target.getAttribute('class')
     game.gotchis[0].care.play[care]++;
     e.stopPropagation();
     game.gotchis[0].play();
     document.querySelector('.play-options').classList.add('display-none');
-    characterImg.classList.add('pace'); 
+        // ANIMATION FUNCTIONALITY
+        let time = 0;
+        const playTime = setInterval(function() {
+          if (time === 2) {
+            changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+          }
+          if (time === 4) {
+    
+            changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
+          }
+          if (time === 5) {
+            characterImg.classList.add('pace');
+            pauseGame();
+            clearInterval(playTime);
+          }
+          time++;
+        }, 1000);
+    
   })
 });
 
@@ -462,51 +526,70 @@ document.getElementById('teach').addEventListener('click', function(e) {
   document.querySelector('.play-options').classList.add('display-none');
   document.querySelector('.feed-options').classList.add('display-none');
   document.querySelector('.teach-options').classList.toggle('display-none');
-  characterImg.classList.remove('pace'); 
+  pauseGame();
   
   document.querySelector('.teach-options').addEventListener('click', function(e) {
+    characterImg.classList.remove('pace'); 
     const care = e.target.getAttribute('class')
     game.gotchis[0].care.teach[care]++;
     e.stopPropagation();
     game.gotchis[0].learn();
     document.querySelector('.teach-options').classList.add('display-none');
-    characterImg.classList.add('pace'); 
+        // ANIMATION FUNCTIONALITY
+        let time = 0;
+        const teachTime = setInterval(function() {
+          if (time === 2) {
+            changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+          }
+          if (time === 4) {
+    
+            changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
+          }
+          if (time === 5) {
+            characterImg.classList.add('pace');
+            pauseGame();
+            clearInterval(teachTime);
+          }
+          time++;
+        }, 1000);
+    
   })
 });
 
+// TUCK IN BUTTON FUNCTIONALITY ~~~ DONE?
 document.getElementById('tuck-in').addEventListener('click', function(e) {
   addDisplayNoneToOptions();
-  
+  characterImg.classList.remove('pace'); 
   game.gotchis[0].sleep();
+  e.stopPropagation();
+  document.querySelector('.night-time').classList.add('night-time-on');
+  pauseGame();
+  changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+  characterImg.classList.add('lie-down');
+  document.querySelector('.blanket').classList.add('blanket-slide');
   
-    e.stopPropagation();
-    document.querySelector('.night-time').classList.add('night-time-on');
-    pauseGame();
-    
-    changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
-    
-    characterImg.classList.add('lie-down');
-    document.querySelector('.blanket').classList.add('blanket-slide');
-    
-    let time = 0;
-    const sleepyTime = setInterval(function() {
-      if (time === 2) {
-        game.gotchis[0].incrementSize();
-        changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
-      }
-      if (time === 4) {
+  // setInterval function for sleep animation and image change timing
 
-        document.querySelector('.blanket').classList.remove('blanket-slide');
-        characterImg.classList.remove('lie-down');
-        changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
-      }
-      if (time === 5) {
-        pauseGame();
-        document.querySelector('.night-time').classList.remove('night-time-on');
-        clearInterval(sleepyTime);
-      }
-      time++;
-    }, 1000);
+  let time = 0;
+  const sleepyTime = setInterval(function() {
+    if (time === 2) {
+      game.gotchis[0].incrementSize();
+      changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+    }
+    if (time === 4) {
+      document.querySelector('.blanket').classList.remove('blanket-slide');
+      characterImg.classList.remove('lie-down');
+      changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
+    }
+    if (time === 5) {
+      characterImg.classList.add('pace');
+      document.querySelector('.night-time').classList.remove('night-time-on');
+      pauseGame();
+      clearInterval(sleepyTime);
+    }
+    time++;
+  }, 1000);
+
 });
 
 
