@@ -293,23 +293,17 @@ class Gotchi {
           changeCharacterImage('happyDown')
         })
       }
-      // commented out below so game can continue during testing ////
+
       if (dead) {      
         game.isAlive = false;
         game.gameOver();
       }
+
       document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
       document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
       document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
       document.getElementById('skills-progress').style.width = `${this.stats.skill*10}%`;
-
-
-      console.log(`bored: ${this.stats.bored*10}%`);
-      console.log(`hungry: ${this.stats.hungry*10}%`);
-      console.log(`sleepy: ${this.stats.sleepy*10}%`);
-      console.log(`skill: ${this.stats.skill*10}%`);
     }
-
     }
   }
 
@@ -330,7 +324,6 @@ const game = {
     const timerId = setInterval(function() {
       // timer stops if pause button clicked
       if (!pauseButton.classList.contains('pause-game')) {
-        console.log(game.time, "game time")
         if (game.time % 14 === 0) {
           const sleepyVal = tamagotchi.stats.sleepy++;
         };
