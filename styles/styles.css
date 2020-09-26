@@ -304,6 +304,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   top: 68%;
   /* top: 60% */
   left: 36%;
+  z-index: 10;
   height: 150px;
 }
 
@@ -328,6 +329,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   position: absolute;
   top: 76.5%;
   right: 25%;
+  z-index: -2;
 }
 
 .instructions {
@@ -400,7 +402,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 }
 
 .night-time-on {
-  z-index: 10;
+  z-index: 30;
   animation: lights-out 5s;
 }
 
@@ -412,7 +414,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .blanket-slide {
   animation: blanket-slide 4.5s;
-  z-index: 1;
+  z-index: 20;
 }
 
 .pace {
@@ -436,7 +438,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: game-down 5.5s ease-out 0.5s;
 }
 .move-aside {
-  z-index: 10;
+  /* z-index: 10; */
   animation: move-aside 5.5s ease-in-out 0.5s;
 }
 .math-drop {
