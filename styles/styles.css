@@ -229,7 +229,7 @@ button:hover {
 .option-pop-out img {
   width: 33%;
   height: 75%;
-  margin: 0 5%;
+  padding: 0 5%;
 }
 
 #tuck-in {
@@ -285,7 +285,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   width: 32px;
   position: absolute;
   top: -25%;
-  left: 50%;
+  left: 44%;
   z-index: 10;
 }
 
@@ -302,7 +302,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .gotchi {
   position: absolute;
   top: 68%;
-  /* top: 70%; */
   left: 36%;
   height: 150px;
 }
@@ -417,22 +416,133 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: pace 10s infinite linear;
 }
 
+.food-drop {
+  animation: food-down 1.5s ease-out 0.5s;
+}
 .object-drop {
-  animation: object-down 2.5s ease-out 0.5s;
+  animation: object-down 1.5s ease-out 0.5s;
+}
+
+.ball-drop {
+  animation: ball-down 5.5s ease-in 0.5s;
+}
+.feather-drop {
+  animation: feather-down 5.5s ease-in 0.5s;
+}
+.game-drop {
+  animation: game-down 1.5s ease-out 0.5s;
 }
 
 /*********************************************************/
 /******************* Animations */
 
-
-@keyframes object-down {
-  20% {
+@keyframes feather-down {
+  0% {
     top: -25%;
-    left: 50%;
+    left: 44%;
+  }
+  30% {
+    transform: rotate(360deg);
+  }
+  45% {
+    transform: rotate(0deg);
+  }
+  60% {
+    top: 88%;
+    left: 44%;
+    transform: rotate(360deg);
+  }
+  76% {
+    transform: rotate(345deg);
+  }
+  78% {
+    transform: rotate(360deg);
+  }
+  80% {
+    transform: rotate(345deg);
+  }
+  82% {
+    transform: rotate(360deg);
+  }
+  84% {
+    transform: rotate(375deg);
+  }
+  86% {
+    transform: rotate(360deg);
+  }
+  88% {
+    transform: rotate(375deg);
+  }
+  90% {
+    transform: rotate(360deg);
   }
   100% {
-    top: 90%;
-    left: 46%;
+    transform: rotate(360deg);
+    top: 88%;
+    left: 44%;
+  }
+}
+
+@keyframes game-down {
+  0% {
+    top: -25%;
+    left: 44%;
+  }
+  100% {
+    top: 88%;
+    left: 44%;
+  }
+}
+
+@keyframes ball-down {
+  0% {
+    top: -25%;
+    left: 44%;
+  }
+  20% {
+    top: -25%;
+  }
+  30% {
+    top: 88%;
+  }
+  40% {
+    top: 35%;
+  }
+  60% {
+    top: 88%;
+  }
+  75% {
+    top: 20%;
+  }
+  100% {
+    top: 88%;
+    left: 44%;
+  }
+}
+@keyframes food-down {
+  0% {
+    left: 44%;
+    top: -25%;
+  }
+  20% {
+    top: -25%;
+  }
+  100% {
+    top: 88%;
+    left: 44%;
+  }
+}
+@keyframes object-down {
+  0% {
+    left: 44%;
+    top: -25%;
+  }
+  20% {
+    top: -25%;
+  }
+  100% {
+    top: 88%;
+    left: 44%;
   }
 }
 

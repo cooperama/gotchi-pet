@@ -117,8 +117,8 @@ const imageFiles = {
 
 // ----------------------------- Helper Functions
 
-function changeCharacterImage(image, sizeIndex) {
-  characterImg.setAttribute('src', imageFiles[image][sizeIndex]);
+function changeCharacterImage(image) {
+  characterImg.setAttribute('src', imageFiles[image][game.gotchis[0].sizeIndex]);
 }
 
 // used with pause button
@@ -142,7 +142,8 @@ function pauseGame() {
   toggleDisplayOnToButtons()
 }
 
-function displayDropImage(e) {
+function displayDropImage(e, objectDrop) {
+// function displayDropImage(e) {
   const className = e.target.classList[0];
   const matchingImage = document.querySelector(`.drop-${className}`);
   if (!matchingImage) {
@@ -150,7 +151,8 @@ function displayDropImage(e) {
     return;
   }
   matchingImage.classList.remove('display-none');
-  matchingImage.classList.add('object-drop')
+  matchingImage.classList.add(objectDrop)
+  // matchingImage.classList.add('object-drop')
 }
 
 function hideDropImage(e) {
@@ -299,21 +301,21 @@ class Gotchi {
         characterImg.classList.remove('pace');
       })
       if (!dead) {
-        changeCharacterImage('worried', this.sizeIndex)
+        changeCharacterImage('worried')
       }
     } else {
         document.querySelectorAll('.bar').forEach(bar => {
         bar.classList.remove('warning');
         messageP.textContent = ' ';
-        changeCharacterImage('happyDown', this.sizeIndex)
+        changeCharacterImage('happyDown')
       })
     }
     // commented out below so game can continue during testing ////
     // if the game isn't paused, it won't execute gameOver yet.
-    if (dead && !pauseButton.classList.contains('pause-game')) {      
-      game.isAlive = false;
-      game.gameOver();
-    }
+    // if (dead && !pauseButton.classList.contains('pause-game')) {      
+    //   game.isAlive = false;
+    //   game.gameOver();
+    // }
     document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
     document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
     document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
@@ -415,7 +417,6 @@ const game = {
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // instead of creating element here, add it in the html with display none and remove it here.
-// figure out the position of the gotchi when dying... it ends up too low, idk why
 
         const restart = document.createElement('button');
         restart.textContent = 'play again?';
@@ -484,19 +485,30 @@ document.getElementById('feed').addEventListener('click', function(e) {
     let time = 0;
     const feedingTime = setInterval(function() {
       if (time === 0) {
-        displayDropImage(e);
+        displayDropImage(e, 'food-drop');
         hideScreenBoxes();
       }
-      if (time === 3) {
-        game.gotchis[0].eat();
+      if (time === 2) {
+        changeCharacterImage('catch')
         hideDropImage(e);
+      }
+      if (time === 2.5) changeCharacterImage('openMouth');
+      if (time === 3) changeCharacterImage('eat');
+      if (time === 3.5) changeCharacterImage('openMouth');
+      if (time === 4) changeCharacterImage('eat');
+      if (time === 4.5) changeCharacterImage('openMouth');
+      if (time === 5) changeCharacterImage('happyDown');
+      if (time === 5.5) changeCharacterImage('happyUp');
+      if (time === 6) {
+        changeCharacterImage('happyDown');
+        game.gotchis[0].eat();
         showScreenBoxes();
         characterImg.classList.add('pace');
         pauseGame();
         clearInterval(feedingTime);
       }
-      time++;
-    }, 1000);
+      time += 0.5;
+    }, 500);
   })
 });
 
@@ -517,10 +529,20 @@ document.getElementById('play').addEventListener('click', function(e) {
     let time = 0;
     const playTime = setInterval(function() {
       if (time === 0) {
-        displayDropImage(e);
+
+        console.log(care);
+        displayDropImage(e, `${care}-drop`);
+
+
+        // displayDropImage(e);
         hideScreenBoxes();
       }
-      if (time === 3) {
+      if (time === 1) changeCharacterImage('happyUp')
+      if (time === 2) changeCharacterImage('happyUp')
+      if (time === 3) changeCharacterImage('happyUp')
+      if (time === 4) changeCharacterImage('happyUp')
+      if (time === 5) changeCharacterImage('happyUp')
+      if (time === 6) {
         game.gotchis[0].play();
         hideDropImage(e);
         showScreenBoxes();
