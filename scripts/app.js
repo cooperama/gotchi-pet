@@ -145,6 +145,10 @@ function pauseGame() {
 function displayDropImage(e) {
   const className = e.target.classList[0];
   const matchingImage = document.querySelector(`.drop-${className}`);
+  if (!matchingImage) {
+    console.log('className: ', className)
+    return;
+  }
   matchingImage.classList.remove('display-none');
   matchingImage.classList.add('object-drop')
 }
@@ -306,9 +310,10 @@ class Gotchi {
     }
     // commented out below so game can continue during testing ////
     // if (dead) {
-    //   game.isAlive = false;
-    //   game.gameOver();
-    // }
+    if (dead && !pauseButton.classList.contains('pause-game')) {      // if the game isn't paused, it won't execute gameOver yet.
+      game.isAlive = false;
+      game.gameOver();
+    }
     document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
     document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
     document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
@@ -371,7 +376,7 @@ const game = {
     const timerId = setInterval(function() {
       // timer stops if pause button clicked
       if (!pauseButton.classList.contains('pause-game')) {
-        console.log('time: ', game.time)
+        // console.log('time: ', game.time)
         if (game.time % 15 === 0) {
           const sleepyVal = tamagotchi.stats.sleepy++;
           document.getElementById('sleepy-progress').style.width = `${sleepyVal*10}%`;
@@ -384,12 +389,9 @@ const game = {
         };
         game.time++;
 
-        // not turning up false...
         if (game.isAlive === false) {
-          // this.gameOver();
           clearInterval(timerId);
         }
-        // If any stats reach 10, game over.
         tamagotchi.checkStats();
       }
     }, 1000);
@@ -397,15 +399,17 @@ const game = {
   gameOver() {
     console.log('gameOver')
     characterImg.classList.remove('pace');
-    document.querySelector('.star-box').remove();
-    document.querySelector('.message-box').remove();
-    document.querySelector('.stats-box').remove();
-    document.querySelector('.interactions').remove();
-    // move name to center, put Gotchi in a grave //////////////////
+    // document.querySelectorAll('.option-box').forEach(box => box.remove())
+    // document.querySelector('.star-box').remove();
+    // document.querySelector('.message-box').remove();
+    // document.querySelector('.stats-box').remove();
+    // document.querySelector('.interactions').remove();
+
+    hideScreenBoxes()
+
     changeCharacterImage('deadUnimpressed', this.gotchis[0].sizeIndex)
     characterImg.classList.add('die-down');
     document.querySelector('.night-time').classList.add('white-out');
-
   }
 }
 
@@ -452,7 +456,6 @@ document.getElementById('feed').addEventListener('click', function(e) {
   playOptions.classList.add('display-none');
   feedOptions.classList.toggle('display-none');
 
-console.log ('feed clicked')
   feedOptions.addEventListener('click', function(e) {
     pauseGame();
     e.stopPropagation();
@@ -483,7 +486,6 @@ console.log ('feed clicked')
 });
 
 document.getElementById('play').addEventListener('click', function(e) {
-  // addDisplayNoneToOptions(e.target);
   teachOptions.classList.add('display-none');
   feedOptions.classList.add('display-none');
   playOptions.classList.toggle('display-none');

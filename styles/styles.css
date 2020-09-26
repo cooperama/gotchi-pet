@@ -1,12 +1,21 @@
+/********************************************** CONTENTS */
+
+/* Universal */
+/* Layout */
+/* Details */
+/* Buttons */
+/* Toggled / Added / Removed Classes */
+/* Animations */
+
+/*********************************************************/
 /******************* Universal */
 
 * {
   box-sizing: border-box;
-  /* font-family: 'Epilogue', sans-serif; */
   font-family: 'Poppins', sans-serif;
 }
 
-
+/*********************************************************/
 /******************* Layout */
 
 
@@ -37,7 +46,6 @@ body {
   position: relative;
 }
 
-
 header {
   display: flex;
   flex-direction: column;
@@ -50,16 +58,12 @@ header {
 main {
   width: 100%;
   height: 70%;
-  /* border-bottom: 1px solid rgb(169, 169, 169); */
   position: relative;
 }
 
 footer {
   height: 15%;
 }
-
-
-/******************* Sections */
 
 .message-box {
   width: 70%;
@@ -92,8 +96,8 @@ footer {
   background: rgba(81, 159, 32, 0.728);
 }
 
+/*********************************************************/
 /******************* Details */
-
 
 .name-age {
   display: flex;
@@ -125,7 +129,7 @@ ul {
   padding: 0 10px 0 10px;
 }
 
-
+/*********************************************************/
 /******************* Buttons */
 
 button,
@@ -149,14 +153,12 @@ button:hover {
   background-color: rgb(240, 128, 128);
 }
 
-
 .interactions button {
   background-color: lightblue;
   box-shadow: 0 0 3px rgb(51, 65, 82);
   border-radius: 5%;
   width: 80px;
 }
-
 
 .interactions button:hover {
   background-color: rgb(90, 185, 216);
@@ -170,7 +172,6 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   height: 100%;
   width: 25%;
 }
@@ -217,16 +218,12 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
-
+/*********************************************************/
 /******************* Toggled / Added / Removed Classes */
-
-/* remove class display-none and moon img element after gotchi is born / start button clicked */
-/* display-none applied to main, header, and footer and moon-after img */
 
 .display-none {
   display: none;
 }
-
 
 .moon {
   position: relative;
@@ -245,8 +242,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   width: 100px;
 }
 
-
-
 .object-box {
   height: 32px;
   width: 32px;
@@ -255,24 +250,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   left: 50%;
   z-index: 10;
 }
-
-.object-drop {
-  animation: object-down 2.5s ease-out 0.5s;
-}
-
-@keyframes object-down {
-  20% {
-    top: -25%;
-    left: 50%;
-  }
-  100% {
-    top: 90%;
-    left: 46%;
-  }
-}
-
-
-
 
 .start-game {
   position: relative;
@@ -285,7 +262,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   color: rgba(255, 255, 255, 0.502);
   animation: start-float 2s infinite;
 }
-
 
 .gotchi-intro {
   position: relative;
@@ -325,7 +301,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   top: 80%;
   right: 29%;
 }
-
 
 .instructions {
   background: rgba(43, 43, 43, 0.55);
@@ -374,15 +349,17 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .name-choice:hover {
   background-color: rgba(99, 187, 242, 0.94);
   transition: background-color 250;
-  /* box-shadow: 0 0 3px rgb(73, 201, 223); */
 }
 
-
+.night-time {
+  content: '';
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
 
 .lie-down {
-  /* animation: lying-down 7s; */
   animation: lying-down 5s;
-  /* testing adding hop after wake up */
 }
 
 .die-down {
@@ -390,7 +367,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: dying-down 2s;
   top: 85%;
 }
-
 
 .float-down {
   animation: float-down 6s;
@@ -402,14 +378,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .egg-down {
   animation: egg-down 5s;
-}
-
-
-.night-time {
-  content: '';
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
 }
 
 .night-time-on {
@@ -433,8 +401,24 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: pace 14s infinite linear;
 }
 
+.object-drop {
+  animation: object-down 2.5s ease-out 0.5s;
+}
 
+/*********************************************************/
 /******************* Animations */
+
+
+@keyframes object-down {
+  20% {
+    top: -25%;
+    left: 50%;
+  }
+  100% {
+    top: 90%;
+    left: 46%;
+  }
+}
 
 /* add / remove when pausing or pressing buttons */
 @keyframes pace {
@@ -490,9 +474,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     top: 74%;
   }
 }
-
-
-
 
 @keyframes blanket-slide {
   0% {
@@ -565,16 +546,13 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 @keyframes egg-down {
   60% {
     top: 74%;
-    /* top: 70%; */
     left: 40%;
   }
   100% {
     top: 74%;
-    /* top: 70%; */
     left: 40%;
   }
 }
-
 
 @keyframes float-down {
   1% {
