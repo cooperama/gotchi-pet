@@ -309,8 +309,8 @@ class Gotchi {
       })
     }
     // commented out below so game can continue during testing ////
-    // if (dead) {
-    if (dead && !pauseButton.classList.contains('pause-game')) {      // if the game isn't paused, it won't execute gameOver yet.
+    // if the game isn't paused, it won't execute gameOver yet.
+    if (dead && !pauseButton.classList.contains('pause-game')) {      
       game.isAlive = false;
       game.gameOver();
     }
@@ -397,19 +397,34 @@ const game = {
     }, 1000);
   },
   gameOver() {
-    console.log('gameOver')
     characterImg.classList.remove('pace');
-    // document.querySelectorAll('.option-box').forEach(box => box.remove())
-    // document.querySelector('.star-box').remove();
-    // document.querySelector('.message-box').remove();
-    // document.querySelector('.stats-box').remove();
-    // document.querySelector('.interactions').remove();
 
     hideScreenBoxes()
 
     changeCharacterImage('deadUnimpressed', this.gotchis[0].sizeIndex)
     characterImg.classList.add('die-down');
     document.querySelector('.night-time').classList.add('white-out');
+    let time = 0;
+    const timer = setInterval(function(){
+      console.log(time);
+      if (time === 4) {
+        document.querySelector('.game-over').classList.remove('display-none');
+        document.querySelector('.game-over').classList.add('animate__fadeIn');
+      }
+      if (time === 7) {
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// instead of creating element here, add it in the html with display none and remove it here.
+// figure out the position of the gotchi when dying... it ends up too low, idk why
+
+        const restart = document.createElement('button');
+        restart.textContent = 'play again?';
+        restart.classList.add('play-again-button');
+        document.querySelector('body').appendChild(restart);
+        clearInterval(timer);
+      }
+      time++;
+    }, 1000)
   }
 }
 

@@ -8,8 +8,7 @@
   <!-- Animate CSS -->
   <link
   rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-å/>
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -18,12 +17,13 @@
   <title>Tamagotchi</title>
 </head>
 <body>
+  <img src="./images/game-over.gif" alt="game-over" class="display-none animate__animated game-over">
   <div class="night-time"></div>
   <div class="screen">
     <img class="character moon" src="./images/moon.png" alt="moon">
 
     <button class="start-game">start</button>
-    
+
     <header class="display-none">
       <div class="message-box">
         <p class="message"> </p>
@@ -131,10 +131,7 @@
         </div>
 
         <div class="options-boxes tuck-in-box">
-          <!-- <div class="option-pop-out tuck-in-options display-none">
-            <img src="./images/option-stand-in.png" alt="tucktuck" class="tucktuck">
-          </div> -->
-          <button id="tuck-in">tuck-in</button>
+          <button id="tuck-in">sleep</button>
         </div>
       </div>
     </footer>

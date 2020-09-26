@@ -69,7 +69,8 @@ footer {
   width: 70%;
   min-height: 100%;
   box-shadow: 0 0 2px rgb(85, 85, 85);
-  background-color: rgba(0, 0, 0, 0.199); 
+  background: rgba(43, 43, 43, 0.55);
+  color: white;
   padding: 30px;
   margin: 10px;
   margin-top: 40px;
@@ -153,16 +154,53 @@ button:hover {
   background-color: rgb(240, 128, 128);
 }
 
+
+
+.agree, 
+.name-choice,
 .interactions button {
-  background-color: lightblue;
-  box-shadow: 0 0 3px rgb(51, 65, 82);
-  border-radius: 5%;
+  background-color: rgb(69, 172, 235);
+  color: white;
+  margin-bottom: 15px;
+  padding: 5px 15px;
+  letter-spacing: 1px;
   width: 80px;
 }
 
+.agree:hover, 
+.name-choice:hover,
 .interactions button:hover {
-  background-color: rgb(90, 185, 216);
+  background-color: rgb(123, 195, 240);
+  transition: background-color 250ms;
 }
+
+
+.start-game {
+  position: relative;
+  background: none;
+  outline: none;
+  border: none;
+  font-family: 'Epilogue', sans-serif;
+  font-size: 30px;
+  text-shadow: 0 0 1px rgb(174, 247, 255);
+  color: rgba(255, 255, 255, 0.502);
+  animation: start-float 2s infinite;
+}
+
+.play-again-button {
+  z-index: 20;
+  background: none;
+  font-size: 20px;
+  transition: font-size 100ms;
+}
+
+.play-again-button:hover {
+  font-size: 23px;
+  transition: font-size 100ms;
+}
+
+
+
 
 .interactions img:hover {
   cursor: pointer;
@@ -251,32 +289,22 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   z-index: 10;
 }
 
-.start-game {
-  position: relative;
-  background: none;
-  outline: none;
-  border: none;
-  font-family: 'Epilogue', sans-serif;
-  font-size: 30px;
-  text-shadow: 0 0 1px rgb(174, 247, 255);
-  color: rgba(255, 255, 255, 0.502);
-  animation: start-float 2s infinite;
-}
 
 .gotchi-intro {
   position: relative;
   display: inline-block;
-  top: 72%;
-  left: 37%;
-  height: 135px;
-  width: 135px;
+  top: 70%;
+  left: 36%;
+  height: 150px;
+  width: 150px;
 }
 
 .gotchi {
   position: absolute;
-  top: 74%;
-  left: 40%;
-  height: 135px;
+  top: 68%;
+  /* top: 70%; */
+  left: 36%;
+  height: 150px;
 }
 
 .star {
@@ -298,8 +326,8 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .blanket {
   position: absolute;
-  top: 80%;
-  right: 29%;
+  top: 76.5%;
+  right: 25%;
 }
 
 .instructions {
@@ -335,27 +363,16 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   outline: none;
 }
 
-.agree, 
-.name-choice {
-  background-color: rgba(52, 151, 213, 0.81);
-  color: white;
-  margin-bottom: 15px;
-  padding: 5px 15px;
-  letter-spacing: 1px;
-  width: 80px;
-}
-
-.agree:hover, 
-.name-choice:hover {
-  background-color: rgba(99, 187, 242, 0.94);
-  transition: background-color 250;
-}
-
 .night-time {
   content: '';
   position: fixed;
   height: 100vh;
   width: 100vw;
+}
+
+.game-over {
+  position: absolute;
+  z-index: 20;
 }
 
 .lie-down {
@@ -364,8 +381,8 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 
 .die-down {
   transform: rotate(-90deg);
-  animation: dying-down 2s;
-  top: 85%;
+  animation: dying-down 5s;
+  top: 68%;
 }
 
 .float-down {
@@ -385,9 +402,8 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: lights-out 5s;
 }
 
-/* if gotchi dies */
 .white-out {
-  background-color: rgba(255, 255, 255, 0.934);
+  background: rgb(255,255,255);
   animation: white-out 5s;
   z-index: 10;
 }
@@ -398,7 +414,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 }
 
 .pace {
-  animation: pace 14s infinite linear;
+  animation: pace 10s infinite linear;
 }
 
 .object-drop {
@@ -423,85 +439,66 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 /* add / remove when pausing or pressing buttons */
 @keyframes pace {
   0% {
-    left: 40%;
-    top: 74%;
+    left: 36%;
+    top: 70%;
   }
   10% {
     left: 40%;
     top: 69%;
   }
-  20% {
-    left: 33%;
-    top: 66%;
-  }
-  25% {
-    left: 30%;
-    top: 70%;
-  }
   32% {
     left: 33%;
-    top: 74%;
-  }
-  40% {
-    left: 31%;
-    top: 70%;
-  }
-  48% {
-    left: 40%;
-  }
-  51% {
-    left: 45%;
     top: 66%;
   }
+  51% {
+    left: 40%;
+    top: 62%;
+  }
   57% {
-    left: 50%;
-    top: 70%;
+    left: 43%;
+    top: 67%;
   }
   63% {
-    left: 56%;
-    top: 74%;
-  }
-  77% {
-    left: 54%;
-    top: 70%;
-  }
-  90% {
-    left: 55%;
+    left: 38%;
     top: 65%;
   }
   100% {
-    left: 40%;
-    top: 74%;
+    left: 36%;
+    top: 70%;
   }
 }
 
 @keyframes blanket-slide {
   0% {
-    right: 29%;
+    right: 25%;
   }
-  40% {
+  50% {
     right: 37%;
   }
   93% {
     right: 37%;
   }
   100% {
-    right: 29%;
+    right: 25%;
   }
 }
 
 @keyframes lying-down {
   0% {
     transform: rotate(0);
+    top: 68%;
   }
   25% {
     transform: rotate(-90deg);
+    top: 72%;
   }
   98% {
     transform: rotate(-90deg);
+    top: 72%;
   }
   100% {
     transform: rotate(0);
+    top: 68%;
   }
 }
 
@@ -509,12 +506,13 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   0% {
     transform: rotate(0);
   }
-  90% {
+  50% {
     transform: rotate(-90deg);
-    top: 78%;
+    top: 68%;
   }
   100% {
-    top: 82%;
+    transform: rotate(-90deg);
+    top: -50%;
   }
 }
 
@@ -523,8 +521,9 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     background-color: rgba(255,255,255,0);
   }
   100% {
-    background-color: rgba(255, 255, 255, 0.747);
+    background-color: rgb(255, 255, 255);
   }
+
 }
 
 @keyframes lights-out {
