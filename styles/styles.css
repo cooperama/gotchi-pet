@@ -195,11 +195,6 @@ button:hover {
   animation: start-float 2s infinite;
 }
 
-.play-again-button:hover {
-  font-size: 23px;
-  transition: font-size 100ms;
-}
-
 
 
 

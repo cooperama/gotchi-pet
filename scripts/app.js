@@ -1,3 +1,5 @@
+// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------ 
 // ----------------------------- Tamagotchi
 
 // - Global Variables
@@ -6,9 +8,10 @@
 // - Game Object
 // - Events
 
+
+// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------ 
 // ----------------------------- Global Variables
-
-
 
 const screen = document.querySelector('.screen');
 const pauseButton = document.querySelector('.pause');
@@ -118,12 +121,19 @@ const imageFiles = {
   ]
 }
 
+// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------ 
 // ----------------------------- Helper Functions
 
 function pauseGame() {
-  pauseButton.classList.toggle('pause-game'); // pauses timer!!!
+  pauseButton.classList.add('pause-game'); 
   addDisplayNoneToOptions();
-  toggleDisplayOnToButtons()
+  toggleDisplayOnToButtons();
+}
+function unpauseGame() {
+  pauseButton.classList.remove('pause-game'); 
+  addDisplayNoneToOptions();
+  toggleDisplayOnToButtons();
 }
 
 function changeCharacterImage(image) {
@@ -178,7 +188,8 @@ function showScreenBoxes() {
   document.querySelector('.interactions').classList.remove('display-none');
 }
 
-
+// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------ 
 // ----------------------------- Tamagotchi Class
 
 class Gotchi {
@@ -210,36 +221,10 @@ class Gotchi {
         tricks: 0
       }
     };
-    this.character = {
-      temper: {
-        leaves: ['calm', 'green'],
-        cherries: ['playful', 'pink'],
-        sandwich: ['energetic', 'orange']
-      },
-      desire: {
-        catch: 'help',
-        tickle: 'love',
-        boardGame: 'travel'
-      },
-      skills: {
-        read: 'speak',
-        math: 'building',
-        tricks: 'fly'
-      }
-    },
-    this.choices = {
-      catch: `Find ${this.name} a friend`,
-      tickle: `Send ${this.name} to college`,
-      boardGame: `Set ${this.name} free`
-    },
-    this.result = '';
-    this.desire = '';
-    this.skill = '';
   }
   sleep() {
     this.stats.sleepy = 0;
     this.age++;
-    this.checkAge();
     this.checkStats();
   }
   eat() {
@@ -248,16 +233,12 @@ class Gotchi {
   }
   play() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
-    this.stats.sleepy += 0.2;
     this.stats.skill += 0.5;
-    this.stats.hungry += 0.5;
     this.checkStats();
   }
   learn() {
     this.stats.bored <= 2 ? this.stats.bored = 0 : this.stats.bored -= 2;
-    this.stats.sleepy += 0.2;
     this.stats.skill += 0.5;
-    this.stats.hungry += 0.5;
     this.checkStats();
   }
   incrementSize() {
@@ -266,104 +247,76 @@ class Gotchi {
     document.querySelector('.age').textContent = this.age;
   }
   checkStats() {
-    let statNums = Object.values(this.stats);
-    statNums = statNums.slice(0, 3);
-    // Change message if stats go above 8
-    let danger = statNums.some(num => {
-      if (num >= 8) {
-        messageP.textContent = `${this.name} doesn't feel so good...`;
-        return true;
-      } 
-    });
-    // Check if any stats are at 10, if so, game over
-    let dead = statNums.some( num => {
-      if (num > 10) {
-        game.isAlive = false;
-        return true;
-      } 
-    })
+    if (!pauseButton.classList.contains('pause-game')) {
 
-    if (this.stats.skill === 10) {
-      if (this.stats.skillCount <= 5) {
+      let statNums = Object.values(this.stats);
+      statNums = statNums.slice(0, 3);
+
+      let danger = statNums.some(num => {
+        if (num >= 8) {
+          messageP.textContent = `${this.name} doesn't feel so good...`;
+          return true;
+        } 
+      });
+
+      let dead = statNums.some( num => {
+        if (num >= 10) {
+          game.isAlive = false;
+          return true;
+        } 
+      })
+
+      if (this.stats.skill >= 10) {
+        if (this.stats.skillCount <= 5) {
+          const skillStar = document.createElement('img');
+          skillStar.setAttribute('src', './images/star.png');
+          skillStar.setAttribute('alt', 'star');
+          skillStar.classList.add('star');
+          document.querySelector('.star-box').appendChild(skillStar);
+        }
         this.stats.skill = 0;
         this.stats.skillCount++;
-        const skillStar = document.createElement('img');
-        skillStar.setAttribute('src', './images/star.png');
-        skillStar.setAttribute('alt', 'star');
-        skillStar.classList.add('star');
-        document.querySelector('.star-box').appendChild(skillStar);
       }
-    }
 
-    if (danger) {
-        document.querySelectorAll('.bar').forEach(bar => {
-        bar.classList.add('warning');
-        characterImg.classList.remove('pace');
-      })
-      if (!dead) {
-        changeCharacterImage('worried')
+      if (danger && !pauseButton.classList.contains('pause-game')) {
+          document.querySelectorAll('.bar').forEach(bar => {
+          bar.classList.add('warning');
+          characterImg.classList.remove('pace');
+        })
+        if (!dead) {
+          changeCharacterImage('worried')
+        }
+      } else {
+          document.querySelectorAll('.bar').forEach(bar => {
+          bar.classList.remove('warning');
+          messageP.textContent = ' ';
+          changeCharacterImage('happyDown')
+        })
       }
-    } else {
-        document.querySelectorAll('.bar').forEach(bar => {
-        bar.classList.remove('warning');
-        messageP.textContent = ' ';
-        changeCharacterImage('happyDown')
-      })
-    }
-    // commented out below so game can continue during testing ////
-    // if the game isn't paused, it won't execute gameOver yet.
-    if (dead && !pauseButton.classList.contains('pause-game')) {      
-      game.isAlive = false;
-      game.gameOver();
-    }
-    document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
-    document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
-    document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
-    document.getElementById('skills-progress').style.width = `${this.stats.skill*10}%`;
-  }
-  // Update desire/skill if age is 6 activate animations to hint at Tamagotchi's desire
-  checkAge() {
-    if (this.age === 6) {
-      // activate desire / skills scenes
-      this.desire = this.getDesire();
-      this.skill = this.getSkills();
-      console.log('this.desire: ', this.desire)
-      console.log('this.skill: ', this.skill)
-    }
-    if (this.age === 10) {
-      // activate wants a change scene
-      this.result = this.getDesire();
-    }
-  }
-  getDesire() {
-    const desires = Object.keys(this.care.play);
-    let mostPlayed;
-    let amountPlayed = 0;
-    for (let i = 0; i < desires.length; i++) {
-      if (this.care.play[desires[i]] > amountPlayed) {
-        mostPlayed = desires[i];
-        amountPlayed = this.care.play[desires[i]];
+      // commented out below so game can continue during testing ////
+      if (dead) {      
+        game.isAlive = false;
+        game.gameOver();
       }
-    }
-    console.log('gotchi wants: ', this.character.desire[mostPlayed])
-    return this.character.desire[mostPlayed];
-  }
-  getSkills() {
-    const skillsList = Object.keys(this.care.teach);
-    let mostTaught;
-    let amountTaught = 0;
-    for (let i = 0; i < skillsList.length; i++) {
-      if (this.care.teach[skillsList[i]] > amountTaught) {
-        mostTaught = skillsList[i];
-        amountTaught = this.care.teach[skillsList[i]];
-      }
-    }
-    console.log('gotchi skills: ', this.character.skills[mostTaught])
-    return this.character.skills[mostTaught];
-  }
-}
+      document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
+      document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
+      document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
+      document.getElementById('skills-progress').style.width = `${this.stats.skill*10}%`;
 
 
+      console.log(`bored: ${this.stats.bored*10}%`);
+      console.log(`hungry: ${this.stats.hungry*10}%`);
+      console.log(`sleepy: ${this.stats.sleepy*10}%`);
+      console.log(`skill: ${this.stats.skill*10}%`);
+    }
+
+    }
+  }
+
+
+
+// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------ 
 // ----------------------------- Game Object
 
 const game = {
@@ -372,21 +325,18 @@ const game = {
   time: 0,
   start() {
     this.isAlive = true;
-    screen.appendChild(document.querySelector('.i-one'));
   },
   life(tamagotchi) {
     const timerId = setInterval(function() {
       // timer stops if pause button clicked
       if (!pauseButton.classList.contains('pause-game')) {
-        if (game.time % 15 === 0) {
+        console.log(game.time, "game time")
+        if (game.time % 14 === 0) {
           const sleepyVal = tamagotchi.stats.sleepy++;
-          document.getElementById('sleepy-progress').style.width = `${sleepyVal*10}%`;
         };
-        if (game.time % 3 === 0) {
+        if (game.time % 6 === 0) {
           const boredVal = tamagotchi.stats.bored++;
           const hungryVal = tamagotchi.stats.hungry++;
-          document.getElementById('bored-progress').style.width = `${boredVal*10}%`;
-          document.getElementById('hungry-progress').style.width = `${hungryVal*10}%`;
         };
         game.time++;
 
@@ -398,16 +348,16 @@ const game = {
     }, 1000);
   },
   gameOver() {
-    characterImg.classList.remove('pace');
-
     hideScreenBoxes()
-
+    
     changeCharacterImage('deadUnimpressed')
+    characterImg.classList.remove('pace');
     characterImg.classList.add('die-down');
+
     document.querySelector('.night-time').classList.add('white-out');
+
     let time = 0;
     const timer = setInterval(function(){
-      console.log(time);
       if (time === 4) {
         document.querySelector('.game-over').classList.remove('display-none');
         document.querySelector('.game-over').classList.add('animate__fadeIn');
@@ -419,49 +369,30 @@ const game = {
       time++;
     }, 1000)
   }
-}
+};
 
 
+// ------------------------------------------------------------------------------------ 
+// ------------------------------------------------------------------------------------ 
 // ----------------------------- Events
 
-document.querySelector('.play-again-button').addEventListener('click', function() {
-  location.reload();
-})
+
 
 pauseButton.addEventListener('click', function() {
   if (!this.classList.contains('pause-game')) {
     characterImg.classList.remove('pace');
     characterImg.classList.add('display-none');
+    pauseGame();
   } else {
     characterImg.classList.add('pace');
     characterImg.classList.remove('display-none');
+    unpauseGame() 
   }
-  // above is gonna cause a bug when clicking a button but no option...
-  // maybe remove pause button from screen at this time
-  pauseGame();
 })
 
-// maybe have the user click the tamagotchi before clicking a button that way, the captured element can be passed into the event listeners below
-// buttons are inactive until tamagotchi is clicked, then they are active and can be clicked.
-
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// trying to dry up the toggling on the buttons...
-
-// function addDisplayNoneToOptions(target) {
-
-//   document.querySelector('.teach-options').classList.add('display-none');
-//   document.querySelector('.play-options').classList.add('display-none');
-//   document.querySelector('.feed-options').classList.add('display-none');
-
-//   target.classList.remove('display-none');
-// }
-
-
-// ~~~~ FEED BUTTON ANIMATION && FUNCTIONALITY
+// ~~~~ FEED BUTTON FUNCTIONALITY & ANIMATION
 
 document.getElementById('feed').addEventListener('click', function(e) {
-  // addDisplayNoneToOptions(e.target);
   // Close other button options divs
   teachOptions.classList.add('display-none');
   playOptions.classList.add('display-none');
@@ -473,9 +404,8 @@ document.getElementById('feed').addEventListener('click', function(e) {
     feedOptions.classList.add('display-none');
 
     characterImg.classList.remove('pace'); 
-    const care = e.target.getAttribute('class')
+    const care = e.target.getAttribute('class');
     game.gotchis[0].care.food[care]++;
-    
     
     let time = 0;
     const feedingTime = setInterval(function() {
@@ -494,18 +424,22 @@ document.getElementById('feed').addEventListener('click', function(e) {
       if (time === 4.5) changeCharacterImage('openMouth');
       if (time === 5) changeCharacterImage('happyDown');
       if (time === 5.5) changeCharacterImage('happyUp');
+
       if (time === 6) {
-        changeCharacterImage('happyDown');
         game.gotchis[0].eat();
-        showScreenBoxes();
+        changeCharacterImage('happyDown');
         characterImg.classList.add('pace');
-        pauseGame();
+
+        showScreenBoxes();
+        unpauseGame();
         clearInterval(feedingTime);
       }
       time += 0.5;
     }, 500);
   })
 });
+
+// ~~~~ PLAY BUTTON FUNCTIONALITY & ANIMATION
 
 document.getElementById('play').addEventListener('click', function(e) {
   teachOptions.classList.add('display-none');
@@ -518,54 +452,55 @@ document.getElementById('play').addEventListener('click', function(e) {
     playOptions.classList.add('display-none');
 
     characterImg.classList.remove('pace'); 
-    const care = e.target.getAttribute('class')
+    const care = e.target.getAttribute('class');
     game.gotchis[0].care.play[care]++;
     
     let time = 0;
     const playTime = setInterval(function() {
-      console.log(time)
-      // 6000ms up to 60 ~~~
       if (time === 0) {
         displayDropImage(e, `${care}-drop`);
         hideScreenBoxes();
       }
+
       if (care === 'ball') {
-        if (time === 18) changeCharacterImage('happyUp')
-        if (time === 24) changeCharacterImage('happyDown')
-        if (time === 36) changeCharacterImage('reallyHappyUp')
-        if (time === 45) changeCharacterImage('reallyHappyDown')
-        if (time === 48) changeCharacterImage('reallyHappyUp')
-        if (time === 54) changeCharacterImage('reallyHappyDown')
-        if (time === 58) changeCharacterImage('happyUp')
+        if (time === 18) changeCharacterImage('happyUp');
+        if (time === 24) changeCharacterImage('happyDown');
+        if (time === 36) changeCharacterImage('reallyHappyUp');
+        if (time === 45) changeCharacterImage('reallyHappyDown');
+        if (time === 48) changeCharacterImage('reallyHappyUp');
+        if (time === 54) changeCharacterImage('reallyHappyDown');
+        if (time === 58) changeCharacterImage('happyUp');
       }
       if (care === 'feather') {
-        if (time === 36) changeCharacterImage('happyUp')
-        if (time === 40) changeCharacterImage('happyDown')
-        if (time === 44) changeCharacterImage('reallyHappyUp')
-        if (time === 48) changeCharacterImage('reallyHappyDown')
-        if (time === 52) changeCharacterImage('reallyHappyUp')
-        if (time === 54) changeCharacterImage('reallyHappyDown')
-        if (time === 58) changeCharacterImage('happyUp')
+        if (time === 36) changeCharacterImage('happyUp');
+        if (time === 40) changeCharacterImage('happyDown');
+        if (time === 44) changeCharacterImage('reallyHappyUp');
+        if (time === 48) changeCharacterImage('reallyHappyDown');
+        if (time === 52) changeCharacterImage('reallyHappyUp');
+        if (time === 54) changeCharacterImage('reallyHappyDown');
+        if (time === 58) changeCharacterImage('happyUp');
       }
       if (care === 'game') {
         characterImg.classList.add('move-aside');
-        if (time === 18) changeCharacterImage('openMouth')
-        if (time === 22) changeCharacterImage('happyDown')
-        if (time === 26) changeCharacterImage('reallyHappyDown')
-        if (time === 34) changeCharacterImage('sad')
-        if (time === 38) changeCharacterImage('worried')
-        if (time === 42) changeCharacterImage('sad')
-        if (time === 48) changeCharacterImage('happyUp')
-        if (time === 52) changeCharacterImage('reallyHappyUp')
+        if (time === 18) changeCharacterImage('openMouth');
+        if (time === 22) changeCharacterImage('happyDown');
+        if (time === 26) changeCharacterImage('reallyHappyDown');
+        if (time === 34) changeCharacterImage('sad');
+        if (time === 38) changeCharacterImage('worried');
+        if (time === 42) changeCharacterImage('sad');
+        if (time === 48) changeCharacterImage('happyUp');
+        if (time === 52) changeCharacterImage('reallyHappyUp');
       }
+
       if (time === 60) {
-        changeCharacterImage('happyDown')
         game.gotchis[0].play();
-        hideDropImage(e);
-        showScreenBoxes();
+        changeCharacterImage('happyDown');
         characterImg.classList.remove('move-aside');
         characterImg.classList.add('pace');
-        pauseGame();
+
+        hideDropImage(e);
+        showScreenBoxes();
+        unpauseGame();
         clearInterval(playTime);
       }
       time++;
@@ -573,102 +508,110 @@ document.getElementById('play').addEventListener('click', function(e) {
   })
 });
 
+// ~~~~ TEACH BUTTON FUNCTIONALITY & ANIMATION 
+
 document.getElementById('teach').addEventListener('click', function(e) {
-  // addDisplayNoneToOptions(e.target);
   playOptions.classList.add('display-none');
   feedOptions.classList.add('display-none');
   teachOptions.classList.toggle('display-none');
   
   teachOptions.addEventListener('click', function(e) {
-    pauseGame();
-    e.stopPropagation();
-    teachOptions.classList.add('display-none');
+      game.gotchis[0].learn();
+      pauseGame();
+      e.stopPropagation();
 
-    characterImg.classList.remove('pace'); 
-    const care = e.target.getAttribute('class')
-    game.gotchis[0].care.teach[care]++;
+      teachOptions.classList.add('display-none');
 
-    let time = 0;
-    const teachTime = setInterval(function() {
-      console.log(time)
-      if (time === 0) {
-        displayDropImage(e, `${care}-drop`);
-        hideScreenBoxes();
-      }
-      if (care === 'book') {
-        if (time === 18) changeCharacterImage('back');
-        if (time === 24) changeAbcBoardImage(1);
-        if (time === 30) changeAbcBoardImage(2);
-        if (time === 38) changeAbcBoardImage(3);
-        if (time === 46) changeAbcBoardImage(0);
-        if (time === 50) changeAbcBoardImage(4);
-      }
-      if (care === 'math') {
-        if (time === 18) changeCharacterImage('back');
-        if (time === 24) changeMathBoardImage(1);
-        if (time === 28) changeMathBoardImage(2);
-        if (time === 32) changeMathBoardImage(3);
-        if (time === 36) changeMathBoardImage(4);
-        if (time === 40) changeMathBoardImage(0);
-        if (time === 44) changeMathBoardImage(5);
-      }
-      if (care === 'hoop') {
-        characterImg.classList.add('hoop-jump');
-        if (time === 18) changeCharacterImage('happyUp');
-        if (time === 24) changeCharacterImage('happyDown');
-        if (time === 36) changeCharacterImage('reallyHappyUp');
-        if (time === 45) changeCharacterImage('reallyHappyDown');
-        if (time === 48) changeCharacterImage('reallyHappyUp')
-        if (time === 54) changeCharacterImage('reallyHappyDown')
-        if (time === 58) changeCharacterImage('happyUp')
-      }
-      
-      
-      if (time === 60) {
-        characterImg.classList.remove('hoop-jump');
-        game.gotchis[0].learn();
-        changeCharacterImage('happyDown');
-        hideDropImage(e);
-        showScreenBoxes();
-        characterImg.classList.add('pace');
-        pauseGame();
-        clearInterval(teachTime);
-      }
-      time++;
-    }, 100);
-    
-  })
+      characterImg.classList.remove('pace'); 
+      const care = e.target.getAttribute('class');
+      game.gotchis[0].care.teach[care]++;
+
+      let time = 0;
+      const teachTime = setInterval(function() {
+        if (time === 0) {
+          displayDropImage(e, `${care}-drop`);
+          hideScreenBoxes();
+        }
+        if (care === 'book') {
+          if (time === 18) changeCharacterImage('back');
+          if (time === 24) changeAbcBoardImage(1);
+          if (time === 30) changeAbcBoardImage(2);
+          if (time === 38) changeAbcBoardImage(3);
+          if (time === 46) changeAbcBoardImage(0);
+          if (time === 50) changeAbcBoardImage(4);
+        }
+        if (care === 'math') {
+          if (time === 18) changeCharacterImage('back');
+          if (time === 24) changeMathBoardImage(1);
+          if (time === 28) changeMathBoardImage(2);
+          if (time === 32) changeMathBoardImage(3);
+          if (time === 36) changeMathBoardImage(4);
+          if (time === 40) changeMathBoardImage(0);
+          if (time === 44) changeMathBoardImage(5);
+        }
+        if (care === 'hoop') {
+          characterImg.classList.add('hoop-jump');
+          if (time === 18) changeCharacterImage('happyUp');
+          if (time === 24) changeCharacterImage('happyDown');
+          if (time === 36) changeCharacterImage('reallyHappyUp');
+          if (time === 45) changeCharacterImage('reallyHappyDown');
+          if (time === 48) changeCharacterImage('reallyHappyUp');
+          if (time === 54) changeCharacterImage('reallyHappyDown');
+          if (time === 58) changeCharacterImage('happyUp');
+        }
+        
+        if (time === 60) {
+          
+          game.gotchis[0].learn();
+          changeCharacterImage('happyDown');
+          characterImg.classList.remove('hoop-jump');
+          characterImg.classList.add('pace');
+
+          hideDropImage(e);
+          showScreenBoxes();
+          unpauseGame();
+          clearInterval(teachTime);
+        }
+        time++;
+      }, 100);
+ 
+    }
+  // }
+  )
+
 });
 
-// TUCK IN BUTTON FUNCTIONALITY ~~~ DONE?
+// ~~~~ SLEEP BUTTON FUNCTIONALITY & ANIMATION 
+
 document.getElementById('tuck-in').addEventListener('click', function(e) {
   addDisplayNoneToOptions();
-  characterImg.classList.remove('pace'); 
-  game.gotchis[0].sleep();
-  e.stopPropagation();
-  document.querySelector('.night-time').classList.add('night-time-on');
   pauseGame();
-  changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+  e.stopPropagation();
+
+  game.gotchis[0].sleep();
+
+  characterImg.classList.remove('pace'); 
   characterImg.classList.add('lie-down');
+  changeCharacterImage('sleep', game.gotchis[0].sizeIndex);
+  document.querySelector('.night-time').classList.add('night-time-on');
   document.querySelector('.blanket').classList.add('blanket-slide');
-  
-  // setInterval function for sleep animation and image change timing
 
   let time = 0;
   const sleepyTime = setInterval(function() {
     if (time === 2) {
       game.gotchis[0].incrementSize();
-      changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
+      changeCharacterImage('sleep', game.gotchis[0].sizeIndex);
     }
     if (time === 4) {
-      document.querySelector('.blanket').classList.remove('blanket-slide');
       characterImg.classList.remove('lie-down');
-      changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
+      document.querySelector('.blanket').classList.remove('blanket-slide');
+      changeCharacterImage('happyDown', game.gotchis[0].sizeIndex);
     }
     if (time === 5) {
       characterImg.classList.add('pace');
       document.querySelector('.night-time').classList.remove('night-time-on');
-      pauseGame();
+
+      unpauseGame();
       clearInterval(sleepyTime);
     }
     time++;
@@ -677,20 +620,21 @@ document.getElementById('tuck-in').addEventListener('click', function(e) {
 });
 
 
-// ~~~~~~~~~~~~~~ start game button starting animation
+// ~~~~ START GAME STARTING ANIMATION
 
-document.querySelector('.start-game')
-  .addEventListener('click', function() {
+document.querySelector('.start-game').addEventListener('click', function() {
     document.querySelector('.start-game').remove();
     characterImg.classList.add('float-down');
     characterImg.classList.add('wobble');
+
     let waiting = true;
     let wait = 0;
     while (waiting) {
+
       const pause = setInterval(function() {
+
         if (wait === 5) {
-          document.querySelector('body')
-            .style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
+          document.querySelector('body').style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
           screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
 
           characterImg.classList.remove('moon');
@@ -699,16 +643,17 @@ document.querySelector('.start-game')
         };
         // start with default character images
         if (wait === 10) {
-          characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png')
+          characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png');
           characterImg.classList.add('gotchi-intro');
         }
         if (wait === 12) {
-          characterImg.setAttribute('src', './images/sprite/gotchi-young-really-happy-up.png')
+          characterImg.setAttribute('src', './images/sprite/gotchi-young-really-happy-up.png');
         }
         if (wait === 13) {
-          characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png')
+          characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png');
         }
         if (wait === 14) {
+          screen.appendChild(document.querySelector('.i-one'));
           characterImg.remove();
           game.start();
           clearInterval(pause);
@@ -719,53 +664,66 @@ document.querySelector('.start-game')
       break;
     }
   }
-)
+);
 
 
-// ~~~~~~~~~~~~~~ Intro / Instructions Buttons
+// ~~~~ INTRO / INSTRUCTIONS BUTTON EVENTS
 
 document.querySelector('.button-one').addEventListener('click', function() {
   document.querySelector('.i-one').remove();
   screen.appendChild(document.querySelector('.i-two'));
-})
+});
 
 document.querySelector('.button-one').addEventListener('mouseover', function(e) {
   e.target.textContent = 'wow !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = ' wow ';
-  })
-})
+  });
+});
 
 document.querySelector('.button-two').addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = 'okay?';
-  })
-})
+  });
+});
 
 document.querySelector('.button-two').addEventListener('click', function() {
   document.querySelector('.i-two').remove();
   screen.appendChild(document.querySelector('.i-three'));
-})
+});
 
 document.querySelector('.button-three').addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = 'okay?';
-  })
-})
+  });
+});
 
 document.querySelector('.button-three').addEventListener('click', function() {
   document.querySelector('.i-three').remove();
   screen.appendChild(document.querySelector('.i-four'));
-})
+});
 
 document.querySelector('.name-choice').addEventListener('mouseover', function(e) {
   e.target.textContent = 'okay !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = 'okay?';
-  })
-})
+  });
+});
+
+document.querySelector('.play-again-button').addEventListener('click', function() {
+  location.reload();
+});
+
+document.querySelector('.play-again-button').addEventListener('mouseover', function(e) {
+  e.target.textContent = 'play again !';
+  this.addEventListener('mouseout', function(e) {
+    e.target.textContent = 'play again?';
+  });
+});
+
+// ~~~~ CREATE TAMAGOTCHI OBJECT AND SHOW SCREEN MENUS
 
 document.querySelector('.name-choice').addEventListener('click', function(e) {
   const gotchiName = document.getElementById('gotchi-name').value;
@@ -773,7 +731,6 @@ document.querySelector('.name-choice').addEventListener('click', function(e) {
   document.querySelector('.name').textContent = gotchiName;
   // in case I want to develop so more gotchis are born::::
   game.gotchis.push(tamagotchi);
-  console.log(tamagotchi)
   document.querySelector('.i-four').remove();
   document.querySelector('header').classList.remove('display-none');    
   document.querySelector('main').classList.remove('display-none');
@@ -781,14 +738,10 @@ document.querySelector('.name-choice').addEventListener('click', function(e) {
 
   game.life(game.gotchis[0]);
   document.querySelector('main').appendChild(characterImg);
-  // the classes below were added in the beginning.. removed here for cleanliness
   characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
   characterImg.classList.add('gotchi');
-  // start pacing
   characterImg.classList.add('pace');
 })
 
 
 
-
-// ----------------------------- testing testing testing
