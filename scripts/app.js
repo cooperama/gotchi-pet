@@ -15,9 +15,6 @@ const pauseButton = document.querySelector('.pause');
 const messageP = document.querySelector('.message');
 const characterImg = document.querySelector('.character');
 
-const mathBoardImg = document.querySelector('.math-board');
-const abcBoardImg = document.querySelector('.abc-board');
-
 const teachOptions = document.querySelector('.teach-options');
 const playOptions = document.querySelector('.play-options');
 const feedOptions = document.querySelector('.feed-options');
@@ -123,18 +120,22 @@ const imageFiles = {
 
 // ----------------------------- Helper Functions
 
+function pauseGame() {
+  pauseButton.classList.toggle('pause-game'); // pauses timer!!!
+  addDisplayNoneToOptions();
+  toggleDisplayOnToButtons()
+}
+
 function changeCharacterImage(image) {
   characterImg.setAttribute('src', imageFiles[image][game.gotchis[0].sizeIndex]);
 }
 function changeMathBoardImage(index) {
-  mathBoardImg.setAttribute('src', imageFiles['mathboard'][index]);
+  document.querySelector('.math-board').setAttribute('src', imageFiles['mathboard'][index]);
 }
 function changeAbcBoardImage(index) {
-  abcBoardImg.setAttribute('src', imageFiles['catBoard'][index]);
+  document.querySelector('.abc-board').setAttribute('src', imageFiles['catBoard'][index]);
 }
 
-// used with pause button
-// trying to use with toggling interaction buttons... not working
 function addDisplayNoneToOptions() {
   document.querySelector('.teach-options').classList.add('display-none');
   document.querySelector('.play-options').classList.add('display-none');
@@ -148,20 +149,9 @@ function toggleDisplayOnToButtons() {
   document.getElementById('tuck-in').classList.toggle('display-none');
 }
 
-function pauseGame() {
-  pauseButton.classList.toggle('pause-game'); // pauses timer!!!
-  addDisplayNoneToOptions();
-  toggleDisplayOnToButtons()
-}
-
 function displayDropImage(e, objectDrop) {
-// function displayDropImage(e) {
   const className = e.target.classList[0];
   const matchingImage = document.querySelector(`.drop-${className}`);
-  if (!matchingImage) {
-    console.log('className: ', className)
-    return;
-  }
   matchingImage.classList.remove('display-none');
   matchingImage.classList.add(objectDrop)
 }
@@ -170,7 +160,6 @@ function hideDropImage(e) {
   const className = e.target.classList[0];
   const matchingImage = document.querySelector(`.drop-${className}`);
   matchingImage.classList.add('display-none');
-  // matchingImage.classList.remove('object-drop')
 }
 
 function hideScreenBoxes() {
@@ -198,9 +187,9 @@ class Gotchi {
     this.age = 1;
     this.sizeIndex = 0;
     this.stats = {
-      hungry: 6,
+      hungry: 4,
       sleepy: 1,
-      bored: 3,
+      bored: 2,
       skill: 0,
       skillCount: 0
     };
@@ -295,7 +284,7 @@ class Gotchi {
     })
 
     if (this.stats.skill === 10) {
-      if (this.stats.skillCount <= 3) {
+      if (this.stats.skillCount <= 5) {
         this.stats.skill = 0;
         this.stats.skillCount++;
         const skillStar = document.createElement('img');
@@ -323,10 +312,10 @@ class Gotchi {
     }
     // commented out below so game can continue during testing ////
     // if the game isn't paused, it won't execute gameOver yet.
-    // if (dead && !pauseButton.classList.contains('pause-game')) {      
-    //   game.isAlive = false;
-    //   game.gameOver();
-    // }
+    if (dead && !pauseButton.classList.contains('pause-game')) {      
+      game.isAlive = false;
+      game.gameOver();
+    }
     document.getElementById('bored-progress').style.width = `${this.stats.bored*10}%`;
     document.getElementById('hungry-progress').style.width = `${this.stats.hungry*10}%`;
     document.getElementById('sleepy-progress').style.width = `${this.stats.sleepy*10}%`;
@@ -389,7 +378,6 @@ const game = {
     const timerId = setInterval(function() {
       // timer stops if pause button clicked
       if (!pauseButton.classList.contains('pause-game')) {
-        // console.log('time: ', game.time)
         if (game.time % 15 === 0) {
           const sleepyVal = tamagotchi.stats.sleepy++;
           document.getElementById('sleepy-progress').style.width = `${sleepyVal*10}%`;
@@ -402,7 +390,7 @@ const game = {
         };
         game.time++;
 
-        if (game.isAlive === false) {
+        if (!game.isAlive) {
           clearInterval(timerId);
         }
         tamagotchi.checkStats();
@@ -414,7 +402,7 @@ const game = {
 
     hideScreenBoxes()
 
-    changeCharacterImage('deadUnimpressed', this.gotchis[0].sizeIndex)
+    changeCharacterImage('deadUnimpressed')
     characterImg.classList.add('die-down');
     document.querySelector('.night-time').classList.add('white-out');
     let time = 0;
@@ -424,15 +412,8 @@ const game = {
         document.querySelector('.game-over').classList.remove('display-none');
         document.querySelector('.game-over').classList.add('animate__fadeIn');
       }
-      if (time === 7) {
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// instead of creating element here, add it in the html with display none and remove it here.
-
-        const restart = document.createElement('button');
-        restart.textContent = 'play again?';
-        restart.classList.add('play-again-button');
-        document.querySelector('body').appendChild(restart);
+      if (time === 5) {
+        document.querySelector('.play-again-button').classList.remove('display-none');
         clearInterval(timer);
       }
       time++;
@@ -443,6 +424,9 @@ const game = {
 
 // ----------------------------- Events
 
+document.querySelector('.play-again-button').addEventListener('click', function() {
+  location.reload();
+})
 
 pauseButton.addEventListener('click', function() {
   if (!this.classList.contains('pause-game')) {
@@ -629,6 +613,7 @@ document.getElementById('teach').addEventListener('click', function(e) {
         if (time === 44) changeMathBoardImage(5);
       }
       if (care === 'hoop') {
+        characterImg.classList.add('hoop-jump');
         if (time === 18) changeCharacterImage('happyUp');
         if (time === 24) changeCharacterImage('happyDown');
         if (time === 36) changeCharacterImage('reallyHappyUp');
@@ -637,9 +622,10 @@ document.getElementById('teach').addEventListener('click', function(e) {
         if (time === 54) changeCharacterImage('reallyHappyDown')
         if (time === 58) changeCharacterImage('happyUp')
       }
-
-
+      
+      
       if (time === 60) {
+        characterImg.classList.remove('hoop-jump');
         game.gotchis[0].learn();
         changeCharacterImage('happyDown');
         hideDropImage(e);

@@ -192,6 +192,7 @@ button:hover {
   background: none;
   font-size: 20px;
   transition: font-size 100ms;
+  animation: start-float 2s infinite;
 }
 
 .play-again-button:hover {
@@ -299,20 +300,12 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   width: 150px;
 }
 
-.gotchi {
-  position: absolute;
-  top: 68%;
-  /* top: 60% */
-  left: 36%;
-  z-index: 10;
-  height: 150px;
-}
-
 .star {
   width: 45px;
   padding: 5px;
 }
 
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!! extra feature.... */
 .star:hover {
   cursor: pointer;
 }
@@ -379,6 +372,19 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   z-index: 20;
 }
 
+.drop-game,
+.drop-board,
+.drop-book {
+  z-index: 1;
+}
+.gotchi {
+  position: absolute;
+  top: 68%;
+  left: 36%;
+  z-index: 2;
+  height: 150px;
+}
+
 .lie-down {
   animation: lying-down 5s;
 }
@@ -417,6 +423,9 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   z-index: 20;
 }
 
+
+
+
 .pace {
   animation: pace 10s infinite linear;
 }
@@ -424,9 +433,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .food-drop {
   animation: food-down 1.5s ease-out 0.5s;
 }
-/* .object-drop {
-  animation: object-down 1.5s ease-out 0.5s;
-} */
 
 .ball-drop {
   animation: ball-down 5.5s ease-in 0.5s;
@@ -438,7 +444,6 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: game-down 5.5s ease-out 0.5s;
 }
 .move-aside {
-  /* z-index: 10; */
   animation: move-aside 5.5s ease-in-out 0.5s;
 }
 .math-drop {
@@ -448,11 +453,73 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: board-down 5.5s ease-in-out 0.5s;
 }
 .hoop-drop {
-  animation: board-down 5.5s ease-in-out 0.5s;
+  animation: hoop-down 5.5s ease-in-out 0.5s;
+}
+
+.hoop-jump {
+  animation: hoop-jump 5.5s ease-in-out 0.5s;
 }
 /*********************************************************/
 /******************* Animations */
 
+@keyframes hoop-jump {
+  0% {
+    top: 68%;
+    left: 44%;
+  }
+  30% {
+    top: 70%;
+    left: 60%;
+  }
+  35% {
+    top: 55%;
+    left: 52%;
+  }
+  40% {
+    top: 55%;
+    left: 36%;
+  }
+  45% {
+    top: 68%;
+    left: 28%;
+  }
+  50% {
+    top: 68%;
+    left: 28%;
+  }
+
+  55% {
+    top: 55%;
+    left: 36%;
+  }
+  60% {
+    top: 55%;
+    left: 52%;
+  }
+  65% {
+    top: 70%;
+    left: 60%;
+  }
+  100% {
+    top: 68%;
+    left: 44%;
+  }
+}
+
+@keyframes hoop-down {
+  0% {
+    top: -25%;
+    left: 44%;
+  }
+  30% {
+    top: 60%;
+    left: 44%;
+  }
+  100% {
+    top: 60%;
+    left: 44%;
+  }
+}
 @keyframes board-down {
   0% {
     top: -25%;
