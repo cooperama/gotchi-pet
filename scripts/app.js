@@ -451,16 +451,12 @@ document.getElementById('feed').addEventListener('click', function(e) {
   teachOptions.classList.add('display-none');
   playOptions.classList.add('display-none');
   feedOptions.classList.toggle('display-none');
-  // document.querySelector('.teach-options').classList.add('display-none');
-  // document.querySelector('.play-options').classList.add('display-none');
-  // document.querySelector('.feed-options').classList.toggle('display-none');
 
-
+console.log ('feed clicked')
   feedOptions.addEventListener('click', function(e) {
     pauseGame();
     e.stopPropagation();
     feedOptions.classList.add('display-none');
-
 
     characterImg.classList.remove('pace'); 
     const care = e.target.getAttribute('class')
@@ -488,70 +484,69 @@ document.getElementById('feed').addEventListener('click', function(e) {
 
 document.getElementById('play').addEventListener('click', function(e) {
   // addDisplayNoneToOptions(e.target);
-  document.querySelector('.teach-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.play-options').classList.toggle('display-none');
-  pauseGame();
+  teachOptions.classList.add('display-none');
+  feedOptions.classList.add('display-none');
+  playOptions.classList.toggle('display-none');
   
-  document.querySelector('.play-options').addEventListener('click', function(e) {
+  playOptions.addEventListener('click', function(e) {
+    pauseGame();
+    e.stopPropagation();
+    playOptions.classList.add('display-none');
+
     characterImg.classList.remove('pace'); 
     const care = e.target.getAttribute('class')
     game.gotchis[0].care.play[care]++;
-    e.stopPropagation();
-    game.gotchis[0].play();
-    document.querySelector('.play-options').classList.add('display-none');
-        // ANIMATION FUNCTIONALITY
-        let time = 0;
-        const playTime = setInterval(function() {
-          if (time === 2) {
-            changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
-          }
-          if (time === 4) {
     
-            changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
-          }
-          if (time === 5) {
-            characterImg.classList.add('pace');
-            pauseGame();
-            clearInterval(playTime);
-          }
-          time++;
-        }, 1000);
-    
+    let time = 0;
+    const playTime = setInterval(function() {
+      if (time === 0) {
+        displayDropImage(e);
+        hideScreenBoxes();
+      }
+      if (time === 3) {
+        game.gotchis[0].play();
+        hideDropImage(e);
+        showScreenBoxes();
+        characterImg.classList.add('pace');
+        pauseGame();
+        clearInterval(playTime);
+      }
+      time++;
+    }, 1000);
   })
 });
 
 document.getElementById('teach').addEventListener('click', function(e) {
   // addDisplayNoneToOptions(e.target);
-  document.querySelector('.play-options').classList.add('display-none');
-  document.querySelector('.feed-options').classList.add('display-none');
-  document.querySelector('.teach-options').classList.toggle('display-none');
-  pauseGame();
+  playOptions.classList.add('display-none');
+  feedOptions.classList.add('display-none');
+  teachOptions.classList.toggle('display-none');
   
-  document.querySelector('.teach-options').addEventListener('click', function(e) {
+  teachOptions.addEventListener('click', function(e) {
+    pauseGame();
+    e.stopPropagation();
+    teachOptions.classList.add('display-none');
+
     characterImg.classList.remove('pace'); 
     const care = e.target.getAttribute('class')
     game.gotchis[0].care.teach[care]++;
-    e.stopPropagation();
-    game.gotchis[0].learn();
-    document.querySelector('.teach-options').classList.add('display-none');
-        // ANIMATION FUNCTIONALITY
-        let time = 0;
-        const teachTime = setInterval(function() {
-          if (time === 2) {
-            changeCharacterImage('sleep', game.gotchis[0].sizeIndex)
-          }
-          if (time === 4) {
-    
-            changeCharacterImage('happyDown', game.gotchis[0].sizeIndex)
-          }
-          if (time === 5) {
-            characterImg.classList.add('pace');
-            pauseGame();
-            clearInterval(teachTime);
-          }
-          time++;
-        }, 1000);
+
+    let time = 0;
+    const teachTime = setInterval(function() {
+      if (time === 0) {
+        displayDropImage(e);
+        hideScreenBoxes();
+      }
+      if (time === 3) {
+        game.gotchis[0].learn();
+        hideDropImage(e);
+        showScreenBoxes();
+        characterImg.classList.add('pace');
+        pauseGame();
+        clearInterval(teachTime);
+      }
+      time++;
+    }, 1000);
     
   })
 });
