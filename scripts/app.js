@@ -15,6 +15,8 @@ const pauseButton = document.querySelector('.pause');
 const messageP = document.querySelector('.message');
 const characterImg = document.querySelector('.character');
 
+const mathBoardImg = document.querySelector('.math-board');
+const abcBoardImg = document.querySelector('.abc-board');
 
 const teachOptions = document.querySelector('.teach-options');
 const playOptions = document.querySelector('.play-options');
@@ -98,8 +100,12 @@ const imageFiles = {
     './images/cat-board-cat-100.png'
   ],
   mathboard: [
-    './images/whiteboard-after-100.png',
-    './images/whiteboard-before-100.png'
+    './images/whiteboard-before-100.png',
+    './images/whiteboard-2.png',
+    './images/whiteboard-3.png',
+    './images/whiteboard-4.png',
+    './images/whiteboard-5.png',
+    './images/whiteboard-after-100.png'
   ],
   loveBugs: [
     './images/images/love-bugs.png',
@@ -119,6 +125,12 @@ const imageFiles = {
 
 function changeCharacterImage(image) {
   characterImg.setAttribute('src', imageFiles[image][game.gotchis[0].sizeIndex]);
+}
+function changeMathBoardImage(index) {
+  mathBoardImg.setAttribute('src', imageFiles['mathboard'][index]);
+}
+function changeAbcBoardImage(index) {
+  abcBoardImg.setAttribute('src', imageFiles['catBoard'][index]);
 }
 
 // used with pause button
@@ -152,14 +164,13 @@ function displayDropImage(e, objectDrop) {
   }
   matchingImage.classList.remove('display-none');
   matchingImage.classList.add(objectDrop)
-  // matchingImage.classList.add('object-drop')
 }
 
 function hideDropImage(e) {
   const className = e.target.classList[0];
   const matchingImage = document.querySelector(`.drop-${className}`);
   matchingImage.classList.add('display-none');
-  matchingImage.classList.remove('object-drop')
+  // matchingImage.classList.remove('object-drop')
 }
 
 function hideScreenBoxes() {
@@ -528,30 +539,53 @@ document.getElementById('play').addEventListener('click', function(e) {
     
     let time = 0;
     const playTime = setInterval(function() {
+      console.log(time)
+      // 6000ms up to 60 ~~~
       if (time === 0) {
-
-        console.log(care);
         displayDropImage(e, `${care}-drop`);
-
-
-        // displayDropImage(e);
         hideScreenBoxes();
       }
-      if (time === 1) changeCharacterImage('happyUp')
-      if (time === 2) changeCharacterImage('happyUp')
-      if (time === 3) changeCharacterImage('happyUp')
-      if (time === 4) changeCharacterImage('happyUp')
-      if (time === 5) changeCharacterImage('happyUp')
-      if (time === 6) {
+      if (care === 'ball') {
+        if (time === 18) changeCharacterImage('happyUp')
+        if (time === 24) changeCharacterImage('happyDown')
+        if (time === 36) changeCharacterImage('reallyHappyUp')
+        if (time === 45) changeCharacterImage('reallyHappyDown')
+        if (time === 48) changeCharacterImage('reallyHappyUp')
+        if (time === 54) changeCharacterImage('reallyHappyDown')
+        if (time === 58) changeCharacterImage('happyUp')
+      }
+      if (care === 'feather') {
+        if (time === 36) changeCharacterImage('happyUp')
+        if (time === 40) changeCharacterImage('happyDown')
+        if (time === 44) changeCharacterImage('reallyHappyUp')
+        if (time === 48) changeCharacterImage('reallyHappyDown')
+        if (time === 52) changeCharacterImage('reallyHappyUp')
+        if (time === 54) changeCharacterImage('reallyHappyDown')
+        if (time === 58) changeCharacterImage('happyUp')
+      }
+      if (care === 'game') {
+        characterImg.classList.add('move-aside');
+        if (time === 18) changeCharacterImage('openMouth')
+        if (time === 22) changeCharacterImage('happyDown')
+        if (time === 26) changeCharacterImage('reallyHappyDown')
+        if (time === 34) changeCharacterImage('sad')
+        if (time === 38) changeCharacterImage('worried')
+        if (time === 42) changeCharacterImage('sad')
+        if (time === 48) changeCharacterImage('happyUp')
+        if (time === 52) changeCharacterImage('reallyHappyUp')
+      }
+      if (time === 60) {
+        changeCharacterImage('happyDown')
         game.gotchis[0].play();
         hideDropImage(e);
         showScreenBoxes();
+        characterImg.classList.remove('move-aside');
         characterImg.classList.add('pace');
         pauseGame();
         clearInterval(playTime);
       }
       time++;
-    }, 1000);
+    }, 100);
   })
 });
 
@@ -572,12 +606,42 @@ document.getElementById('teach').addEventListener('click', function(e) {
 
     let time = 0;
     const teachTime = setInterval(function() {
+      console.log(time)
       if (time === 0) {
-        displayDropImage(e);
+        displayDropImage(e, `${care}-drop`);
         hideScreenBoxes();
       }
-      if (time === 3) {
+      if (care === 'book') {
+        if (time === 18) changeCharacterImage('back');
+        if (time === 24) changeAbcBoardImage(1);
+        if (time === 30) changeAbcBoardImage(2);
+        if (time === 38) changeAbcBoardImage(3);
+        if (time === 46) changeAbcBoardImage(0);
+        if (time === 50) changeAbcBoardImage(4);
+      }
+      if (care === 'math') {
+        if (time === 18) changeCharacterImage('back');
+        if (time === 24) changeMathBoardImage(1);
+        if (time === 28) changeMathBoardImage(2);
+        if (time === 32) changeMathBoardImage(3);
+        if (time === 36) changeMathBoardImage(4);
+        if (time === 40) changeMathBoardImage(0);
+        if (time === 44) changeMathBoardImage(5);
+      }
+      if (care === 'hoop') {
+        if (time === 18) changeCharacterImage('happyUp');
+        if (time === 24) changeCharacterImage('happyDown');
+        if (time === 36) changeCharacterImage('reallyHappyUp');
+        if (time === 45) changeCharacterImage('reallyHappyDown');
+        if (time === 48) changeCharacterImage('reallyHappyUp')
+        if (time === 54) changeCharacterImage('reallyHappyDown')
+        if (time === 58) changeCharacterImage('happyUp')
+      }
+
+
+      if (time === 60) {
         game.gotchis[0].learn();
+        changeCharacterImage('happyDown');
         hideDropImage(e);
         showScreenBoxes();
         characterImg.classList.add('pace');
@@ -585,7 +649,7 @@ document.getElementById('teach').addEventListener('click', function(e) {
         clearInterval(teachTime);
       }
       time++;
-    }, 1000);
+    }, 100);
     
   })
 });

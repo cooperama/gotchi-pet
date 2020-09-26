@@ -302,6 +302,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .gotchi {
   position: absolute;
   top: 68%;
+  /* top: 60% */
   left: 36%;
   height: 150px;
 }
@@ -368,7 +369,9 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   height: 100vh;
   width: 100vw;
 }
-
+.drop-game {
+  transform: skewX(-30deg);
+}
 .game-over {
   position: absolute;
   z-index: 20;
@@ -419,9 +422,9 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 .food-drop {
   animation: food-down 1.5s ease-out 0.5s;
 }
-.object-drop {
+/* .object-drop {
   animation: object-down 1.5s ease-out 0.5s;
-}
+} */
 
 .ball-drop {
   animation: ball-down 5.5s ease-in 0.5s;
@@ -430,16 +433,47 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: feather-down 5.5s ease-in 0.5s;
 }
 .game-drop {
-  animation: game-down 1.5s ease-out 0.5s;
+  animation: game-down 5.5s ease-out 0.5s;
 }
-
+.move-aside {
+  z-index: 10;
+  animation: move-aside 5.5s ease-in-out 0.5s;
+}
+.math-drop {
+  animation: board-down 5.5s ease-in-out 0.5s;
+}
+.book-drop {
+  animation: board-down 5.5s ease-in-out 0.5s;
+}
+.hoop-drop {
+  animation: board-down 5.5s ease-in-out 0.5s;
+}
 /*********************************************************/
 /******************* Animations */
+
+@keyframes board-down {
+  0% {
+    top: -25%;
+    left: 44%;
+  }
+  30% {
+    top: 56%;
+    left: 40%
+  }
+  90% {
+    top: 56%;
+    left: 40%
+  }
+  100% {
+    top: -25%;
+    left: 44%;
+  }
+}
 
 @keyframes feather-down {
   0% {
     top: -25%;
-    left: 44%;
+    left: 45%;
   }
   30% {
     transform: rotate(360deg);
@@ -449,7 +483,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   }
   60% {
     top: 88%;
-    left: 44%;
+    left: 45%;
     transform: rotate(360deg);
   }
   76% {
@@ -479,17 +513,40 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   100% {
     transform: rotate(360deg);
     top: 88%;
-    left: 44%;
+    left: 45%;
   }
 }
 
+@keyframes move-aside {
+  0% {
+    top: 68%;
+    left: 44%;
+  }
+  30% {
+    top: 56%;
+    left: 47%
+  }
+  90% {
+    top: 56%;
+    left: 47%
+  }
+  100% {
+    top: 68%;
+    left: 44%;
+  }
+
+}
 @keyframes game-down {
   0% {
     top: -25%;
     left: 44%;
   }
+  30% {
+    top: 80%;
+    left: 44%;
+  }
   100% {
-    top: 88%;
+    top: 80%;
     left: 44%;
   }
 }
@@ -503,20 +560,24 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     top: -25%;
   }
   30% {
-    top: 88%;
+    top: 78%;
   }
   40% {
     top: 35%;
   }
   60% {
-    top: 88%;
+    top: 78%;
   }
   75% {
     top: 20%;
   }
-  100% {
-    top: 88%;
+  80% {
+    top: 78%;
     left: 44%;
+  }
+  100% {
+    top: 0%;
+    left: 100%;
   }
 }
 @keyframes food-down {
@@ -532,7 +593,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     left: 44%;
   }
 }
-@keyframes object-down {
+/* @keyframes object-down {
   0% {
     left: 44%;
     top: -25%;
@@ -544,21 +605,21 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     top: 88%;
     left: 44%;
   }
-}
+} */
 
 /* add / remove when pausing or pressing buttons */
 @keyframes pace {
   0% {
     left: 36%;
-    top: 70%;
+    top: 66%;
   }
   10% {
     left: 40%;
-    top: 69%;
+    top: 64%;
   }
   32% {
     left: 33%;
-    top: 66%;
+    top: 60%;
   }
   51% {
     left: 40%;
@@ -566,7 +627,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   }
   57% {
     left: 43%;
-    top: 67%;
+    top: 64%;
   }
   63% {
     left: 38%;
@@ -574,7 +635,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   }
   100% {
     left: 36%;
-    top: 70%;
+    top: 68%;
   }
 }
 
