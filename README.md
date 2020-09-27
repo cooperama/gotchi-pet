@@ -17,8 +17,13 @@ The Tamagotchi project is a beginner's project that demonstrates the creator's a
 
 ## Technologies
 
-For this project, I used HTML, CSS, some Animate CSS classes to help with animations, vanlla Javascript for DOM manipulation. I also used pixilart.com to create my character and object images, and loading.io to create a gif image.
+For this project, I used HTML, CSS, some Animate CSS classes to help with animations, vanilla Javascript for DOM manipulation. I also used pixilart.com to create my character and object images, and loading.io to create a gif image.
 
+music: https://www.bensound.com
+
+music: http://www.orangefreesounds.com/ Celeste Lullaby Music Alexander Blu
+
+https://audiotrimmer.com/
 
 ## Approach
 
@@ -39,23 +44,21 @@ After creating the functionality, I then focused on my visuals. I created my ima
 
 ## Wireframes
 
-### Start Screen ~ Tamagotchi Is Born!
+### Start Screen
+Tamagotchi is born, and the user is presented with brief instructions.
 
 ![image](./images/image1.png)
 
 ![image](./images/image2.png)
 
 ### Interact With Tamagotchi
-User chooses from interactions options and affects Tamagotchi's stats.
+The user chooses from interactions options and affects Tamagotchi's stats.
 
 ![image](./images/image3.png)
 
 ### Tamagotchi Tells How It Feels
-Tamagotchi can communicate how they feel through body language and the narrative box.
+Tamagotchi can communicate how they feel through body language and the narrative box. Tamagotchi will live as long as the user takes care of them.
 
 ![image](./images/image4.png)
 
-## Tamagotchi's Needs Change
-At a certain age, Tamagotchi's needs change and the user must figure out what they want.
 
-![image](./images/image5.png)

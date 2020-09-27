@@ -22,6 +22,9 @@ const teachOptions = document.querySelector('.teach-options');
 const playOptions = document.querySelector('.play-options');
 const feedOptions = document.querySelector('.feed-options');
 
+const elevatorMusic = document.querySelector('#elevator');
+const music = document.getElementById('music');
+
 const imageFiles = {
   happyDown: [
     './images/sprite/gotchi-young-happy-down.png',
@@ -346,6 +349,7 @@ const game = {
   gameOver() {
     hideScreenBoxes()
     
+    music.pause();
     changeCharacterImage('deadUnimpressed')
     characterImg.classList.remove('pace');
     characterImg.classList.add('die-down');
@@ -357,6 +361,8 @@ const game = {
       if (time === 4) {
         document.querySelector('.game-over').classList.remove('display-none');
         document.querySelector('.game-over').classList.add('animate__fadeIn');
+        document.getElementById('goodbye').play();
+        document.getElementById('goodbye').volume = 0.5;
       }
       if (time === 5) {
         document.querySelector('.play-again-button').classList.remove('display-none');
@@ -378,10 +384,21 @@ pauseButton.addEventListener('click', function() {
   if (!this.classList.contains('pause-game')) {
     characterImg.classList.remove('pace');
     characterImg.classList.add('display-none');
+
+   music.pause();
+   elevatorMusic.currentTime = 1;
+   elevatorMusic.play();
+   elevatorMusic.volume = 0.1;
+    
     pauseGame();
   } else {
     characterImg.classList.add('pace');
     characterImg.classList.remove('display-none');
+
+   elevatorMusic.pause();
+   elevatorMusic.currentTime = 1;
+   music.play();
+
     unpauseGame() 
   }
 })
@@ -584,6 +601,10 @@ document.getElementById('tuck-in').addEventListener('click', function(e) {
   pauseGame();
   e.stopPropagation();
 
+  music.pause();
+  document.getElementById('lullaby').play();
+  document.getElementById('lullaby').volume = 0.6;
+
   game.gotchis[0].sleep();
 
   characterImg.classList.remove('pace'); 
@@ -607,6 +628,7 @@ document.getElementById('tuck-in').addEventListener('click', function(e) {
       characterImg.classList.add('pace');
       document.querySelector('.night-time').classList.remove('night-time-on');
 
+      music.play();
       unpauseGame();
       clearInterval(sleepyTime);
     }
@@ -622,6 +644,9 @@ document.querySelector('.start-game').addEventListener('click', function() {
     document.querySelector('.start-game').remove();
     characterImg.classList.add('float-down');
     characterImg.classList.add('wobble');
+
+    document.getElementById('intro-music').play();
+    document.getElementById('intro-music').volume = 0.3;
 
     let waiting = true;
     let wait = 0;
@@ -639,6 +664,8 @@ document.querySelector('.start-game').addEventListener('click', function() {
         };
         // start with default character images
         if (wait === 10) {
+          document.getElementById('pop').play();
+          document.getElementById('pop').volume = 0.6;
           characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png');
           characterImg.classList.add('gotchi-intro');
         }
@@ -733,6 +760,8 @@ document.querySelector('.name-choice').addEventListener('click', function(e) {
   document.querySelector('footer').classList.remove('display-none');
 
   game.life(game.gotchis[0]);
+  music.play();
+  music.volume = 0.1;
   document.querySelector('main').appendChild(characterImg);
   characterImg.classList.remove('gotchi-intro', 'float-down', 'wobble', 'moon-top', 'egg-down');
   characterImg.classList.add('gotchi');
