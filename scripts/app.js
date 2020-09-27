@@ -279,6 +279,8 @@ class Gotchi {
           skillStar.setAttribute('alt', 'star');
           skillStar.classList.add('star');
           document.querySelector('.star-box').appendChild(skillStar);
+          document.getElementById('pop').play();
+          document.getElementById('pop').volume = 0.6;
         }
         this.stats.skill = 0;
         this.stats.skillCount++;
@@ -426,19 +428,19 @@ document.getElementById('feed').addEventListener('click', function(e) {
         displayDropImage(e, 'food-drop');
         hideScreenBoxes();
       }
-      if (time === 2) {
+      if (time === 1.5) {
         changeCharacterImage('catch')
         hideDropImage(e);
       }
-      if (time === 2.5) changeCharacterImage('openMouth');
-      if (time === 3) changeCharacterImage('eat');
-      if (time === 3.5) changeCharacterImage('openMouth');
-      if (time === 4) changeCharacterImage('eat');
-      if (time === 4.5) changeCharacterImage('openMouth');
-      if (time === 5) changeCharacterImage('happyDown');
-      if (time === 5.5) changeCharacterImage('happyUp');
+      if (time === 2) changeCharacterImage('openMouth');
+      if (time === 2.5) changeCharacterImage('eat');
+      if (time === 3) changeCharacterImage('openMouth');
+      if (time === 3.5) changeCharacterImage('eat');
+      if (time === 4) changeCharacterImage('openMouth');
+      if (time === 4.5) changeCharacterImage('happyDown');
+      if (time === 5) changeCharacterImage('happyUp');
 
-      if (time === 6) {
+      if (time === 5.5) {
         game.gotchis[0].eat();
         changeCharacterImage('happyDown');
         characterImg.classList.add('pace');
@@ -476,13 +478,13 @@ document.getElementById('play').addEventListener('click', function(e) {
       }
 
       if (care === 'ball') {
-        if (time === 18) changeCharacterImage('happyUp');
-        if (time === 24) changeCharacterImage('happyDown');
-        if (time === 36) changeCharacterImage('reallyHappyUp');
-        if (time === 45) changeCharacterImage('reallyHappyDown');
-        if (time === 48) changeCharacterImage('reallyHappyUp');
-        if (time === 54) changeCharacterImage('reallyHappyDown');
-        if (time === 58) changeCharacterImage('happyUp');
+        if (time === 13) changeCharacterImage('happyUp');
+        if (time === 18) changeCharacterImage('happyDown');
+        if (time === 24) changeCharacterImage('reallyHappyUp');
+        if (time === 28) changeCharacterImage('reallyHappyDown');
+        if (time === 33) changeCharacterImage('reallyHappyUp');
+        if (time === 40) changeCharacterImage('reallyHappyDown');
+        if (time === 44) changeCharacterImage('happyUp');
       }
       if (care === 'feather') {
         if (time === 36) changeCharacterImage('happyUp');
@@ -490,8 +492,6 @@ document.getElementById('play').addEventListener('click', function(e) {
         if (time === 44) changeCharacterImage('reallyHappyUp');
         if (time === 48) changeCharacterImage('reallyHappyDown');
         if (time === 52) changeCharacterImage('reallyHappyUp');
-        if (time === 54) changeCharacterImage('reallyHappyDown');
-        if (time === 58) changeCharacterImage('happyUp');
       }
       if (care === 'game') {
         characterImg.classList.add('move-aside');
@@ -505,7 +505,7 @@ document.getElementById('play').addEventListener('click', function(e) {
         if (time === 52) changeCharacterImage('reallyHappyUp');
       }
 
-      if (time === 60) {
+      if (time === 55) {
         game.gotchis[0].play();
         changeCharacterImage('happyDown');
         characterImg.classList.remove('move-aside');
@@ -564,16 +564,13 @@ document.getElementById('teach').addEventListener('click', function(e) {
         }
         if (care === 'hoop') {
           characterImg.classList.add('hoop-jump');
-          if (time === 18) changeCharacterImage('happyUp');
-          if (time === 24) changeCharacterImage('happyDown');
-          if (time === 36) changeCharacterImage('reallyHappyUp');
-          if (time === 45) changeCharacterImage('reallyHappyDown');
-          if (time === 48) changeCharacterImage('reallyHappyUp');
-          if (time === 54) changeCharacterImage('reallyHappyDown');
-          if (time === 58) changeCharacterImage('happyUp');
+          if (time === 19) changeCharacterImage('happyUp');
+          if (time === 25) changeCharacterImage('happyDown');
+          if (time === 27) changeCharacterImage('reallyHappyUp');
+          if (time === 36) changeCharacterImage('reallyHappyDown');
         }
         
-        if (time === 60) {
+        if (time === 55) {
           
           game.gotchis[0].learn();
           changeCharacterImage('happyDown');
@@ -668,6 +665,7 @@ document.querySelector('.start-game').addEventListener('click', function() {
           document.getElementById('pop').volume = 0.6;
           characterImg.setAttribute('src', './images/sprite/gotchi-young-happy-up.png');
           characterImg.classList.add('gotchi-intro');
+          characterImg.classList.add('gotchi');
         }
         if (wait === 12) {
           characterImg.setAttribute('src', './images/sprite/gotchi-young-really-happy-up.png');

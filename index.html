@@ -3,21 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Main CSS -->
+      <!-- Main CSS -->
   <link rel="stylesheet" href="./styles/styles.css">
-  <!-- Animate CSS -->
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <!-- Font -->
+      <!-- Animate CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+      <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-  <!-- Main JS -->
+      <!-- Main JS -->
   <script src="./scripts/app.js" defer></script>
   <title>Tamagotchi</title>
 </head>
 <body>
-  <!-- <img src="./images/game-over.gif" alt="game-over" class="display-none animate__animated game-over"> -->
+
   <div class="display-none animate__animated game-over">
     <!-- Images made on: https://loading.io/animation/text/ -->
     <img src="./images/game-over-game.gif" alt="game" class="game-over-gif">
@@ -26,15 +24,8 @@
   <button class="play-again-button display-none">play again?</button>
   <div class="night-time"></div>
 
-
-
-
-
-
+    <!-- Audio from bensound.com & orangefreesounds.com -->
   <audio src="./audio/Celeste-lullaby-music-intro.mp3" id="intro-music"></audio>
-
-
-
   <audio src="./audio/bensound-cute.mp3" id="music" loop='true'></audio>
   <audio src="./audio/bensound-creepy.mp3" id="goodbye" loop='true'></audio>
   <audio src="./audio/Finger-in-mouth-pop-sound-effect/Finger-in-mouth-pop-sound-effect.mp3" id="pop"></audio>
@@ -43,18 +34,19 @@
 
 
   <div class="screen">
-    <img class="character moon" src="./images/moon.png" alt="moon">
 
+    <img class="character moon" src="./images/moon.png" alt="moon">
     <button class="start-game">start</button>
 
     <header class="display-none">
       <div class="message-box">
-        <p class="message"> </p>
+        <p class="message"></p>
       </div>
       <div class="star-box">
         <button class="pause">pause</button>
       </div>
     </header>
+
 
     <main class="display-none">
 
@@ -70,10 +62,6 @@
       <div class="object-box display-none drop-sandwich"><img src="./images/sandwich.png" alt="sandwich"></div>
 
 
-
-
-
-
       <div class="stats-box">
         <ul class="name-age">
           <div>
@@ -85,6 +73,7 @@
             <span class="age">1</span>
           </div>
         </ul>
+
         <ul class="stats">
           <li>Hungry: </li>
           <div class="progress-bars">
@@ -104,6 +93,7 @@
           </div>
         </ul>
       </div>
+
       <div class="instructions i-one">
         <p>Wow! What a cute gotchi!</p>
         <button class="agree button-one">wow</button>
@@ -118,14 +108,15 @@
       </div>
       <div class="instructions i-four">
         <p>What will you call them?</p>
-        <input type="name" name="gotchi-name" id="gotchi-name" placeholder="Moochi" value="Moochi">
+        <input type="name" name="gotchi-name" id="gotchi-name" placeholder="Mochi" value="Mochi">
         <button class="name-choice">okay?</button>
       </div>
+
       <img src="./images/blanket.png" alt="blanket" class="blanket">
+
     </main>
 
-    <footer class="display-none">
-      <div class="interactions">
+    <footer class="display-none interactions">
         <div class="options-boxes feed-box">
           <div class="option-pop-out feed-options display-none">
             <img src="./images/cherries.png" alt="cherries" class="cherries">
@@ -156,7 +147,6 @@
         <div class="options-boxes tuck-in-box">
           <button id="tuck-in">sleep</button>
         </div>
-      </div>
     </footer>
 
   </div>

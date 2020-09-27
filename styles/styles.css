@@ -2,7 +2,7 @@
 
 /* Universal */
 /* Layout */
-/* Details */
+/* Text / Lists */
 /* Buttons */
 /* Toggled / Added / Removed Classes */
 /* Animations */
@@ -20,10 +20,10 @@
 
 
 body {
-  margin: 0;
-  padding: 0;
   width: 100vw;
   height: 100vh;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,23 +36,23 @@ body {
 .screen {
   width: 850px;
   height: 700px;
-  background-image: url('../images/ghibli_night.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  position: relative;
   border: 20px solid black;
   border-left: 20px solid rgb(18, 18, 18);
   border-right: 20px solid rgb(18, 18, 18);
   box-shadow: 0 0 2px rgb(85, 85, 85);
-  position: relative;
+  background-image: url('../images/ghibli_night.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header {
+  height: 15%;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  height: 15%;
-  margin-top: 20px;
 }
 
 main {
@@ -61,36 +61,31 @@ main {
   position: relative;
 }
 
-footer {
-  height: 15%;
-}
-
 .message-box {
   width: 70%;
   min-height: 100%;
-  box-shadow: 0 0 2px rgb(85, 85, 85);
-  background: rgba(43, 43, 43, 0.55);
-  color: white;
   padding: 30px;
   margin: 10px;
   margin-top: 40px;
+  box-shadow: 0 0 2px rgb(85, 85, 85);
+  background: rgba(43, 43, 43, 0.55);
+  color: white;
 }
 
 .stats-box {
-  position: relative;
   width: 200px;
+  position: relative;
   top: -105px;
   left: 10px;
+  display: flex;
+  flex-direction: column;
   background: rgba(238, 212, 126, 0.728); 
   box-shadow: 0 0 2px rgb(85, 85, 85);
   border-radius: 2px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
 }
 
 .interactions {
-  height: 80%;
+  height: 12%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -98,37 +93,86 @@ footer {
 }
 
 /*********************************************************/
-/******************* Details */
+/******************* Objects */
+
+.night-time {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
+
+.object-box {
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  top: -25%;
+  left: 44%;
+  z-index: 10;
+}
+
+.blanket {
+  position: absolute;
+  top: 76.5%;
+  right: 25%;
+  z-index: -2;
+}
+
+.game-over {
+  position: absolute;
+  z-index: 20;
+}
+
+
+
+/*********************************************************/
+/******************* Text / Lists */
 
 .name-age {
+  margin-bottom: 0;
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 0;
-  margin-top: 5px;
   text-align: center;
 }
 
-li {
-  list-style: none;
-  padding-top: 5px;
-}
-
-.name, .age {
-  display: inline-block;
+.name, 
+.age {
   width: 100%;
-  text-align: center;
   padding: 8px;
+  display: inline-block;
   background: #fffae8;
   border-radius: 5%;
   box-shadow: 0 0 2px rgb(159, 159, 159);
+  text-align: center;
 }
 
 ul {
+  padding: 0 10px 0 10px;
   display: flex;
   flex-direction: column;
-  padding: 0 10px 0 10px;
 }
+
+li {
+  padding-top: 5px;
+  list-style: none;
+}
+
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
+/* progress bar code modified from: 
+https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
+
+.progress-bars {
+  padding: 1px;
+  box-shadow: 0 0 3px rgb(0, 0, 0);
+}
+
+.bar {
+  width: 1%;
+  height: 10px;
+  background-color: rgb(59, 186, 215);
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
 
 /*********************************************************/
 /******************* Buttons */
@@ -142,38 +186,6 @@ button:hover {
   cursor: pointer;
   border-radius: 2px;
 }
-
-.pause {
-  margin: 10px;
-  background-color: rgba(240, 128, 128, 0.803);
-  color: white;
-}
-
-.pause:hover, 
-.pause:active {
-  background-color: rgb(240, 128, 128);
-}
-
-
-
-.agree, 
-.name-choice,
-.interactions button {
-  background-color: rgb(69, 172, 235);
-  color: white;
-  margin-bottom: 15px;
-  padding: 5px 15px;
-  letter-spacing: 1px;
-  width: 80px;
-}
-
-.agree:hover, 
-.name-choice:hover,
-.interactions button:hover {
-  background-color: rgb(123, 195, 240);
-  transition: background-color 250ms;
-}
-
 
 .start-game {
   position: relative;
@@ -195,37 +207,63 @@ button:hover {
   animation: start-float 2s infinite;
 }
 
+.pause {
+  margin: 10px;
+  background-color: rgba(240, 128, 128, 0.803);
+  color: white;
+}
 
+.pause:hover, 
+.pause:active {
+  background-color: rgb(240, 128, 128);
+}
 
+.agree, 
+.name-choice,
+.interactions button {
+  width: 80px;
+  margin-bottom: 15px;
+  padding: 5px 15px;
+  background-color: rgb(69, 172, 235);
+  color: white;
+  letter-spacing: 1px;
+}
+
+.agree:hover, 
+.name-choice:hover,
+.interactions button:hover {
+  background-color: rgb(123, 195, 240);
+  transition: background-color 250ms;
+}
 
 .interactions img:hover {
   cursor: pointer;
 }
 
 .options-boxes {
+  height: 100%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
-  width: 25%;
 }
 
 .option-pop-out  {
+  height: 65%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 65%;
-}
-
-.option-pop-out + button,
-#tuck-in {
-  margin: 0 auto;
 }
 
 .option-pop-out img {
   width: 33%;
   height: 75%;
   padding: 0 5%;
+}
+
+.option-pop-out + button,
+#tuck-in {
+  margin: 0 auto;
 }
 
 #tuck-in {
@@ -236,92 +274,10 @@ button:hover {
   background: rgb(166, 102, 255);
 }
 
-/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
-/* progress bar code modified from: 
-https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
-
-.progress-bars {
-  padding: 1px;
-  box-shadow: 0 0 3px rgb(0, 0, 0);
-}
-
-.bar {
-  width: 1%;
-  height: 10px;
-  background-color: rgb(59, 186, 215);
-}
-/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */
-
 /*********************************************************/
 /******************* Toggled / Added / Removed Classes */
 
-.display-none {
-  display: none;
-}
-
-.moon {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  left: 40%;
-  top: 5%;
-  animation: moon-float 5s infinite;
-} 
-
-.moon-top {
-  position: relative;
-  top: 0;
-  left: 40%;
-  height: 100px;
-  width: 100px;
-}
-
-.object-box {
-  height: 32px;
-  width: 32px;
-  position: absolute;
-  top: -25%;
-  left: 44%;
-  z-index: 10;
-}
-
-
-.gotchi-intro {
-  position: relative;
-  display: inline-block;
-  top: 70%;
-  left: 36%;
-  height: 150px;
-  width: 150px;
-}
-
-.star {
-  width: 45px;
-  padding: 5px;
-}
-
-/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!! extra feature.... */
-.star:hover {
-  cursor: pointer;
-}
-
-.star-box {
-  z-index: 1;
-  width: 70%;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-}
-
-.blanket {
-  position: absolute;
-  top: 76.5%;
-  right: 25%;
-  z-index: -2;
-}
-
 .instructions {
-  background: rgba(43, 43, 43, 0.55);
   height: 120px;
   width: 370px;
   display: flex;
@@ -329,12 +285,13 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   justify-content: space-around;
   align-items: center;
   position: relative;
+  top: 35%;
+  left: 25%;
+  background: rgba(43, 43, 43, 0.55);
   color: white;
   border-radius: 2px;
   text-align: center;
   line-height: 2;
-  top: 35%;
-  left: 25%;
 }
 
 .instructions p {
@@ -342,42 +299,78 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
 }
 
 .instructions input {
+  margin: 8px 0 10px 0; 
   border-radius: 2px;
   background-color: rgba(255, 255, 255, 0.653);
   text-align: center;
-  margin: 8px 0 10px 0; 
 }
 
 .instructions input:focus {
-  background-color: rgba(255, 255, 255, 0.838);
   outline: none;
+  background-color: rgba(255, 255, 255, 0.838);
 }
 
-.night-time {
-  content: '';
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-}
-.drop-game {
-  transform: skewX(-30deg);
-}
-.game-over {
-  position: absolute;
-  z-index: 20;
+.display-none {
+  display: none;
 }
 
-.drop-game,
-.drop-board,
-.drop-book {
-  z-index: 1;
+.moon {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  left: 40%;
+  top: 5%;
+  animation: moon-float 5s infinite;
+} 
+
+.moon-top {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  top: 0;
+  left: 40%;
 }
+
 .gotchi {
   position: absolute;
   top: 68%;
-  left: 36%;
+  left: 36%;  
   z-index: 2;
   height: 150px;
+  width: 150px;
+}
+
+.gotchi-intro {
+  top: 70%;
+  left: 38%;
+}
+
+.star {
+  width: 45px;
+  padding: 5px;
+}
+
+.star-box {
+  width: 70%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  z-index: 1;
+}
+
+/*********************************************************/
+/******************* Toggled Animations Classes */
+
+
+.night-time-on {
+  z-index: 30;
+  animation: lights-out 5s;
+}
+
+.white-out {
+  background: rgb(255,255,255);
+  animation: white-out 5s;
+  z-index: 10;
 }
 
 .lie-down {
@@ -402,60 +395,59 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   animation: egg-down 5s;
 }
 
-.night-time-on {
-  z-index: 30;
-  animation: lights-out 5s;
-}
-
-.white-out {
-  background: rgb(255,255,255);
-  animation: white-out 5s;
-  z-index: 10;
-}
-
 .blanket-slide {
   animation: blanket-slide 4.5s;
   z-index: 20;
 }
-
-
-
 
 .pace {
   animation: pace 10s infinite linear;
 }
 
 .food-drop {
-  animation: food-down 1.5s ease-out 0.5s;
+  animation: food-down 1.5s ease-out;
 }
 
 .ball-drop {
-  animation: ball-down 5.5s ease-in 0.5s;
+  animation: ball-down 5.5s ease-in;
 }
+
 .feather-drop {
-  animation: feather-down 5.5s ease-in 0.5s;
+  animation: feather-down 5.5s ease-in;
 }
+
 .game-drop {
-  animation: game-down 5.5s ease-out 0.5s;
+  z-index: 1;
+  transform: skewX(-30deg);
+  animation: game-down 5.5s ease-out;
 }
+
 .move-aside {
-  animation: move-aside 5.5s ease-in-out 0.5s;
+  animation: move-aside 5.5s ease-in-out;
 }
+
 .math-drop {
-  animation: board-down 5.5s ease-in-out 0.5s;
+  z-index: 1;
+  animation: board-down 5.5s ease-in-out;
 }
+
 .book-drop {
-  animation: board-down 5.5s ease-in-out 0.5s;
+  z-index: 1;
+  animation: board-down 5.5s ease-in-out;
 }
+
 .hoop-drop {
-  animation: hoop-down 5.5s ease-in-out 0.5s;
+  animation: hoop-down 5.5s ease-in-out;
 }
 
 .hoop-jump {
-  animation: hoop-jump 5.5s ease-in-out 0.5s;
+  animation: hoop-jump 5.5s ease-in-out;
 }
+
+
 /*********************************************************/
-/******************* Animations */
+/******************* Keyframes Animations */
+
 
 @keyframes hoop-jump {
   0% {
@@ -515,6 +507,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     left: 44%;
   }
 }
+
 @keyframes board-down {
   0% {
     top: -25%;
@@ -600,6 +593,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
   }
 
 }
+
 @keyframes game-down {
   0% {
     top: -25%;
@@ -620,13 +614,16 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     top: -25%;
     left: 44%;
   }
-  20% {
-    top: -25%;
-  }
-  30% {
+  25% {
     top: 78%;
   }
-  40% {
+  37% {
+    top: 25%;
+  }
+  45% {
+    top: 78%;
+  }
+  52% {
     top: 35%;
   }
   60% {
@@ -644,6 +641,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     left: 100%;
   }
 }
+
 @keyframes food-down {
   0% {
     left: 44%;
@@ -657,21 +655,7 @@ https://stackoverflow.com/questions/7190898/progress-bar-with-html-and-css */
     left: 44%;
   }
 }
-/* @keyframes object-down {
-  0% {
-    left: 44%;
-    top: -25%;
-  }
-  20% {
-    top: -25%;
-  }
-  100% {
-    top: 88%;
-    left: 44%;
-  }
-} */
 
-/* add / remove when pausing or pressing buttons */
 @keyframes pace {
   0% {
     left: 36%;

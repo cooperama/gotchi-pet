@@ -17,13 +17,8 @@ The Tamagotchi project is a beginner's project that demonstrates the creator's a
 
 ## Technologies
 
-For this project, I used HTML, CSS, some Animate CSS classes to help with animations, vanilla Javascript for DOM manipulation. I also used pixilart.com to create my character and object images, and loading.io to create a gif image.
+For this project, I used HTML, CSS, some Animate CSS classes to help with animations, vanilla Javascript for DOM manipulation. I also used pixilart.com to create my character and object images, loading.io to create a gif image, and audiotrimmer.com to clip out sound snippets. Music from bensound.com and orangefreesounds.com/.
 
-music: https://www.bensound.com
-
-music: http://www.orangefreesounds.com/ Celeste Lullaby Music Alexander Blu
-
-https://audiotrimmer.com/
 
 ## Approach
 
