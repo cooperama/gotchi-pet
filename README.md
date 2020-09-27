@@ -35,6 +35,7 @@ After creating the functionality, I then focused on my visuals. I created my ima
 
 
 ## Unsolved Problems
+Sometimes when the character images pops on screen in place of the moon image, the image shifts a little rather than remaining in place.
 
 
 ## Wireframes

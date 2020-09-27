@@ -76,11 +76,6 @@ const imageFiles = {
     './images/sprite/gotchi-midage-worried.png',
     './images/sprite/gotchi-big-worried.png'
   ],
-  surprisedBad: [
-    './images/sprite/gotchi-young-surprised-bad.png',
-    './images/sprite/gotchi-midage-surprised-bad.png',
-    './images/sprite/gotchi-big-surprised-bad.png'
-  ],
   catch: [
     './images/sprite/gotchi-young-catch.png',
     './images/sprite/gotchi-midage-catch.png',
@@ -90,10 +85,6 @@ const imageFiles = {
     './images/sprite/gotchi-young-eat.png',
     './images/sprite/gotchi-midage-eat.png',
     './images/sprite/gotchi-big-eat.png'
-  ],
-  bird: [
-    './images/bird-down.png',
-    './images/bird-up.png'
   ],
   catBoard: [
     './images/cat-board-100.png',
@@ -109,18 +100,6 @@ const imageFiles = {
     './images/whiteboard-4.png',
     './images/whiteboard-5.png',
     './images/whiteboard-after-100.png'
-  ],
-  loveBugs: [
-    './images/images/love-bugs.png',
-    './images/images/love-bugs-love.png',
-    './images/images/love-bugs-love-2.png'
-  ],
-  squirrel: [
-    './images/squirrel-happy.png',
-    './images/squirrel-run-open.png',
-    './images/squirrel-run-closed.png',
-    './images/squirrel-upsidedown-open.png',
-    './images/squirrel-upsidedown-closed.png'
   ]
 }
 
@@ -572,6 +551,8 @@ document.getElementById('teach').addEventListener('click', function(e) {
         
         if (time === 55) {
           
+          changeAbcBoardImage(0);
+          changeMathBoardImage(0);
           game.gotchis[0].learn();
           changeCharacterImage('happyDown');
           characterImg.classList.remove('hoop-jump');
@@ -650,7 +631,6 @@ document.querySelector('.start-game').addEventListener('click', function() {
     while (waiting) {
 
       const pause = setInterval(function() {
-
         if (wait === 5) {
           document.querySelector('body').style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
           screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
@@ -690,16 +670,16 @@ document.querySelector('.start-game').addEventListener('click', function() {
 
 // ~~~~ INTRO / INSTRUCTIONS BUTTON EVENTS
 
-document.querySelector('.button-one').addEventListener('click', function() {
-  document.querySelector('.i-one').remove();
-  screen.appendChild(document.querySelector('.i-two'));
-});
-
 document.querySelector('.button-one').addEventListener('mouseover', function(e) {
   e.target.textContent = 'wow !';
   this.addEventListener('mouseout', function(e) {
     e.target.textContent = ' wow ';
   });
+});
+
+document.querySelector('.button-one').addEventListener('click', function() {
+  document.querySelector('.i-one').remove();
+  screen.appendChild(document.querySelector('.i-two'));
 });
 
 document.querySelector('.button-two').addEventListener('mouseover', function(e) {
@@ -733,17 +713,6 @@ document.querySelector('.name-choice').addEventListener('mouseover', function(e)
   });
 });
 
-document.querySelector('.play-again-button').addEventListener('click', function() {
-  location.reload();
-});
-
-document.querySelector('.play-again-button').addEventListener('mouseover', function(e) {
-  e.target.textContent = 'play again !';
-  this.addEventListener('mouseout', function(e) {
-    e.target.textContent = 'play again?';
-  });
-});
-
 // ~~~~ CREATE TAMAGOTCHI OBJECT AND SHOW SCREEN MENUS
 
 document.querySelector('.name-choice').addEventListener('click', function(e) {
@@ -766,5 +735,16 @@ document.querySelector('.name-choice').addEventListener('click', function(e) {
   characterImg.classList.add('pace');
 })
 
+// ~~~~ REPLAY BUTTON
 
+document.querySelector('.play-again-button').addEventListener('mouseover', function(e) {
+  e.target.textContent = 'play again !';
+  this.addEventListener('mouseout', function(e) {
+    e.target.textContent = 'play again?';
+  });
+});
+
+document.querySelector('.play-again-button').addEventListener('click', function() {
+  location.reload();
+});
 
