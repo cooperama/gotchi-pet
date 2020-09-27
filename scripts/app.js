@@ -527,10 +527,11 @@ document.getElementById('teach').addEventListener('click', function(e) {
         if (care === 'book') {
           if (time === 18) changeCharacterImage('back');
           if (time === 24) changeAbcBoardImage(1);
-          if (time === 30) changeAbcBoardImage(2);
-          if (time === 38) changeAbcBoardImage(3);
-          if (time === 46) changeAbcBoardImage(0);
-          if (time === 50) changeAbcBoardImage(4);
+          if (time === 28) changeAbcBoardImage(2);
+          if (time === 32) changeAbcBoardImage(3);
+          if (time === 36) changeAbcBoardImage(0);
+          if (time === 42) changeAbcBoardImage(4);
+          if (time === 48) changeAbcBoardImage(0);
         }
         if (care === 'math') {
           if (time === 18) changeCharacterImage('back');
@@ -551,7 +552,6 @@ document.getElementById('teach').addEventListener('click', function(e) {
         
         if (time === 55) {
           
-          changeAbcBoardImage(0);
           changeMathBoardImage(0);
           game.gotchis[0].learn();
           changeCharacterImage('happyDown');
