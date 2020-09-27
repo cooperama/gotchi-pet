@@ -633,6 +633,7 @@ document.querySelector('.start-game').addEventListener('click', function() {
       const pause = setInterval(function() {
         if (wait === 5) {
           document.querySelector('body').style.backgroundImage = 'url(./images/ghilbli_day_2.jpg)';
+          document.querySelector('body').style.backgroundSize = 'cover';
           screen.style.backgroundImage = 'url(./images/ghibli_background.jpg)';
 
           characterImg.classList.remove('moon');
