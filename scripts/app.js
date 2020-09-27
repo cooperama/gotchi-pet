@@ -130,6 +130,7 @@ function pauseGame() {
   addDisplayNoneToOptions();
   toggleDisplayOnToButtons();
 }
+
 function unpauseGame() {
   pauseButton.classList.remove('pause-game'); 
   addDisplayNoneToOptions();
@@ -139,9 +140,11 @@ function unpauseGame() {
 function changeCharacterImage(image) {
   characterImg.setAttribute('src', imageFiles[image][game.gotchis[0].sizeIndex]);
 }
+
 function changeMathBoardImage(index) {
   document.querySelector('.math-board').setAttribute('src', imageFiles['mathboard'][index]);
 }
+
 function changeAbcBoardImage(index) {
   document.querySelector('.abc-board').setAttribute('src', imageFiles['catBoard'][index]);
 }
