@@ -1,9 +1,9 @@
-# Project 0 ~~ Tamagotchi
+# Motchi Gotchi
 
 
 ## What & Why
 
-The Tamagotchi project is a beginner's project that demonstrates the creator's ability with HTML, CSS, JavaScript, and DOM manipulation. 
+This is a beginner's project based on the Tamagotchi game that demonstrates the creator's ability with HTML, CSS, JavaScript, and DOM manipulation. 
 
 
 ## User Story
